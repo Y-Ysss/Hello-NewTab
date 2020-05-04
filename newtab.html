@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Hello-NewTab</title>
+  <!-- <base target="_blank"> -->
+  <link rel="stylesheet" type="text/css" href="css/newtab.css">
+  <!-- <link href="css/common.css" rel="stylesheet" type="text/css"> -->
+  <!-- <link rel="stylesheet" type="text/css" href="css/newtab_dev.css"> -->
+  <link rel="icon" type="image/png" href="img/favicon/icon_016.png" sizes="16x16">
+  <link rel="icon" type="image/png" href="img/favicon/icon_032.png" sizes="32x32">
+  <link rel="icon" type="image/png" href="img/favicon/icon_096.png" sizes="96x96">
+  <template id="content-module-template">
+    <div class="content-module">
+      <div class="content-header"></div>
+        <ul></ul>
+    </div>
+  </template>
+  <template id="liTemplate">
+    <li><a><img class="favicon"></a></li>
+  </template>
+</head>
+
+<body>
+  <div id="bookmark-search-group">
+    <div id="bookmark-search-header">Search</div>
+    <div id="bookmark-search-input-area">
+      <input id="search" type="text" placeholder="ブックマークの検索" required>
+      <input id="searchView" class="action-item" title="検索結果の再読込" type="submit" value="">
+      <span id="searchReset" class="action-item searchResetHidden">×</span>
+    </div>
+    <!-- <div id="progressBar" class="hide-module">
+      <div id="progress"></div>
+    </div> -->
+    <div id="bookmark-search-result">
+    </div>
+  </div>
+  <div id="mFilter"></div>
+  <div id="system-link-area">
+    <div id="moreMenu" class="menu action-item"><img class="menu-icon" src="img/icon-menu.svg">System Pages</div>
+    <div id="searchMenu" class="menu action-item"><img class="menu-icon" src="img/icon-search.svg">Search Bookmarks</div>
+    <div class="menu crate-system-tab" data-href="chrome://apps/"><img class="menu-icon" src="img/icon-apps.svg">Apps</div>
+    <div class="menu crate-system-tab" data-href="chrome://bookmarks/"><img class="menu-icon" src="img/icon-bookmarks.svg">Bookmarks</div>
+    <div class="menu crate-system-tab" data-href="chrome://history/"><img class="menu-icon" src="img/icon-history.svg">History</div>
+    <div class="menu crate-system-tab" data-href="chrome://downloads/"><img class="menu-icon" src="img/icon-downloads.svg">Downloads</div>
+    <div class="menu crate-system-tab" data-href="chrome://extensions/"><img class="menu-icon" src="img/icon-extensions.svg">Extensions</div>
+    <div class="menu crate-system-tab" data-href="chrome://settings/"><img class="menu-icon" src="img/icon-settings.svg">Settings</div>
+    <div class="menu crate-system-tab" data-href="option.html"><img class="menu-icon" src="img/icon-options.svg">Options</div>
+    
+    <div id="selectThemeMenu" class="menu action-item">
+      <img class="menu-icon" src="img/icon-theme.svg">Switch Theme
+      
+    </div>
+    <div id="fmTheme" class="floatMenu">
+      <div>
+        <input type="radio" name="theme" id="tmLight" value="tmLight">
+        <label for="tmLight">Modern Light</label>
+      </div>
+      <div>
+        <input type="radio" name="theme" id="tmDark" value="tmDark">
+        <label for="tmDark">Modern Dark</label>
+      </div>
+      <div>
+        <input type="radio" name="theme" id="tmOrange" value="tmOrange">
+        <label for="tmOrange">Modern Orange</label>
+      </div>
+      <div>
+        <input type="radio" name="theme" id="tmFlatLight" value="tmFlatLight">
+        <label for="tmFlatLight">Flat Light</label>
+      </div>
+      <div>
+        <input type="radio" name="theme" id="tmFlatDark" value="tmFlatDark">
+        <label for="tmFlatDark">Flat Dark</label>
+      </div>
+      <div>
+        <input type="radio" name="theme" id="tmFullFlatLight" value="tmFullFlatLight">
+        <label for="tmFullFlatLight">FullFlat Light</label>
+      </div>
+      <div>
+        <input type="radio" name="theme" id="tmNeumorphismLight" value="tmNeumorphismLight">
+        <label for="tmNeumorphismLight">Neumorphism Light</label>
+      </div>
+      <div id="applyTheme" class="button action-item">Apply</div>
+    </div>
+    <div id="vsbltyMenu" class="menu action-item"><img class="menu-icon" src="img/icon-visibility.svg">Visibility
+      <!-- <div class="form_tggl" id="tggl1"></div> -->
+    </div>
+      <div id="fmVsblty" class="floatMenu">
+        Visible Folders
+        <div class="action-item form_tggl" id="tgglVisible"></div>
+      </div>
+  </div>
+    <div id="sArea" class="displayNone">
+      <input id="s" class="text-input" type="text" placeholder="Google Search">
+      <input id="sEnter" class="textSubmit" type="submit" value=" 〉"></input>
+    </div>
+  <div id="body-main">
+  </div>
+  <script type="text/javascript" src="js/lib/rippleEffect.js"></script>
+  <script type="text/javascript" src="js/lib/desvg.js"></script>
+  <script type="text/javascript" src="js/lib/macy.js"></script>
+  <script type="text/javascript" src="js/common.js"></script>
+  <script type="text/javascript" src="js/newtab.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Option_Page</title>
+  <base target="_blank">
+  <!-- <link href="css/option.css" rel="stylesheet" type="text/css"> -->
+  <link href="css/common.css" rel="stylesheet" type="text/css">
+  <link href="css/option_dev.css" rel="stylesheet" type="text/css">
+</head>
+
+<body class="body">
+  <div id="toast">設定を保存しました</div>
+  <div id="side-menu">
+    <div>Options</div>
+    <a href="#option" class="ripple" target="_self">Option</a>
+    <a href="#howtouse" class="ripple" target="_self">How To Use</a>
+    <a href="#about" class="ripple" target="_self">About</a>
+    <a href="#attribution" class="ripple" target="_self">Attribution</a>
+    <a href="#exinfo" class="ripple" target="_self">Extension Info</a>
+    <a href="#githubcmmt" class="ripple" target="_self">GitHub Commits</a>
+  </div>
+  <div id="body-main">
+    <span id="option"></span>
+    <div class="card">
+      <div class="card-head">#Options</div>
+      <div class="card-contents">
+        <div class="section-items-continuation">
+            <div class="section-item-text"></div>
+          <div class="section-item-action"><div id="save-settings" class="button">保存する</div></div>
+        </div>
+        <div class="content-section">
+          <div class="section-title">Open in new tab</div>
+          <div class="section-items">
+            <!-- <div class="section-item-icon"><img src="img/iconBookmarks.svg"></div> -->
+            <div class="section-item-text">ブックマークを新しいタブで開く</div>
+            <div class="section-item-action"><div id="tgglOpenTab" class="toggle"></div></div>
+          </div>
+        </div>
+        <div class="content-section">
+          <div class="section-title">Web search bar</div>
+          <div class="section-items">
+            <div class="section-item-text">検索バーを表示する</div>
+            <div class="section-item-action"><div id="tgglWebSearch" class="toggle"></div></div>
+          </div>
+        </div>
+
+        <div class="content-section">
+          <div class="section-title">Page</div>
+          <div class="section-items">
+            <div class="section-item-text">デフォルトのファビコン（Webページのアイコン）を使用する</div>
+            <div class="section-item-action"><div id="tgglIcon" class="toggle"></div></div>
+          </div>
+          <div class="section-items">
+            <div class="section-item-text">ページの拡大/縮小（Default : 100）[%]</div>
+            <div class="section-item-action">
+              <input id="txtScale" class="text-input" type="number" placeholder="Number" value="100">
+            </div>
+          </div>
+          <div class="section-items">
+            <div class="section-item-text">ページのスタイル</div>
+            <div class="section-item-action">
+              <div class="radio-group">
+                <input type="radio" name="theme" id="tmLight" value="tmLight">
+                <label for="tmLight">Modern Light</label>
+                <input type="radio" name="theme" id="tmDark" value="tmDark">
+                <label for="tmDark">Modern Dark</label>
+                <input type="radio" name="theme" id="tmOrange" value="tmOrange">
+                <label for="tmOrange">Modern Orange</label>
+                <input type="radio" name="theme" id="tmFlatLight" value="tmFlatLight">
+                <label for="tmFlatLight">Flat Light</label>
+                <input type="radio" name="theme" id="tmFlatDark" value="tmFlatDark">
+                <label for="tmFlatDark">Flat Dark</label>
+                <input type="radio" name="theme" id="tmFullFlatLight" value="tmFullFlatLight">
+                <label for="tmFullFlatLight">FullFlat Light</label>
+              </div>
+            </div>
+          </div>
+
+          <div class="content-section">
+          <!-- <div class="section-title">Unimplemented</div> -->
+            <details>
+              <summary>実験的機能</summary>
+              <div class="section-title">除外フォルダの指定</div>
+              <div class="section-items-continuation">
+                <div class="section-item-text">除外フォルダ指定（正規表現）</div>
+                <div class="section-item-action">
+                  <input id="txtRegexpPattern" class="text-input wide" type="text" placeholder="Regular Expression Pattern">
+                </div>
+              </div>
+              <div class="section-items">
+                <details>
+                  <summary>正規表現パターン</summary>
+                  <table border="0" cellspacing="0">
+                    <!-- <caption>文字種</caption> -->
+                    <tr>
+                      <th>パターン</th><th>説明</th>
+                    </tr>
+                    <tr><td>^<span class="fBlue">...</span></td><td>直後の文字が先頭にある場合</td></tr>
+                    <tr><td><span class="fBlue">...</span>$</td><td>直前の文字が末尾にある場合</td></tr>
+                    <tr><td>.</td><td>任意の1文字</td></tr>
+                    <tr><td><span class="fBlue">...</span>*</td><td>直前の文字が0回以上繰り返す場合の最長一致</td></tr>
+                    <tr><td><span class="fBlue">...</span>+</td><td>直前の文字が1回以上繰り返す場合の最長一致</td></tr>
+                    <tr><td><span class="fBlue">...</span>?</td><td>直前の文字が0または1回の場合の最長一致</td></tr>
+                    <tr><td><span class="fBlue">...</span>+?</td><td>直前の文字が1回以上繰り返す場合の最短一致</td></tr>
+                    <tr><td><span class="fBlue">...</span>*?</td><td>直前の文字が0回以上繰り返す場合の最短一致</td></tr>
+                    <tr><td><span class="fBlue">...</span>??</td><td>直前の文字が0または1回の場合の最短一致</td></tr>
+                    <tr><td><span class="fBlue">...</span>|<span class="fBlue">...</span></td><td>左右のいずれかの条件（OR）</td></tr>
+                    <tr><td>[<span class="fBlue">...</span>]</td><td>角括弧内のいずれか1文字</td></tr>
+                    <tr><td>[^<span class="fBlue">...</span>]</td><td>角括弧内の文字以外</td></tr>
+                    <tr><td>(<span class="fBlue">...</span>)</td><td>パターンのグループ化</td></tr>
+                    <tr><td>{<span class="fBlue">n</span>}</td><td>桁数指定</td></tr>
+                    <tr><td>{<span class="fBlue">min</span>, }</td><td>最小桁数のみ指定</td></tr>
+                    <tr><td>{<span class="fBlue">min</span>,<span class="fBlue">max</span>}</td><td>最小と最大桁数指定の最長一致</td></tr>
+                    <tr><td>{<span class="fBlue">min</span>,<span class="fBlue">max</span>}?</td><td>最小と最大桁数指定の最短一致</td></tr>
+                  </table>
+                  <!-- <table border="0" cellspacing="0">
+                    <caption>位置</caption>
+                    <tr>
+                      <th>記法</th><th>説明</th>
+                    </tr>
+                    <tr><td>\<</td><td>単語の先頭</td></tr>
+                    <tr><td>\></td><td>単語の末尾</td></tr>
+                    <tr><td>\b</td><td>単語の先頭か末尾</td></tr>
+                    <tr><td>\B</td><td>単語の先頭か末尾以外</td></tr>
+                  </table> -->
+                </details>
+              </div>
+
+              <div class="section-title">オートテーマ</div>
+              <div class="section-items-continuation">
+                <div class="section-item-text">テーマ1の選択と時間設定</div>
+                <div class="section-item-action">
+                  <label class="selector">
+                    <select name="autoThemePrimary">
+                      <option value="tmLight">Modern Light</option>
+                      <option value="tmDark">Modern Dark</option>
+                      <option value="tmOrange">Modern Orange</option>
+                      <option value="tmFlatLight">Flat Light</option>
+                      <option value="tmFlatDark">Flat Dark</option>
+                      <option value="tmFullFlatLight">FullFlat Light</option>
+                    </select>
+                  </label>
+                  <span>&ensp;:&ensp;
+                    <input name="sliderLower" class="sliderLower short text-synchronize-slider" type="number" min="0" max="24" step="1">時 ～ 
+                    <input name="sliderUpper" class="sliderUpper short text-synchronize-slider" type="number" min="0" max="24" step="1">時
+                  </span>
+                </div>
+              </div>
+
+
+              <div class="section-items-continuation">
+                <div class="section-item-text">テーマ2の選択と時間設定</div>
+                <div class="section-item-action">
+                  <label class="selector">
+                    <select name="autoThemeSecondary">
+                      <option value="tmLight">Modern Light</option>
+                      <option value="tmDark">Modern Dark</option>
+                      <option value="tmOrange">Modern Orange</option>
+                      <option value="tmFlatLight">Flat Light</option>
+                      <option value="tmFlatDark">Flat Dark</option>
+                      <option value="tmFullFlatLight">FullFlat Light</option>
+                    </select>
+                  </label>
+                  <span>&ensp;:&ensp;
+                    <input name="sliderUpper" class="sliderUpper short text-synchronize-slider" type="number" min="0" max="24" step="1">時 ～
+                    <input name="sliderLower" class="sliderLower short text-synchronize-slider" type="number" min="0" max="24" step="1">時 
+                  </span>
+                </div>
+              </div>
+              <div class="section-items">
+                <div class="section-item-text">時間設定</div>
+                <div class="section-item-action">
+                  <input type="range" name="sliderLower" class="slider" id="sliderLowerRange" min="0" max="24" setp="1">
+                  <input type="range" name="sliderUpper" class="slider" id="sliderUpperRange" min="0" max="24" setp="1">
+                </div>
+              </div>
+
+              <div class="section-title">メイソンリーレイアウト</div>
+              <div class="section-items">
+                <div class="section-item-text">列数 (Default:8)</div>
+                <div class="section-item-action">
+                  <input id="txtMacyColumns" class="text-input" type="number" placeholder="Number">
+                </div>
+              </div>
+              <div class="section-items">
+                <div class="section-item-text">Margin X (Default:30)</div>
+                <div class="section-item-action">
+                  <input id="txtMacyMarginX" class="text-input" type="number" placeholder="Number">
+                </div>
+              </div>
+              <div class="section-items">
+                <div class="section-item-text">ブレークポイント (Default: { 1200:5, 990:4, 780:3, 620:2, 430:1 })</div>
+                <div class="section-item-action">
+                  <input id="txtMacyBreak" class="text-input" type="text" placeholder="{key:value}" disabled="disable">
+                </div>
+              </div>
+            </details>
+            <!-- <div class="section-title">Web search bar</div>
+            <div class="section-items">
+              <div class="section-item-text">検索バーを表示する</div>
+              <div class="section-item-action"></div>
+            </div> -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <span id="howtouse"></span>
+    <div class="card">
+      <div class="card-head">#How to use</div>
+      <div class="card-contents">
+        <div class="content-section">
+          <div class="section-title">Side Menu</div>
+          <div class="section-items-slim">
+            <div class="section-item-icon"><img src="img/icon-menu.svg"></div>
+            <div class="section-item-text">メニューの拡大</div>
+            <div class="section-item-action">メニューを拡大してページ名を表示</div>
+          </div>
+          <div class="section-items-slim">
+            <div class="section-item-icon"><img src="img/icon-search.svg"></div>
+            <div class="section-item-text">ブックマークの検索</div>
+            <div class="section-item-action">[Alt] + [B]で検索欄にフォーカス、[Esc]キーでフォーカス解除できる。</div>
+          </div>
+          <div class="section-items-slim">
+            <div class="section-item-icon"><img src="img/icon-apps.svg"></div>
+            <div class="section-item-text">Chromeアプリ</div>
+            <div class="section-item-action"></div>
+          </div>
+          <div class="section-items-slim">
+            <div class="section-item-icon"><img src="img/icon-bookmarks.svg"></div>
+            <div class="section-item-text">ブックマーク</div>
+            <div class="section-item-action"></div>
+          </div>
+          <div class="section-items-slim">
+            <div class="section-item-icon"><img src="img/icon-history.svg"></div>
+            <div class="section-item-text">履歴</div>
+            <div class="section-item-action"></div>
+          </div>
+          <div class="section-items-slim">
+            <div class="section-item-icon"><img src="img/icon-downloads.svg"></div>
+            <div class="section-item-text">ダウンロード</div>
+            <div class="section-item-action"></div>
+          </div>
+          <div class="section-items-slim">
+            <div class="section-item-icon"><img src="img/icon-extensions.svg"></div>
+            <div class="section-item-text">拡張機能</div>
+            <div class="section-item-action"></div>
+          </div>
+          <div class="section-items-slim">
+            <div class="section-item-icon"><img src="img/icon-settings.svg"></div>
+            <div class="section-item-text">設定</div>
+            <div class="section-item-action"></div>
+          </div>
+          <div class="section-items-slim">
+            <div class="section-item-icon"><img src="img/icon-options.svg"></div>
+            <div class="section-item-text">この拡張機能のオプション</div>
+            <div class="section-item-action"></div>
+          </div>
+          <div class="section-items-slim">
+            <div class="section-item-icon"><img src="img/icon-theme.svg"></div>
+            <div class="section-item-text">テーマの切り替え</div>
+            <div class="section-item-action"></div>
+          </div>
+          <div class="section-items-slim">
+            <div class="section-item-icon"><img src="img/icon-visibility.svg"></div>
+            <div class="section-item-text">隠しフォルダーの表示/非表示</div>
+            <div class="section-item-action"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <span id="about"></span>
+    <div class="card">
+      <div class="card-head">#About</div>
+      <div class="card-contents">
+        <div class="content-section">
+          <div class="section-title">Made By</div>
+          <div class="section-items-slim">
+            <div class="section-item-text">Name : Y-Ysss</div>
+          </div>
+          <div class="section-items-slim">
+            <div class="section-item-text">Blog : <a href="https://ysss.hateblo.jp/"></a></div>
+          </div>
+          <div class="section-items-slim">
+            <div class="section-item-text">GitHub : <a href="https://github.com/Y-Ysss"></a></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <span id="attribution"></span>
+    <div class="card">
+      <div class="card-head">#Attributions</div>
+      <div class="card-contents">
+        <div class="content-section">
+          <div class="section-title">Javascript Libraries</div>
+          <div class="section-items-slim">
+            <div class="section-item-text">deSVG (GitHub : benhowdle89)</div>
+            <div class="section-item-action">
+              <a href="https://github.com/benhowdle89/deSVG"></a>
+            </div>
+          </div>
+          <div class="section-items-slim">
+            <div class="section-item-text">macy (GitHub : bigbitecreative)</div>
+            <div class="section-item-action">
+              <a href="https://github.com/bigbitecreative/macy.js"></a>
+            </div>
+          </div>
+          <div class="section-items-slim">
+            <div class="section-item-text">Ripple Effect (Qiita : nekoneko-wanwan)</div>
+            <div class="section-item-action">
+              <a href="http://qiita.com/nekoneko-wanwan/items/c9f26ce049bd422e555c"></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <span id="exinfo"></span>
+    <div class="card">
+      <div class="card-head">#Installed Extension's Info</div>
+      <div id="ExtensionInfo" class="card-contents">
+      </div>
+    </div>
+
+    <span id="githubcmmt"></span>
+    <div class="card">
+      <div class="card-head">#Recently GitHub Commits</div>
+      <div id="gitCommitsInfo" class="card-contents">
+        
+      </div>
+    </div>
+  </div>
+  <script type="text/javascript" src="js/lib/rippleEffect.js"></script>
+  <script type="text/javascript" src="js/common.js"></script>
+  <script type="text/javascript" src="js/option.js"></script>
+</body>
+
+</html>
