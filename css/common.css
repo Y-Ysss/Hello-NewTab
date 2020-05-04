@@ -157,15 +157,15 @@ select {
 /*Button*/
 
 .button {
-  padding: .1rem 1.6rem;
+  padding: .2rem 1rem;
   display: inline-block;
   cursor: pointer;
   vertical-align: middle;
-  /*font-size: 1em;*/
+  font-size: 1em;
   font-weight: bold;
   letter-spacing: .1em;
-  color: #fff;
-  background-color: #42a5f5;
+  color: #42a5f5;
+  border: .1rem solid #42a5f5;
   box-shadow: 0 0 .3rem rgba(0, 0, 0, .35);
   /*background-color: #115273;*/
   border-radius: .5rem;
@@ -173,8 +173,8 @@ select {
 }
 
 .button:hover {
-  color: #345;
-  background-color: #f0f2f5;
+  color: #fff;
+  background-color: #42a5f5;
   box-shadow: 0 0 .6rem rgba(0, 0, 0, .4);
 }
 
@@ -187,7 +187,7 @@ select {
 .toggle {
   height: .7rem;
   width: 3rem;
-  margin: .5rem 1rem;
+  margin: .3rem 1rem;
   display: inline-block;
   cursor: pointer;
   background-color: #ccc;

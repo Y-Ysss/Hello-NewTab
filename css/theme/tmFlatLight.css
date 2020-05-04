@@ -128,18 +128,19 @@ a {
 }
 
 .button {
-  color: var(--accent-color2);
-  border: var(--accent-color2) solid 1px;
+  color: var(--accent-color1);
+  border: var(--accent-color1) solid .1rem;
 }
 
 .button:hover {
-  color: var(--accent-color1);
-  border:  solid 1px var(--accent-color1);
+  color: var(--base-color1);
+  background-color: var(--accent-color1);
+  border:  solid .1rem var(--accent-color1);
 }
 
 .button:active {
   color: var(--accent-color3);
-  border: var(--accent-color3) solid 1px;
+  border: var(--accent-color3) solid .1rem;
 }
 
 .floatMenu {

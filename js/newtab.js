@@ -207,9 +207,9 @@ class EventFunctions {
   	this.filtering(state);
     const sla = document.getElementById('system-link-area');
     if(state) {
-      sla.style.width = '4rem';
+      sla.style.width = '2.6rem';
     } else {
-      sla.style.width = '19rem';
+      sla.style.width = '14rem';
       this.searchMenu(TO_CLOSE);
       this.selectThemeMenu(TO_CLOSE);
       this.vsbltyMenu(TO_CLOSE);
@@ -238,7 +238,7 @@ class EventFunctions {
       this.moreMenu(TO_CLOSE);
       this.selectThemeMenu(TO_CLOSE);
       this.vsbltyMenu(TO_CLOSE);
-      bookmarkSearch.style.left = '4rem';
+      bookmarkSearch.style.left = '2.6rem';
       searchMenu.classList.add('bg-searchMenu');
       search.focus();
     }
@@ -270,7 +270,7 @@ class EventFunctions {
     document.getElementById('bookmark-search-result').innerHTML = '';
   }
   cssFloatMenu(obj, state) {
-    obj.style.margin = state ? '-4rem 0 0 3rem' : '-4rem 0 0 5rem';
+    obj.style.margin = state ? '-2.8rem 0 0 1rem' : '-2.8rem 0 0 3.8rem';
     obj.style.visibility = state ? 'hidden' : 'visible';
     obj.style.opacity = state ? 0 : 1;
   }
