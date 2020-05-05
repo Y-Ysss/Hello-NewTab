@@ -61,7 +61,7 @@ ul {
 }
 #searchView {
   right: 0;
-  height: 2.5rem;
+  height: 2.8rem;
   width: 10%;
   padding-top: 0.195rem;
   position: absolute;
@@ -78,7 +78,9 @@ ul {
   padding-left: 0.5850rem;
 }
 #searchReset {
-  top: 3.5rem;
+  line-height: 1rem;
+  padding: .8rem 0 1rem 0;
+  font-size: 1.2rem;
   right: 2.6rem;
   position: absolute;
 }
@@ -93,7 +95,7 @@ ul {
 }
 
 #bookmark-search-result {
-  top: 5.5rem;
+  top: 5.6rem;
   height: calc(100% - 6.5rem);
   width: 100%;
   position: absolute;
@@ -122,20 +124,6 @@ ul {
   padding: 0.4549rem 0.52rem;
 }
 
-/*#progressBar {
-    top: 2.5rem;
-    width: 100%;
-    height: 0.195rem;
-    background-color: #abc;
-    position: relative;
-}
-
-#progress {
-    height: 100%;
-    background-color: #26c5ff;
-    position: absolute;
-    -webkit-animation: load 1s linear infinite;
-}*/
 
 @-webkit-keyframes load {
   0% {
@@ -196,36 +184,7 @@ ul {
   text-decoration: none;
 }
 
-.systemLink {
-  /*height: 1.5rem;*/
-  /*color: #345;*/
-  /*padding: 0.65rem;*/
-/*  display: block;
-  overflow: hidden;*/
-  /*transition: 0.3s all;*/
-  /*vertical-align: middle;*/
-  /*white-space: nowrap;*/
-  /*text-decoration: none;*/
-}
 
-/*.systemLink:after {
-    display: block;
-    height: 1.3rem;
-    position: fixed;
-    opacity: 0.6;
-    margin: -1.3rem 0 0 2.6rem;
-    font-size: 0.8450rem;
-    color: inherit;
-    background-color: inherit;
-    padding: 0.13rem;
-    border-radius: 0.195rem;
-    content: "Open in new tab";
-    visibility: hidden;
-}
-.systemLink:hover:after {
-    opacity: 0.95;
-    visibility: visible;
-}*/
 .menu-icon {
   height: 1.3rem;
   width: 1.3rem;

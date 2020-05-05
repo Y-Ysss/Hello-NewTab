@@ -26,7 +26,7 @@ class ContentsManager extends DefaultSettings {
 		super()
 		this.eventFunc = classEventFunctions
 		this.contentModule = document.getElementById('content-module-template')
-		this.contentModuleList = document.getElementById('liTemplate')
+		this.contentModuleList = document.getElementById('li-template')
 		this.fragment = document.createDocumentFragment()
 		this.xx_module
 	}
@@ -76,7 +76,7 @@ class ContentsManager extends DefaultSettings {
 				if(count > 0) {
 					let span = document.createElement('span');
 					span.className = "bkmrkNum"
-					span.textContent = `${count} bookmarks`;
+					span.textContent = `${count} ${count === 1 ? 'bookmark' : 'bookmarks'}`;
 					this.xx_module.appendChild(span)
 					ul.appendChild(this.xx_module);
 					this.fragment.appendChild(contentModuleClone);
@@ -156,15 +156,15 @@ class ContentsManager extends DefaultSettings {
 			 // [ Esc ] : 27
 		})
 
-		this.wrapper('#s', 'keyup', (event) => {
+		this.wrapper('#web-search-input', 'keyup', (event) => {
 			if ((event.which && event.which == 13) || (event.keyCode && event.keyCode == 13)) {
 				chrome.tabs.create({ url: "https://www.google.com/search?q=" + event.target.value});
 				event.target.value = ''
 			}
 		})
 
-		this.wrapper('#sEnter', 'click', (event) => {
-				let val = document.getElementById('s').value
+		this.wrapper('#web-search-submit', 'click', (event) => {
+				let val = document.getElementById('web-search-input').value
 				chrome.tabs.create({ url: "https://www.google.com/search?q=" + val});
 				val = ''
 		})

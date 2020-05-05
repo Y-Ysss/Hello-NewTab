@@ -17,7 +17,7 @@
         <ul></ul>
     </div>
   </template>
-  <template id="liTemplate">
+  <template id="li-template">
     <li><a><img class="favicon"></a></li>
   </template>
 </head>
@@ -30,9 +30,6 @@
       <input id="searchView" class="action-item" title="検索結果の再読込" type="submit" value="">
       <span id="searchReset" class="action-item searchResetHidden">×</span>
     </div>
-    <!-- <div id="progressBar" class="hide-module">
-      <div id="progress"></div>
-    </div> -->
     <div id="bookmark-search-result">
     </div>
   </div>
@@ -48,10 +45,7 @@
     <div class="menu crate-system-tab" data-href="chrome://settings/"><img class="menu-icon" src="img/icon-settings.svg">Settings</div>
     <div class="menu crate-system-tab" data-href="option.html"><img class="menu-icon" src="img/icon-options.svg">Options</div>
     
-    <div id="selectThemeMenu" class="menu action-item">
-      <img class="menu-icon" src="img/icon-theme.svg">Switch Theme
-      
-    </div>
+    <div id="selectThemeMenu" class="menu action-item"><img class="menu-icon" src="img/icon-theme.svg">Switch Theme</div>
     <div id="fmTheme" class="floatMenu">
       <div>
         <input type="radio" name="theme" id="tmLight" value="tmLight">
@@ -83,17 +77,15 @@
       </div>
       <div id="applyTheme" class="button action-item">Apply</div>
     </div>
-    <div id="vsbltyMenu" class="menu action-item"><img class="menu-icon" src="img/icon-visibility.svg">Visibility
-      <!-- <div class="form_tggl" id="tggl1"></div> -->
-    </div>
+    <div id="vsbltyMenu" class="menu action-item"><img class="menu-icon" src="img/icon-visibility.svg">Visibility</div>
       <div id="fmVsblty" class="floatMenu">
         <div>Visible Folders</div>
         <div class="action-item toggle" id="tgglVisible"></div>
       </div>
   </div>
     <div id="sArea" class="displayNone">
-      <input id="s" class="text-input" type="text" placeholder="Google Search">
-      <input id="sEnter" class="textSubmit" type="submit" value=" 〉"></input>
+      <input id="web-search-input" class="text-input" type="text" placeholder="Google Search">
+      <input id="web-search-submit" class="textSubmit" type="submit" value=" 〉"></input>
     </div>
   <div id="body-main">
   </div>

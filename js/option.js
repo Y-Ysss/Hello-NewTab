@@ -59,6 +59,7 @@ class ReflectSettings extends DefaultSettings {
 			console.log(this.settings)
 			this.saveData()
 			chrome.runtime.sendMessage({newtab: 'reload'})
+			chrome.runtime.sendMessage({option: 'reload'})
 
 			let t = document.getElementById('toast')
 			t.style.transform  = 'translateY(-6rem)'
@@ -97,8 +98,9 @@ class ReflectSettings extends DefaultSettings {
 
 class ExtensionInfo {
 	constructor() {
-		this.wrapper('https://api.github.com/repos/Y-Ysss/HelloNewTab/releases/latest', this.versionInfo)
-		this.wrapper('https://api.github.com/repos/Y-Ysss/HelloNewTab/commits', this.gitCommitsInfo)
+		this.versionInfo()
+		this.wrapper('https://api.github.com/repos/Y-Ysss/Hello-NewTab/releases/latest', this.gitReleaseInfo)
+		this.wrapper('https://api.github.com/repos/Y-Ysss/Hello-NewTab/commits', this.gitCommitsInfo)
 	}
 	wrapper(url, func) {
 		fetch(url).then((response) => response.json()).then((data) => {
@@ -106,10 +108,15 @@ class ExtensionInfo {
 		})
 	}
 
-	versionInfo(data) {
+	versionInfo() {
 		const manifestData = chrome.runtime.getManifest();
 		// let str = `<div class="cardContents"><b>Installed Version</b><br>${manifestData.version}</div>`
 		let str = `<div class="content-section"><div class="section-title">Installed Extension</div><div class="section-items-slim"><div class="section-item-text">バージョン : ${manifestData.version}</div></div></div>`
+		document.getElementById('ExtensionInfo').insertAdjacentHTML('beforeend', str);
+	}
+
+	gitReleaseInfo(data) {
+		const manifestData = chrome.runtime.getManifest();
 		if(manifestData.version !== data.name) {
 			str += `<div class="content-section"><div class="section-title">Latest Release</div><div class="section-items-slim"><div class="section-item-text">バージョン : ${data.name}</div></div><div class="section-items-slim"><div class="section-item-text">What's New : <br>${data.body}</div></div><div class="section-items-slim"><div class="section-item-text">URL : <a href="${data.html_url}"></a></div></div></div>`
 			// str += `<h2>#Latest Release</h2><div class="cardContents"><b>Version</b><br>${data.name}</div><div class="cardContents"><b>What\'s New</b><br>${data.body}</div><div class="cardContents"><b>URL</b><br><a href="${data.html_url}"></a></div>`
@@ -130,3 +137,8 @@ class ExtensionInfo {
 const opt = new ReflectSettings()
 const info = new ExtensionInfo()
 
+chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+	if(request.option === 'reload') {
+		window.location.reload()
+	}
+});

@@ -2,7 +2,7 @@
     "manifest_version": 2,
     "name": "Hello NewTab",
     "version": "0.1",
-    "description": "Startpage giving instant access to bookmarks.",
+    "description": "This extension allows you to quickly access your bookmarks on the new tab.",
     "permissions": [
         "bookmarks",
         "tabs",
@@ -25,6 +25,6 @@
     "chrome_url_overrides": {
         "newtab": "newtab.html"
     },
-    "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
+    "content_security_policy": "script-src 'self'; object-src 'self'",
     "options_page": "option.html"
 }
