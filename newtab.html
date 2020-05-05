@@ -7,7 +7,7 @@
   <!-- <base target="_blank"> -->
   <!-- <link rel="stylesheet" type="text/css" href="css/newtab.css"> -->
   <link rel="stylesheet" type="text/css" href="css/common.css">
-  <link rel="stylesheet" type="text/css" href="css/newtab_dev.css">
+  <link rel="stylesheet" type="text/css" href="css/newtab.css">
   <link rel="icon" type="image/png" href="img/icon_016.png" sizes="16x16">
   <link rel="icon" type="image/png" href="img/icon_032.png" sizes="32x32">
   <link rel="icon" type="image/png" href="img/icon_096.png" sizes="96x96">
@@ -28,14 +28,14 @@
     <div id="bookmark-search-input-area">
       <input id="search" type="text" placeholder="ブックマークの検索" required>
       <input id="searchView" class="action-item" title="検索結果の再読込" type="submit" value="">
-      <span id="searchReset" class="action-item searchResetHidden">×</span>
+      <span id="searchReset" class="action-item search-input-clear">×</span>
     </div>
     <div id="bookmark-search-result">
     </div>
   </div>
   <div id="mFilter"></div>
   <div id="system-link-area">
-    <div id="moreMenu" class="menu action-item"><img class="menu-icon" src="img/icon-menu.svg">System Pages</div>
+    <div id="expandMenu" class="menu action-item"><img class="menu-icon" src="img/icon-menu.svg">System Pages</div>
     <div id="searchMenu" class="menu action-item"><img class="menu-icon" src="img/icon-search.svg">Search Bookmarks</div>
     <div class="menu crate-system-tab" data-href="chrome://apps/"><img class="menu-icon" src="img/icon-apps.svg">Apps</div>
     <div class="menu crate-system-tab" data-href="chrome://bookmarks/"><img class="menu-icon" src="img/icon-bookmarks.svg">Bookmarks</div>
@@ -83,13 +83,12 @@
         <div class="action-item toggle" id="tgglVisible"></div>
       </div>
   </div>
-    <div id="sArea" class="displayNone">
-      <input id="web-search-input" class="text-input" type="text" placeholder="Google Search">
-      <input id="web-search-submit" class="textSubmit" type="submit" value=" 〉"></input>
+    <div id="web-search-area">
+      <input id="web-search-input" type="text" placeholder="Google Search">
+      <input id="web-search-submit" type="submit" value="Search"></input>
     </div>
   <div id="body-main">
   </div>
-  <script type="text/javascript" src="js/lib/rippleEffect.js"></script>
   <script type="text/javascript" src="js/lib/desvg.js"></script>
   <script type="text/javascript" src="js/lib/macy.js"></script>
   <script type="text/javascript" src="js/common.js"></script>

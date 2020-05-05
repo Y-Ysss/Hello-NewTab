@@ -46,7 +46,7 @@ a {
 #bookmark-search-result a:hover {
   background: #ebedee;
 }
-#resultNum {
+#bookmark-result-count {
   color: #345;
 }
 #system-link-area {
@@ -90,7 +90,7 @@ a {
   /*-webkit-transition: 0.25s ease-out all;*/
 }
 
-.bkmrkNum {
+.bookmark-count {
   color: #999;
 }
 
@@ -106,10 +106,10 @@ a {
 .form_tggl:hover:after {
   box-shadow: 0 0 .6rem rgba(0, 0, 0, .4);
 }
-.form_tggl_on {
+.toggle-on {
   background-color: #bbdefb;
 }
-.form_tggl_on:after {
+.toggle-on:after {
   background-color: #42a5f5;
 }
 .bg-searchMenu {
@@ -171,8 +171,8 @@ input[type=radio] + label:after {
   color: #999;
 }
 
-.textSubmit{
+#web-search-submit{
   background-color: #ebedee;
-}.textSubmit:hover{
+}#web-search-submit:hover{
   background-color: #abc;
 }

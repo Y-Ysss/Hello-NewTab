@@ -214,12 +214,12 @@ select {
   box-shadow: 0 0 .6rem rgba(0, 0, 0, .45);
 }
 
-.toggle_on {
+.toggle-on {
   background-color: #bbdefb;
   /*border:0.1rem solid #ffffff;*/
 }
 
-.toggle_on:after {
+.toggle-on:after {
   left: 1.7rem;
   background-color: #42a5f5;
 }

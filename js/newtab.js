@@ -16,8 +16,8 @@ class Reflector {
 		document.getElementById(value).checked = true
 	}
 	tgglWebSearch(value) {
-		document.getElementById('sArea').style.display = value ? 'block' : 'none';
-		// value ? document.getElementById('sArea').classList.remove('displayNone') : document.getElementById('sArea').classList.add('displayNone');
+		document.getElementById('web-search-area').style.display = value ? 'block' : 'none';
+		// value ? document.getElementById('web-search-area').classList.remove('displayNone') : document.getElementById('web-search-area').classList.add('displayNone');
 	}
 }
 
@@ -75,7 +75,7 @@ class ContentsManager extends DefaultSettings {
 				const count = this.xx_module.childElementCount;
 				if(count > 0) {
 					let span = document.createElement('span');
-					span.className = "bkmrkNum"
+					span.className = "bookmark-count"
 					span.textContent = `${count} ${count === 1 ? 'bookmark' : 'bookmarks'}`;
 					this.xx_module.appendChild(span)
 					ul.appendChild(this.xx_module);
@@ -129,13 +129,13 @@ class ContentsManager extends DefaultSettings {
 		})
 		this.wrapper('.crate-system-tab', 'click', (event) => {
 			chrome.tabs.create({ url: event.target.dataset.href });
-  // ev.moreMenu(1);
+  // ev.expandMenu(1);
   			document.getElementById('mFilter').classList.remove('filter');
 		})
 		// this.wrapper('#tgglVisible', 'click', (event) => {
 		// 	console.log(event)
 		// 	const element = event.target;
-		// 	element.classList.toggle('form_tggl_on');
+		// 	element.classList.toggle('toggle-on');
 		// 	const items = document.getElementsByClassName('hide-module');
 		// 	for (let i = items.length - 1 ; i >= 0; i--) {
 		// 		items[i].classList.toggle('hide');
@@ -203,7 +203,7 @@ class EventFunctions {
     this.themePopup = NOW_CLOSE
     this.fmVsblty = NOW_CLOSE
   }
-  moreMenu(state = this.linkArea) {
+  expandMenu(state = this.linkArea) {
   	this.filtering(state);
     const sla = document.getElementById('system-link-area');
     if(state) {
@@ -235,7 +235,7 @@ class EventFunctions {
       search.blur();
       this.searchReset();
     } else {
-      this.moreMenu(TO_CLOSE);
+      this.expandMenu(TO_CLOSE);
       this.selectThemeMenu(TO_CLOSE);
       this.vsbltyMenu(TO_CLOSE);
       bookmarkSearch.style.left = '2.6rem';
@@ -264,7 +264,7 @@ class EventFunctions {
             joinResult += `<a class="searchResultItems" href="${item.url}" title="${title}"><img class="favicon" src="chrome://favicon/${item.url}">${title}</a>`;
           }
         }
-        document.getElementById('bookmark-search-result').innerHTML = `<div id="resultNum">${results.length} ${results.length === 1 ? 'bookmark' : 'bookmarks'}</div>${joinResult}`;
+        document.getElementById('bookmark-search-result').innerHTML = `<div id="bookmark-result-count">${results.length} ${results.length === 1 ? 'bookmark' : 'bookmarks'}</div>${joinResult}`;
       });
     }
     document.getElementById('bookmark-search-result').innerHTML = '';
@@ -281,7 +281,7 @@ class EventFunctions {
       this.cssFloatMenu(fmTheme, TO_CLOSE);
       // $('#fmTheme').css({ margin: '-3rem 0 0 3rem', visibility: 'hidden', opacity: '0' });   
     } else {
-      this.moreMenu(TO_CLOSE);
+      this.expandMenu(TO_CLOSE);
       this.vsbltyMenu(TO_CLOSE);
       this.cssFloatMenu(fmTheme, TO_OPEN);
       // $('#fmTheme').css({ margin: '-3rem 0 0 4rem', visibility: 'visible', opacity: '1' });
@@ -296,7 +296,7 @@ class EventFunctions {
   	if (state) {
       this.cssFloatMenu(fmVsblty, TO_CLOSE);
     } else {
-    	this.moreMenu(TO_CLOSE);
+    	this.expandMenu(TO_CLOSE);
       this.selectThemeMenu(TO_CLOSE);
       this.cssFloatMenu(fmVsblty, TO_OPEN);
     }
@@ -304,7 +304,7 @@ class EventFunctions {
   }
   tgglVisible(state) {
   		const tgVsblty = document.getElementById('tgglVisible');
-		tgVsblty.classList.toggle('form_tggl_on');
+		tgVsblty.classList.toggle('toggle-on');
 		const items = document.getElementsByClassName('hide-module');
 		for (let i = items.length - 1 ; i >= 0; i--) {
 			items[i].classList.toggle('hide');

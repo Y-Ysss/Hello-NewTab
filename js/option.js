@@ -1,7 +1,7 @@
 class Reflector {
 	static toggle(key, value) {
 		if(value) {
-			document.getElementById(key).classList.add('toggle_on')
+			document.getElementById(key).classList.add('toggle-on')
 		}
 	}
 	static text(key, value) {
@@ -66,8 +66,8 @@ class ReflectSettings extends DefaultSettings {
 			setTimeout((a) => {a.style.transform  = 'translateY(6rem)'}, 2000, t)
 		})
 		this.wrapper('.toggle', 'click', (event) => {
-			event.target.classList.toggle('toggle_on')
-			this.settings.toggle[event.target.id] = event.target.classList.contains('toggle_on')
+			event.target.classList.toggle('toggle-on')
+			this.settings.toggle[event.target.id] = event.target.classList.contains('toggle-on')
 		})
 		this.wrapper('.text-input', 'blur', (event) => {
 			this.settings.text[event.target.id] = event.target.value
