@@ -6,13 +6,22 @@ class Reflector {
 		}
 	}
 	tgglOpenTab(value) {
-		if(value){document.head.insertAdjacentHTML('beforeend', '<base target="_blank">')}
+		if(value) {
+			document.head.insertAdjacentHTML('beforeend', '<base id="head-target" target="_blank">')
+		} else {
+			const el = document.getElementById("head-target")
+			if(el !== null) {
+				el.remove()
+			}
+		}
+		// if(value){document.head.insertAdjacentHTML('beforeend', '<base target="_blank">')}
 	}
 	txtScale(value) {
 		if(isFinite(value) && value !== '') {document.documentElement.style.zoom = value + '%'}
 	}
 	theme(value) {
-		document.head.insertAdjacentHTML('beforeend', `<link id="ssTheme" rel="stylesheet" type="text/css" href="css/theme/${value}.css">`)
+		document.getElementById('head-theme').href = `css/theme/${value}.css`
+		// document.head.insertAdjacentHTML('beforeend', `<link id="ssTheme" rel="stylesheet" type="text/css" href="css/theme/${value}.css">`)
 		document.getElementById(value).checked = true
 	}
 	tgglWebSearch(value) {
@@ -288,9 +297,6 @@ class EventFunctions {
     }
       this.themePopup = !state;
   }
-  applyTheme() {
-    location.reload();
-  }
   vsbltyMenu(state = this.fmVsblty) {
   	const fmVsblty = document.getElementById('fmVsblty');
   	if (state) {
@@ -311,10 +317,10 @@ class EventFunctions {
 		}
   }
 }
-// const eventFunc = 
+
 const cm = new ContentsManager(new EventFunctions())
 
-chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 	if(request.newtab === 'reload') {
 		// chrome.tabs.reload()
 		window.onbeforeunload = () => { window.scrollTo(0,0)}
@@ -323,3 +329,14 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 		cm.reloadContents()
 	}
 });
+
+// chrome.storage.onChanged.addListener((changes) => {
+// 	console.log(changes)
+// 	if(changes.hasOwnProperty('settings')) {
+// 		// window.onbeforeunload = () => { window.scrollTo(0,0)}
+// 		// window.location.reload()
+// 		cm.reflect()
+// 	} else if(changes.hasOwnProperty('jsonBookmarks')) {
+// 		cm.reloadContents()
+// 	}
+// })

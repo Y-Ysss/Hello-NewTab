@@ -56,7 +56,6 @@ class ReflectSettings extends DefaultSettings {
 	}
 	addElementsEventListener() {
 		this.wrapper('#save-settings', 'click', (event) => {
-			console.log(this.settings)
 			this.saveData()
 			chrome.runtime.sendMessage({newtab: 'reload'})
 			chrome.runtime.sendMessage({option: 'reload'})
@@ -117,8 +116,9 @@ class ExtensionInfo {
 
 	gitReleaseInfo(data) {
 		const manifestData = chrome.runtime.getManifest();
+		let str
 		if(manifestData.version !== data.name) {
-			str += `<div class="content-section"><div class="section-title">Latest Release</div><div class="section-items-slim"><div class="section-item-text">バージョン : ${data.name}</div></div><div class="section-items-slim"><div class="section-item-text">What's New : <br>${data.body}</div></div><div class="section-items-slim"><div class="section-item-text">URL : <a href="${data.html_url}"></a></div></div></div>`
+			str = `<div class="content-section"><div class="section-title">Latest Release</div><div class="section-items-slim"><div class="section-item-text">バージョン : ${data.name}</div></div><div class="section-items-slim"><div class="section-item-text">What's New : <br>${data.body}</div></div><div class="section-items-slim"><div class="section-item-text">URL : <a href="${data.html_url}"></a></div></div></div>`
 			// str += `<h2>#Latest Release</h2><div class="cardContents"><b>Version</b><br>${data.name}</div><div class="cardContents"><b>What\'s New</b><br>${data.body}</div><div class="cardContents"><b>URL</b><br><a href="${data.html_url}"></a></div>`
 			str = str.replace(/\r?\n/g, '<br>')
 		}
@@ -137,8 +137,15 @@ class ExtensionInfo {
 const opt = new ReflectSettings()
 const info = new ExtensionInfo()
 
-chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 	if(request.option === 'reload') {
 		window.location.reload()
 	}
 });
+
+// chrome.storage.onChanged.addListener((changes) => {
+// 	console.log(changes)
+// 	if(changes.hasOwnProperty('settings')) {
+// 		window.location.reload()
+// 	}
+// })
