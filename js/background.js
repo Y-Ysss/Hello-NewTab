@@ -46,9 +46,9 @@ chrome.runtime.onInstalled.addListener(() => {
   console.log('Extension installed')
 })
 
-chrome.storage.onChanged.addListener((changes) => {
-	console.log(changes)
-	if(changes.hasOwnProperty('settings')) {
-		con.saveBookmarks()
-	}
-})
+// chrome.storage.onChanged.addListener((changes) => {
+// 	console.log(changes)
+// 	if(changes.hasOwnProperty('settings')) {
+// 		con.saveBookmarks()
+// 	}
+// })

@@ -108,11 +108,11 @@ class ContentsManager extends DefaultSettings {
 		const data = this.settings
 		for(const type in data){
 			if(typeof data[type] === "object") {
-				this.setState(type, data[type])
+				this.setState(data[type])
 			}
 		}
 	}
-	setState(type, data) {
+	setState(data) {
 		const reflector = new Reflector()
 		for(const key in data) {
 			const func = reflector[key]
@@ -135,6 +135,9 @@ class ContentsManager extends DefaultSettings {
 		})
 		this.wrapper('input[type=radio]', 'click', (event) => {
 			this.settings.radio.theme = event.target.id
+			this.setState(this.settings.radio)
+			chrome.runtime.sendMessage({contents: 'theme'})
+			chrome.runtime.sendMessage({option: 'reload'})
 		})
 		this.wrapper('.crate-system-tab', 'click', (event) => {
 			chrome.tabs.create({ url: event.target.dataset.href });
@@ -327,6 +330,8 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 		window.location.reload()
 	} else if(request.contents === 'reload') {
 		cm.reloadContents()
+	} else if(request.contents === 'theme') {
+		cm.setState(cm.settings.radio)
 	}
 });
 
