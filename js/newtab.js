@@ -37,7 +37,6 @@ class ContentsManager extends DefaultSettings {
 		this.contentModule = document.getElementById('content-module-template')
 		this.contentModuleList = document.getElementById('li-template')
 		this.fragment = document.createDocumentFragment()
-		this.xx_module
 	}
 	init() {
 		this.addContents()
@@ -58,7 +57,8 @@ class ContentsManager extends DefaultSettings {
 	async generateContents() {
 		const data = await getStorage('jsonBookmarks');
 		for(let i in data.jsonBookmarks) {
-			this.generate(data.jsonBookmarks[i].children);
+			let folderFragment  = document.createDocumentFragment()
+			this.generate(data.jsonBookmarks[i].title, true, data.jsonBookmarks[i].children);
 		}
 	}
 
@@ -68,29 +68,18 @@ class ContentsManager extends DefaultSettings {
 		this.reflect()
 	}
 
-	generate(items) {
+	generate(folderName, visible, items) {
+		let contentModuleClone = document.importNode(this.contentModule.content, true),
+		contentModule = contentModuleClone.querySelector('.content-module'),
+		header = contentModuleClone.querySelector('.content-header'),
+		ul = contentModuleClone.querySelector('ul');
+		let folderFragment = document.createDocumentFragment();
+		header.textContent = folderName;
+		if(!visible) {
+			contentModule.classList.add('hide-module', 'hide');
+		}
 		items.forEach((item) => {
-			if("children" in item) {
-				let contentModuleClone = document.importNode(this.contentModule.content, true),
-				contentModule = contentModuleClone.querySelector('.content-module'),
-				header = contentModuleClone.querySelector('.content-header'),
-				ul = contentModuleClone.querySelector('ul');
-				this.xx_module = document.createDocumentFragment();
-				if(!item.visible) {
-					contentModule.classList.add('hide-module', 'hide');
-				}
-				header.textContent = item.title;
-				this.generate(item.children);
-				const count = this.xx_module.childElementCount;
-				if(count > 0) {
-					let span = document.createElement('span');
-					span.className = "bookmark-count"
-					span.textContent = `${count} ${count === 1 ? 'bookmark' : 'bookmarks'}`;
-					this.xx_module.appendChild(span)
-					ul.appendChild(this.xx_module);
-					this.fragment.appendChild(contentModuleClone);
-				}
-			} else {
+			if("url" in item) {
 				let liClone = document.importNode(this.contentModuleList.content, true),
 				img = liClone.querySelector('img'),
 				a = liClone.querySelector('a');
@@ -98,7 +87,22 @@ class ContentsManager extends DefaultSettings {
 				a.setAttribute('title', item.title)
 				a.href = item.url;
 				img.src = `chrome://favicon/${item.url}`;
-				this.xx_module.appendChild(liClone);
+				folderFragment.appendChild(liClone);
+			} 
+		})
+		const count = folderFragment.childElementCount;
+		if(count > 0) {
+			let span = document.createElement('span');
+			span.className = "bookmark-count"
+			span.textContent = `${count} ${count === 1 ? 'bookmark' : 'bookmarks'}`;
+			folderFragment.appendChild(span)
+			ul.appendChild(folderFragment);
+			console.log(folderName)
+			this.fragment.appendChild(contentModuleClone);
+		}
+		items.forEach((item) => {
+			if("children" in item) {
+				this.generate(item.title, item.visible, item.children);
 			}
 		})
 	}
