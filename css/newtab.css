@@ -63,7 +63,6 @@ ul {
   right: 0;
   height: 2.8rem;
   width: 10%;
-  padding-top: 0.195rem;
   position: absolute;
   display: block;
   cursor: pointer;
@@ -75,7 +74,7 @@ ul {
   background-position: center;
 }
 #searchView:hover {
-  padding-left: 0.5850rem;
+  /*padding-left: 0.5850rem;*/
 }
 #searchReset {
   line-height: 1rem;
@@ -114,6 +113,7 @@ ul {
   white-space: nowrap;
   text-overflow: ellipsis;
   -webkit-transition: .12s ease-out all;
+  outline: none;
 }
 
 .search-result-items:hover {
@@ -181,7 +181,6 @@ ul {
   z-index: 10;
   background-color: rgba(0, 0, 0, .3);
 }
-
 
 .menu {
   height: 1.5rem;

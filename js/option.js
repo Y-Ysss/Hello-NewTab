@@ -54,12 +54,22 @@ class ReflectSettings extends DefaultSettings {
 			item.addEventListener(action, (event) => {func(event)})
 		}
 	}
+
+	async setupAlarms() {
+	  console.log(this.settings)
+	  const now = new Date()
+	  console.log(this.formatTime(now))
+	  let t = new Date(now.getFullYear(), now.getMonth(), now.getDate(), now.getHours() + 1)
+	  console.log(this.formatTime(t))
+	  chrome.alarms.create('adjustment', { 'when': t.getTime() })
+	}
+	
 	addElementsEventListener() {
 		this.wrapper('#save-settings', 'click', (event) => {
 			this.saveData()
 			chrome.runtime.sendMessage({newtab: 'reload'})
 			chrome.runtime.sendMessage({option: 'reload'})
-
+			if(this.settings.toggle.tgglAutoTheme){this.setupAlarms()} else {chrome.alarms.clearAll(()=>{console.log('Alarms.clearAll')})}
 			let t = document.getElementById('toast')
 			t.style.transform  = 'translateY(-6rem)'
 			setTimeout((a) => {a.style.transform  = 'translateY(6rem)'}, 2000, t)
@@ -81,12 +91,18 @@ class ReflectSettings extends DefaultSettings {
 			}
 		})
 		this.wrapper('.text-synchronize-slider', 'change', (event) => {
-			const value = event.target.value;
-			for(const item of document.querySelectorAll(`.${event.target.name}`)) {
-				item.value = value
+			let val = event.target.value;
+			if(!Number.isInteger(val)) {val = Math.round(val)}
+			if(val < 0) {val = 0}
+			else if(val > 24) {val = 24}
+
+			const name = event.target.name
+			this.settings.range[name] = val
+			for(const item of document.querySelectorAll(`.${name}`)) {
+				item.value = val
 			}
-			for(const item of document.querySelectorAll(`#${event.target.name}Range`)) {
-				item.value = event.target.value
+			for(const item of document.querySelectorAll(`#${name}Range`)) {
+				item.value = val
 			}
 		})
 		this.wrapper('select', 'change', (event) => {

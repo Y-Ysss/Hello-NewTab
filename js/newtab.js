@@ -142,10 +142,11 @@ class ContentsManager extends DefaultSettings {
 			chrome.runtime.sendMessage({contents: 'theme'})
 			chrome.runtime.sendMessage({option: 'reload'})
 		})
-		this.wrapper('.crate-system-tab', 'click', (event) => {
+		this.wrapper('.create-system-tab', 'click', (event) => {
 			chrome.tabs.create({ url: event.target.dataset.href });
   // ev.expandMenu(1);
-  			document.getElementById('mFilter').classList.remove('filter');
+  			// document.getElementById('mFilter').classList.remove('filter');
+  			this.eventFunc.expandMenu(TO_CLOSE)
 		})
 		// this.wrapper('#tgglVisible', 'click', (event) => {
 		// 	console.log(event)
@@ -159,8 +160,12 @@ class ContentsManager extends DefaultSettings {
 		this.wrapper('#search', 'keyup', (event) => {
 			this.eventFunc.searchView()
 		})
-		this.wrapper('html', 'click', (event) => {
-
+		this.wrapper('#mFilter', 'click', (event) => {
+  			this.eventFunc.expandMenu(TO_CLOSE)
+		})
+		this.wrapper('#body-main', 'click', (event) => {
+			this.eventFunc.selectThemeMenu(TO_CLOSE);
+			this.eventFunc.vsbltyMenu(TO_CLOSE);
 		})
 		this.wrapper('html', 'keydown', (event) => {
 			if (event.altKey && event.keyCode === 66 || event.keyCode === 27 && (document.activeElement === document.getElementById('search'))) {
@@ -219,7 +224,7 @@ class EventFunctions {
     this.fmVsblty = NOW_CLOSE
   }
   expandMenu(state = this.linkArea) {
-  	this.filtering(state);
+  	this.overlay(state);
     const sla = document.getElementById('system-link-area');
     if(state) {
       sla.style.width = '2.6rem';
@@ -231,7 +236,7 @@ class EventFunctions {
     }
     this.linkArea = !state
   }
-  filtering(state = this.filter) {
+  overlay(state = this.filter) {
     const mF = document.getElementById('mFilter');
     if (state) {
       mF.classList.remove('filter');
