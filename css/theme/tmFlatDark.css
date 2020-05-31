@@ -48,7 +48,7 @@ a {
 #bookmark-search-result {
     /*-webkit-transition: 0.5s cubic-bezier(0.31, 1.2, 0.87, 0.86) all;*/
 }
-#bookmark-search-result a:hover {
+.search-result-items:hover {
     background: #284250;
     /*-webkit-transition: 0.25s ease-out all;*/
 }

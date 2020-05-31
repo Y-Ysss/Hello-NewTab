@@ -105,7 +105,7 @@ ul {
   opacity: .98;
 }
 
-#bookmark-search-result a {
+.search-result-items {
   padding: 0.4549rem 0.52rem 0.4549rem 0.52rem;
   z-index: 1;
   display: block;
@@ -116,8 +116,17 @@ ul {
   -webkit-transition: .12s ease-out all;
 }
 
-#bookmark-search-result a:hover {
+.search-result-items:hover {
   padding-left: 0.78rem;
+}
+
+.search-result-items span {
+    background-color: var(--base-color2);
+    padding: .2rem .4rem;
+    margin: 0 .4rem;
+    border-radius: .5rem;
+    right: 0;
+    position: absolute;
 }
 
 #bookmark-result-count {

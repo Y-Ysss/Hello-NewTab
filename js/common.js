@@ -17,6 +17,9 @@ const setStorage = asyncFunc((keys, callback) => {
 const getBookmarksTree = asyncFunc((callback) => {
 	chrome.bookmarks.getTree(callback);
 });
+const getBookmarkItems = asyncFunc((keys, callback) => {
+  chrome.bookmarks.get(keys, callback)
+})
 
 class DefaultSettings {
   constructor() {

@@ -97,7 +97,6 @@ class ContentsManager extends DefaultSettings {
 			span.textContent = `${count} ${count === 1 ? 'bookmark' : 'bookmarks'}`;
 			folderFragment.appendChild(span)
 			ul.appendChild(folderFragment);
-			console.log(folderName)
 			this.fragment.appendChild(contentModuleClone);
 		}
 		items.forEach((item) => {
@@ -272,12 +271,13 @@ class EventFunctions {
     }
     else{
       document.getElementById('searchReset').classList.add('searchResetView');
-      chrome.bookmarks.search(words, (results) => {
+      chrome.bookmarks.search(words, async (results) => {
         let joinResult = '';
         for(const item of results) {
           if(item.url) {
+          	const parent = await getBookmarkItems(item.parentId);
             const title = item.title == "" ? item.url : item.title;
-            joinResult += `<a class="searchResultItems" href="${item.url}" title="${title}"><img class="favicon" src="chrome://favicon/${item.url}">${title}</a>`;
+            joinResult += `<a class="search-result-items" href="${item.url}" title="${title}"><img class="favicon" src="chrome://favicon/${item.url}">${title}<span>${parent[0].title}</span></a>`;
           }
         }
         document.getElementById('bookmark-search-result').innerHTML = `<div id="bookmark-result-count">${results.length} ${results.length === 1 ? 'bookmark' : 'bookmarks'}</div>${joinResult}`;
