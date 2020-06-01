@@ -63,13 +63,13 @@ class ReflectSettings extends DefaultSettings {
 	  console.log(this.formatTime(t))
 	  chrome.alarms.create('adjustment', { 'when': t.getTime() })
 	}
-	
+
 	addElementsEventListener() {
 		this.wrapper('#save-settings', 'click', (event) => {
 			this.saveData()
 			chrome.runtime.sendMessage({newtab: 'reload'})
 			chrome.runtime.sendMessage({option: 'reload'})
-			if(this.settings.toggle.tgglAutoTheme){this.setupAlarms()} else {chrome.alarms.clearAll(()=>{console.log('Alarms.clearAll')})}
+			if(this.settings.toggle.tgglAutoTheme){this.autoTheme(),this.setupAlarms()} else {chrome.alarms.clearAll(()=>{console.log('Alarms.clearAll')})}
 			let t = document.getElementById('toast')
 			t.style.transform  = 'translateY(-6rem)'
 			setTimeout((a) => {a.style.transform  = 'translateY(6rem)'}, 2000, t)

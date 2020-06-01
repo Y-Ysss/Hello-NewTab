@@ -36,40 +36,6 @@ class ContentsController extends DefaultSettings {
 		}
 	}
 
-	async autoTheme() {
-		const data = await getStorage('settings')
-		this.settings.range = data.settings.range
-		let t1 = data.settings.range.sliderLower;
-		let t2 = data.settings.range.sliderUpper;
-		const now = new Date()
-		console.log(this.formatTime(now))
-		const h = now.getHours()
-		let tm
-		if(t1 <= t2) {
-			if(t1 <= h && h < t2) {
-				console.log('theme1')
-				tm = data.settings.select.autoThemePrimary
-			} else if(h < t1 || t2 <= h) {
-				console.log('theme2')
-				tm = data.settings.select.autoThemeSecondary
-			}
-		} else if(t2 < t1) {
-			if(t2 <= h && h < t1) {
-				console.log('theme2')
-				tm = data.settings.select.autoThemeSecondary
-			}else if(t1 <= h || h < t2) {
-				console.log('theme1')
-				tm = data.settings.select.autoThemePrimary
-			}
-		}
-		if(this.settings.radio.theme !== tm) {
-			this.settings.radio.theme = tm
-			console.log('tm:', tm)
-			this.saveData()
-			chrome.runtime.sendMessage({newtab: 'reload'})
-			chrome.runtime.sendMessage({option: 'reload'})
-		}
-	}
 }
 const con = new ContentsController()
 
