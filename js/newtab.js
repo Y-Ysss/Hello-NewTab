@@ -1,73 +1,25 @@
-class Reflector {
-	tgglIcon(value) {
-		const br = value ? '0%' : '50%';
-		for(const item of document.getElementsByClassName('favicon')) {
-			item.style.borderRadius = br;
-		}
-	}
-	tgglOpenTab(value) {
-		if(value) {
-			document.head.insertAdjacentHTML('beforeend', '<base id="head-target" target="_blank">')
-		} else {
-			const el = document.getElementById("head-target")
-			if(el !== null) {
-				el.remove()
-			}
-		}
-		// if(value){document.head.insertAdjacentHTML('beforeend', '<base target="_blank">')}
-	}
-	txtScale(value) {
-		if(isFinite(value) && value !== '') {document.documentElement.style.zoom = value + '%'}
-	}
-	theme(value) {
-		document.getElementById('head-theme').href = `css/theme/${value}.css`
-		// document.head.insertAdjacentHTML('beforeend', `<link id="ssTheme" rel="stylesheet" type="text/css" href="css/theme/${value}.css">`)
-		document.getElementById(value).checked = true
-	}
-	tgglWebSearch(value) {
-		document.getElementById('web-search-area').style.display = value ? 'block' : 'none';
-		// value ? document.getElementById('web-search-area').classList.remove('displayNone') : document.getElementById('web-search-area').classList.add('displayNone');
-	}
-}
-
-class ContentsManager extends DefaultSettings {
-	constructor(classEventFunctions) {
-		super()
-		this.eventFunc = classEventFunctions
+class ContentsGenerator {
+	constructor(settings) {
+		this.settings = settings
 		this.contentModule = document.getElementById('content-module-template')
 		this.contentModuleList = document.getElementById('li-template')
 		this.fragment = document.createDocumentFragment()
 	}
-	init() {
-		this.addContents()
-		// deSVG('.menu-icon', true);
-	}
-	async addContents() {
+	async append() {
 		await this.generateContents()
-		this.contentsAppend()
-		this.addElementsEventListener()
+		this.applyMacy()
+		document.getElementById('body-main').appendChild(this.fragment);
 	}
-
-	async reloadContents() {
-		await this.generateContents()
+	reload() {
 		document.getElementById('body-main').textContent = null;
-		this.contentsAppend()
+		this.append()
 	}
-
 	async generateContents() {
 		const data = await getStorage('jsonBookmarks');
 		for(let i in data.jsonBookmarks) {
-			let folderFragment  = document.createDocumentFragment()
 			this.generate(data.jsonBookmarks[i].title, true, data.jsonBookmarks[i].children);
 		}
 	}
-
-	contentsAppend() {
-		this.funcMacy();
-		document.getElementById('body-main').appendChild(this.fragment);
-		this.reflect()
-	}
-
 	generate(folderName, visible, items) {
 		let contentModuleClone = document.importNode(this.contentModule.content, true),
 		contentModule = contentModuleClone.querySelector('.content-module'),
@@ -105,97 +57,7 @@ class ContentsManager extends DefaultSettings {
 			}
 		})
 	}
-
-
-	reflect() {
-		const data = this.settings
-		for(const type in data){
-			if(typeof data[type] === "object") {
-				this.setState(data[type])
-			}
-		}
-	}
-	setState(data) {
-		const reflector = new Reflector()
-		for(const key in data) {
-			const func = reflector[key]
-			if(typeof func === 'function') {
-				func(data[key])
-			}
-		}
-	}
-
-	wrapper(key, action, func) {
-		const all = document.querySelectorAll(key)
-		for(const item of all) {
-			item.addEventListener(action, (event) => {func(event), this.saveData()})
-		}
-	}
-
-	addElementsEventListener() {
-		this.wrapper('.action-item', 'click', (event) => {
-			this.eventFunc[event.target.id]()
-		})
-		this.wrapper('input[type=radio]', 'click', (event) => {
-			this.settings.radio.theme = event.target.id
-			this.setState(this.settings.radio)
-			chrome.runtime.sendMessage({contents: 'theme'})
-			chrome.runtime.sendMessage({option: 'reload'})
-		})
-		this.wrapper('.create-system-tab', 'click', (event) => {
-			chrome.tabs.create({ url: event.target.dataset.href });
-  // ev.expandMenu(1);
-  			// document.getElementById('mFilter').classList.remove('filter');
-  			this.eventFunc.expandMenu(TO_CLOSE)
-		})
-		// this.wrapper('#tgglVisible', 'click', (event) => {
-		// 	console.log(event)
-		// 	const element = event.target;
-		// 	element.classList.toggle('toggle-on');
-		// 	const items = document.getElementsByClassName('hide-module');
-		// 	for (let i = items.length - 1 ; i >= 0; i--) {
-		// 		items[i].classList.toggle('hide');
-		// 	}
-		// })
-		this.wrapper('#search', 'keyup', (event) => {
-			this.eventFunc.searchView()
-		})
-		this.wrapper('#mFilter', 'click', (event) => {
-  			this.eventFunc.expandMenu(TO_CLOSE)
-		})
-		this.wrapper('#body-main', 'click', (event) => {
-			this.eventFunc.selectThemeMenu(TO_CLOSE);
-			this.eventFunc.vsbltyMenu(TO_CLOSE);
-		})
-		this.wrapper('html', 'keydown', (event) => {
-			if (event.altKey && event.keyCode === 66 || event.keyCode === 27 && (document.activeElement === document.getElementById('search'))) {
-				this.eventFunc.searchMenu()
-				console.log('Alt + B')
-			}
-			 // [ B ] : 66
-			 // [ Esc ] : 27
-		})
-
-		this.wrapper('#web-search-input', 'keyup', (event) => {
-			if ((event.which && event.which == 13) || (event.keyCode && event.keyCode == 13)) {
-				chrome.tabs.create({ url: "https://www.google.com/search?q=" + event.target.value});
-				event.target.value = ''
-			}
-		})
-
-		this.wrapper('#web-search-submit', 'click', (event) => {
-				let val = document.getElementById('web-search-input').value
-				chrome.tabs.create({ url: "https://www.google.com/search?q=" + val});
-				val = ''
-		})
-
-	}
-
-	checkValue(a, b) {
-		return (a !== "" ? a : b)
-	}
-
-	funcMacy() {
+	applyMacy() {
 		let conf = {
 			container: '#body-main',
 			trueOrder: false,
@@ -205,152 +67,294 @@ class ContentsManager extends DefaultSettings {
 			breakAt: { 1200: 5, 990: 4, 780: 3, 620: 2, 430: 1 }
 		}
 		const data = this.settings.text
-		conf.columns =  this.checkValue(data.txtMacyColumns, conf.columns)
-		conf.margin.x =  this.checkValue(data.txtMacyMarginX, conf.margin.x)
+		conf.columns = this.checkValue(data.txtMacyColumns, conf.columns)
+		conf.margin.x = this.checkValue(data.txtMacyMarginX, conf.margin.x)
 
 		let macy = Macy(conf);
 	}
+	checkValue(a, b) {
+		return (a !== "" ? a : b)
+	}
 }
+
 const NOW_OPEN = true
 const NOW_CLOSE = false
 const TO_OPEN = false
 const TO_CLOSE = true
-class EventFunctions {
-  constructor() {
-    this.linkArea = NOW_CLOSE
-    this.searchArea = NOW_CLOSE
-    this.filter = NOW_CLOSE
-    this.themePopup = NOW_CLOSE
-    this.fmVsblty = NOW_CLOSE
-  }
-  expandMenu(state = this.linkArea) {
-  	this.overlay(state);
-    const sla = document.getElementById('system-link-area');
-    if(state) {
-      sla.style.width = '2.6rem';
-    } else {
-      sla.style.width = '14rem';
-      this.searchMenu(TO_CLOSE);
-      this.selectThemeMenu(TO_CLOSE);
-      this.vsbltyMenu(TO_CLOSE);
-    }
-    this.linkArea = !state
-  }
-  overlay(state = this.filter) {
-    const mF = document.getElementById('mFilter');
-    if (state) {
-      mF.classList.remove('filter');
-    } else {
-      mF.classList.add('filter');
-    }
-    this.filter = !state
-  }
-  searchMenu(state = this.searchArea) {
-    const bookmarkSearch = document.getElementById('bookmark-search-group');
-    const searchMenu = document.getElementById('searchMenu');
-    const search = document.getElementById('search');
-    if(state) {
-      bookmarkSearch.style.left = '-34rem';
-      searchMenu.classList.remove('bg-searchMenu');
-      search.blur();
-      this.searchReset();
-    } else {
-      this.expandMenu(TO_CLOSE);
-      this.selectThemeMenu(TO_CLOSE);
-      this.vsbltyMenu(TO_CLOSE);
-      bookmarkSearch.style.left = '2.6rem';
-      searchMenu.classList.add('bg-searchMenu');
-      search.focus();
-    }
-    this.searchArea = !state;
-  }
-  searchReset() {
-    document.getElementById('search').value = "";
-    document.getElementById('searchReset').classList.remove('searchResetView');
-    document.getElementById('bookmark-search-result').innerHTML = '';
-  }
-  searchView() {
-    const words = document.getElementById('search').value;
-    if(words == "") {
-      document.getElementById('searchReset').classList.remove('searchResetView');
-    }
-    else{
-      document.getElementById('searchReset').classList.add('searchResetView');
-      chrome.bookmarks.search(words, async (results) => {
-        let joinResult = '';
-        for(const item of results) {
-          if(item.url) {
-          	const parent = await getBookmarkItems(item.parentId);
-            const title = item.title == "" ? item.url : item.title;
-            joinResult += `<a class="search-result-items" href="${item.url}" title="${title}"><img class="favicon" src="chrome://favicon/${item.url}">${title}<span>${parent[0].title}</span></a>`;
-          }
-        }
-        document.getElementById('bookmark-search-result').innerHTML = `<div id="bookmark-result-count">${results.length} ${results.length === 1 ? 'bookmark' : 'bookmarks'}</div>${joinResult}`;
-      });
-    }
-    document.getElementById('bookmark-search-result').innerHTML = '';
-  }
-  cssFloatMenu(obj, state) {
-    obj.style.margin = state ? '-2.8rem 0 0 1rem' : '-2.8rem 0 0 3.8rem';
-    obj.style.visibility = state ? 'hidden' : 'visible';
-    obj.style.opacity = state ? 0 : 1;
-  }
-  selectThemeMenu(state = this.themePopup) {
-    const fmTheme = document.getElementById('fmTheme');
 
-    if (state) {
-      this.cssFloatMenu(fmTheme, TO_CLOSE);
-      // $('#fmTheme').css({ margin: '-3rem 0 0 3rem', visibility: 'hidden', opacity: '0' });   
-    } else {
-      this.expandMenu(TO_CLOSE);
-      this.vsbltyMenu(TO_CLOSE);
-      this.cssFloatMenu(fmTheme, TO_OPEN);
-      // $('#fmTheme').css({ margin: '-3rem 0 0 4rem', visibility: 'visible', opacity: '1' });
-    }
-      this.themePopup = !state;
-  }
-  vsbltyMenu(state = this.fmVsblty) {
-  	const fmVsblty = document.getElementById('fmVsblty');
-  	if (state) {
-      this.cssFloatMenu(fmVsblty, TO_CLOSE);
-    } else {
-    	this.expandMenu(TO_CLOSE);
-      this.selectThemeMenu(TO_CLOSE);
-      this.cssFloatMenu(fmVsblty, TO_OPEN);
-    }
-      this.fmVsblty = !state;
-  }
-  tgglVisible(state) {
-  		const tgVsblty = document.getElementById('tgglVisible');
+class ExpandMenu {
+	constructor() {
+		// document.getElementById('overray').addEventListener('click', (event) => {
+		// 	this.on(TO_CLOSE)
+		// })
+	}
+	on(state = this.state) {
+		const sla = document.getElementById('system-link-area');
+		const mF = document.getElementById('overray');
+		if(state) {
+			sla.style.width = '2.6rem';
+			// mF.classList.remove('filter');
+		} else {
+			sla.style.width = '14rem';
+			// mF.classList.add('filter');
+		}
+		this.state = !state
+	}
+}
+
+class BookmarkSearch {
+	constructor() {
+		wrapper('#search', 'keyup', (event) => {
+			this.searchView()
+		})
+		wrapper('#searchReset', 'click', (event) => {
+			this.searchReset()
+		})
+	}
+	on(state = this.state) {
+		const bookmarkSearch = document.getElementById('bookmark-search-group');
+		const searchMenu = document.getElementById('searchMenu');
+		const search = document.getElementById('search');
+		if(state) {
+			bookmarkSearch.style.left = '-34rem';
+			searchMenu.classList.remove('bg-searchMenu');
+			search.blur();
+			this.searchReset()
+		} else {
+			// this.expandMenu(TO_CLOSE);
+			// this.selectThemeMenu(TO_CLOSE);
+			// this.vsbltyMenu(TO_CLOSE);
+			bookmarkSearch.style.left = '2.6rem';
+			searchMenu.classList.add('bg-searchMenu');
+			search.focus();
+		}
+		this.state = !state
+	}
+	searchReset() {
+		document.getElementById('search').value = "";
+		document.getElementById('searchReset').classList.remove('searchResetView');
+		document.getElementById('bookmark-search-result').innerHTML = '';
+	}
+	searchView() {
+		const words = document.getElementById('search').value;
+		if(words == "") {
+			document.getElementById('searchReset').classList.remove('searchResetView');
+		}
+		else{
+			document.getElementById('searchReset').classList.add('searchResetView');
+			chrome.bookmarks.search(words, async (results) => {
+				let joinResult = '';
+				for(const item of results) {
+					if(item.url) {
+						const parent = await getBookmarkItems(item.parentId);
+						const title = item.title == "" ? item.url : item.title;
+						joinResult += `<a class="search-result-items" href="${item.url}" title="${title}"><img class="favicon" src="chrome://favicon/${item.url}">${title}<span>${parent[0].title}</span></a>`;
+					}
+				}
+				document.getElementById('bookmark-search-result').innerHTML = `<div id="bookmark-result-count">${results.length} ${results.length === 1 ? 'bookmark' : 'bookmarks'}</div>${joinResult}`;
+			});
+		}
+		document.getElementById('bookmark-search-result').innerHTML = '';
+	}
+}
+
+class FloatMenu {
+	onDisplay(obj, state) {
+		obj.style.margin = state ? '-2.8rem 0 0 1rem' : '-2.8rem 0 0 3.8rem';
+		obj.style.visibility = state ? 'hidden' : 'visible';
+		obj.style.opacity = state ? 0 : 1;
+	}
+}
+
+class SelectTheme extends FloatMenu {
+	on(state = this.state) {
+		const fmTheme = document.getElementById('fmTheme');
+
+		if (state) {
+			super.onDisplay(fmTheme, TO_CLOSE);
+			// $('#fmTheme').css({ margin: '-3rem 0 0 3rem', visibility: 'hidden', opacity: '0' });	 
+		} else {
+			// this.expandMenu(TO_CLOSE);
+			// this.vsbltyMenu(TO_CLOSE);
+			super.onDisplay(fmTheme, TO_OPEN);
+			// $('#fmTheme').css({ margin: '-3rem 0 0 4rem', visibility: 'visible', opacity: '1' });
+		}
+		this.state = !state
+	}
+}
+
+class SwitchModuleVisible extends FloatMenu {
+	constructor() {
+		super()
+		document.getElementById('tgglVisible').addEventListener('click', (event) => {
+			this.action()
+		})
+	}
+	on(state = this.state) {
+		const fmVsblty = document.getElementById('fmVsblty');
+		if (state) {
+			super.onDisplay(fmVsblty, TO_CLOSE);
+		} else {
+			// this.expandMenu(TO_CLOSE);
+			// this.selectThemeMenu(TO_CLOSE);
+			super.onDisplay(fmVsblty, TO_OPEN);
+		}
+		this.state = !state
+	}
+	action() {
+		const tgVsblty = document.getElementById('tgglVisible');
 		tgVsblty.classList.toggle('toggle-on');
 		const items = document.getElementsByClassName('hide-module');
 		for (let i = items.length - 1 ; i >= 0; i--) {
 			items[i].classList.toggle('hide');
 		}
-  }
+	}
 }
 
-const cm = new ContentsManager(new EventFunctions())
+class Reflector {
+	tgglIcon(value) {
+		const br = value ? '0%' : '50%';
+		for(const item of document.getElementsByClassName('favicon')) {
+			item.style.borderRadius = br;
+		}
+	}
+	tgglOpenTab(value) {
+		if(value) {
+			document.head.insertAdjacentHTML('beforeend', '<base id="head-target" target="_blank">')
+		} else {
+			const el = document.getElementById("head-target")
+			if(el !== null) {
+				el.remove()
+			}
+		}
+	}
+	txtScale(value) {
+		if(isFinite(value) && value !== '') {document.documentElement.style.zoom = value + '%'}
+	}
+	theme(value) {
+		document.getElementById('head-theme').href = `css/theme/${value}.css`
+		document.getElementById(value).checked = true
+	}
+	tgglWebSearch(value) {
+		document.getElementById('web-search-area').style.display = value ? 'block' : 'none';
+	}
+}
 
-chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+class ContentsManager extends DefaultSettings {
+	init() {
+		this.addContents()
+		this.addEventListener()
+	}
+	async addContents() {
+		const cg = new ContentsGenerator(this.settings)
+		await cg.append()
+		this.reflect()
+	}
+	reloadContents() {
+		const cg = new ContentsGenerator(this.settings)
+		cg.reload()
+	}
+
+	addEventListener() {
+		wrapper('input[type=radio]', 'click', (event) => {
+			this.settings.radio.theme = event.target.id
+			this.setState(this.settings.radio)
+			this.saveData()
+			chrome.runtime.sendMessage({contents: 'theme'})
+			chrome.runtime.sendMessage({option: 'reload'})
+		})
+		wrapper('html', 'keydown', (event) => {
+			if (event.altKey && event.keyCode === 66 || event.keyCode === 27 && (document.activeElement === document.getElementById('search'))) {
+				this.eventFunc.searchMenu()
+				console.log('Alt + B')
+			}
+			 // [ B ] : 66
+			 // [ Esc ] : 27
+		})
+
+		wrapper('#web-search-input', 'keyup', (event) => {
+			if ((event.which && event.which == 13) || (event.keyCode && event.keyCode == 13)) {
+				chrome.tabs.create({ url: "https://www.google.com/search?q=" + event.target.value});
+				event.target.value = ''
+			}
+		})
+
+		wrapper('#web-search-submit', 'click', (event) => {
+				let val = document.getElementById('web-search-input').value
+				chrome.tabs.create({ url: "https://www.google.com/search?q=" + val});
+				val = ''
+		})
+	}
+
+	reflect() {
+		this.reflector = new Reflector()
+		const data = this.settings
+		for(const type in data){
+			if(typeof data[type] === "object") {
+				this.setState(data[type])
+			}
+		}
+	}
+	setState(data) {
+		for(const key in data) {
+			const func = this.reflector[key]
+			if(typeof func === 'function') {
+				func(data[key])
+			}
+		}
+	}
+}
+
+class SideBarManager {
+	constructor() {
+		this.activeItem = null
+		this.ev = {
+			expandMenu: new ExpandMenu,
+			searchMenu: new BookmarkSearch,
+			selectThemeMenu: new SelectTheme,
+			vsbltyMenu: new SwitchModuleVisible
+		}
+		for(const item in this.ev) {
+			this.ev[item].state = NOW_CLOSE
+		}
+		this.addEventListener()
+	}
+	addEventListener() {
+		wrapper('.action-item', 'click', (event) => {
+			const target = event.target.id
+			this.ev[target].on()
+			this.activeItem = this.ev[target].state ? target : null
+			this.closeMenu(target)
+		})
+		wrapper('.create-system-tab', 'click', (event) => {
+				this.closeMenu()
+			chrome.tabs.create({ url: event.target.dataset.href });
+		})
+		wrapper('#body-main', 'click', (event) => {
+			this.closeMenu()
+		})
+	}
+	closeMenu(activeItem) {
+		for(const item in this.ev) {
+			if(item != activeItem) {
+				this.ev[item].on(TO_CLOSE)
+			}
+		}
+		this.activeItem = null
+	}
+}
+
+const cm = new ContentsManager()
+const ev = new SideBarManager()
+
+chrome.runtime.onMessage.addListener(async(request, sender, sendResponse) =>	{
 	if(request.newtab === 'reload') {
-		// chrome.tabs.reload()
 		window.onbeforeunload = () => { window.scrollTo(0,0)}
 		window.location.reload()
 	} else if(request.contents === 'reload') {
 		cm.reloadContents()
 	} else if(request.contents === 'theme') {
-		cm.setState(cm.settings.radio)
+		const data = await getStorage('settings')
+		cm.setState(data.settings.radio)
 	}
 });
-
-// chrome.storage.onChanged.addListener((changes) => {
-// 	console.log(changes)
-// 	if(changes.hasOwnProperty('settings')) {
-// 		// window.onbeforeunload = () => { window.scrollTo(0,0)}
-// 		// window.location.reload()
-// 		cm.reflect()
-// 	} else if(changes.hasOwnProperty('jsonBookmarks')) {
-// 		cm.reloadContents()
-// 	}
-// })

@@ -20,6 +20,12 @@ const getBookmarksTree = asyncFunc((callback) => {
 const getBookmarkItems = asyncFunc((keys, callback) => {
   chrome.bookmarks.get(keys, callback)
 })
+const wrapper = (key, action, func) => {
+  const all = document.querySelectorAll(key)
+  for(const item of all) {
+    item.addEventListener(action, (event) => {func(event)})
+  }
+}
 
 class DefaultSettings {
   constructor() {
