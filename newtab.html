@@ -27,17 +27,17 @@
   <div id="bookmark-search-group">
     <div id="bookmark-search-header">Search</div>
     <div id="bookmark-search-input-area">
-      <input id="search" type="text" placeholder="ブックマークの検索" required>
-      <span id="searchView" class="action-item" title="検索結果の再読込"></span>
-      <span id="searchReset" class="search-input-clear">×</span>
+      <input id="bookmark-search" type="text" placeholder="ブックマークの検索" required>
+      <!-- <span id="searchView" class="action-item" title="検索結果の再読込"></span> -->
+      <span id="bookmark-search-reset" class="bookmark-search-input-clear">×</span>
     </div>
     <div id="bookmark-search-result">
     </div>
   </div>
   <!-- <div id="overray"></div> -->
   <div id="system-link-area">
-    <div id="expandMenu" class="menu action-item"><img class="menu-icon" src="img/icon-menu.svg">System Pages</div>
-    <div id="searchMenu" class="menu action-item"><img class="menu-icon" src="img/icon-search.svg">Search Bookmarks</div>
+    <div id="expand-menu" class="menu action-item"><img class="menu-icon" src="img/icon-menu.svg">System Pages</div>
+    <div id="search-menu" class="menu action-item"><img class="menu-icon" src="img/icon-search.svg">Search Bookmarks</div>
     <div class="menu create-system-tab" data-href="chrome://apps/"><img class="menu-icon" src="img/icon-apps.svg">Apps</div>
     <div class="menu create-system-tab" data-href="chrome://bookmarks/"><img class="menu-icon" src="img/icon-bookmarks.svg">Bookmarks</div>
     <div class="menu create-system-tab" data-href="chrome://history/"><img class="menu-icon" src="img/icon-history.svg">History</div>
@@ -46,8 +46,8 @@
     <div class="menu create-system-tab" data-href="chrome://settings/"><img class="menu-icon" src="img/icon-settings.svg">Settings</div>
     <div class="menu create-system-tab" data-href="option.html"><img class="menu-icon" src="img/icon-options.svg">Options</div>
     
-    <div id="selectThemeMenu" class="menu action-item"><img class="menu-icon" src="img/icon-theme.svg">Switch Theme</div>
-    <div id="fmTheme" class="floatMenu">
+    <div id="select-theme-menu" class="menu action-item"><img class="menu-icon" src="img/icon-theme.svg">Switch Theme</div>
+    <div id="float-menu-theme" class="float-menu">
       <div>
         <input type="radio" name="theme" id="tmLight" value="tmLight">
         <label for="tmLight">Modern Light</label>
@@ -77,13 +77,13 @@
         <label for="tmNeumorphismLight">Neumorphism Light</label>
       </div>
     </div>
-    <div id="vsbltyMenu" class="menu action-item"><img class="menu-icon" src="img/icon-visibility.svg">Visibility</div>
-      <div id="fmVsblty" class="floatMenu">
+    <div id="module-visible-menu" class="menu action-item"><img class="menu-icon" src="img/icon-visibility.svg">Visibility</div>
+      <div id="float-menu-visibility" class="float-menu">
         <div>Visible Folders</div>
         <div class="toggle" id="tgglVisible"></div>
       </div>
   </div>
-    <div id="web-search-area">
+    <div id="web-search-area" class="displayNone">
       <input id="web-search-input" type="text" placeholder="Google Search">
       <input id="web-search-submit" type="submit" value="Search"></input>
     </div>

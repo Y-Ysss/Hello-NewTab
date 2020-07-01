@@ -1,4 +1,4 @@
-class ContentsGenerator {
+class BookmarkContents {
 	constructor(settings) {
 		this.settings = settings
 		this.contentModule = document.getElementById('content-module-template')
@@ -104,20 +104,20 @@ class ExpandMenu {
 
 class BookmarkSearch {
 	constructor() {
-		wrapper('#search', 'keyup', (event) => {
+		wrapper('#bookmark-search', 'keyup', (event) => {
 			this.searchView()
 		})
-		wrapper('#searchReset', 'click', (event) => {
+		wrapper('#bookmark-search-reset', 'click', (event) => {
 			this.searchReset()
 		})
 	}
 	on(state = this.state) {
 		const bookmarkSearch = document.getElementById('bookmark-search-group');
-		const searchMenu = document.getElementById('searchMenu');
-		const search = document.getElementById('search');
+		const searchMenu = document.getElementById('search-menu');
+		const search = document.getElementById('bookmark-search');
 		if(state) {
 			bookmarkSearch.style.left = '-34rem';
-			searchMenu.classList.remove('bg-searchMenu');
+			searchMenu.classList.remove('active-menu');
 			search.blur();
 			this.searchReset()
 		} else {
@@ -125,30 +125,30 @@ class BookmarkSearch {
 			// this.selectThemeMenu(TO_CLOSE);
 			// this.vsbltyMenu(TO_CLOSE);
 			bookmarkSearch.style.left = '2.6rem';
-			searchMenu.classList.add('bg-searchMenu');
+			searchMenu.classList.add('active-menu');
 			search.focus();
 		}
 		this.state = !state
 	}
 	searchReset() {
-		document.getElementById('search').value = "";
-		document.getElementById('searchReset').classList.remove('searchResetView');
+		document.getElementById('bookmark-search').value = "";
+		document.getElementById('bookmark-search-reset').classList.remove('search-reset-visible');
 		document.getElementById('bookmark-search-result').innerHTML = '';
 	}
 	searchView() {
-		const words = document.getElementById('search').value;
+		const words = document.getElementById('bookmark-search').value;
 		if(words == "") {
-			document.getElementById('searchReset').classList.remove('searchResetView');
+			document.getElementById('bookmark-search-reset').classList.remove('search-reset-visible');
 		}
 		else{
-			document.getElementById('searchReset').classList.add('searchResetView');
+			document.getElementById('bookmark-search-reset').classList.add('search-reset-visible');
 			chrome.bookmarks.search(words, async (results) => {
 				let joinResult = '';
 				for(const item of results) {
 					if(item.url) {
 						const parent = await getBookmarkItems(item.parentId);
 						const title = item.title == "" ? item.url : item.title;
-						joinResult += `<a class="search-result-items" href="${item.url}" title="${title}"><img class="favicon" src="chrome://favicon/${item.url}">${title}<span>${parent[0].title}</span></a>`;
+						joinResult += `<a class="bookmark-search-result-items" href="${item.url}" title="${title}"><img class="favicon" src="chrome://favicon/${item.url}">${title}<span>${parent[0].title}</span></a>`;
 					}
 				}
 				document.getElementById('bookmark-search-result').innerHTML = `<div id="bookmark-result-count">${results.length} ${results.length === 1 ? 'bookmark' : 'bookmarks'}</div>${joinResult}`;
@@ -168,15 +168,18 @@ class FloatMenu {
 
 class SelectTheme extends FloatMenu {
 	on(state = this.state) {
-		const fmTheme = document.getElementById('fmTheme');
+		const fmTheme = document.getElementById('float-menu-theme');
+		const menu = document.getElementById('select-theme-menu')
 
 		if (state) {
 			super.onDisplay(fmTheme, TO_CLOSE);
+			menu.classList.remove('active-menu');
 			// $('#fmTheme').css({ margin: '-3rem 0 0 3rem', visibility: 'hidden', opacity: '0' });	 
 		} else {
 			// this.expandMenu(TO_CLOSE);
 			// this.vsbltyMenu(TO_CLOSE);
 			super.onDisplay(fmTheme, TO_OPEN);
+			menu.classList.add('active-menu');
 			// $('#fmTheme').css({ margin: '-3rem 0 0 4rem', visibility: 'visible', opacity: '1' });
 		}
 		this.state = !state
@@ -191,13 +194,16 @@ class SwitchModuleVisible extends FloatMenu {
 		})
 	}
 	on(state = this.state) {
-		const fmVsblty = document.getElementById('fmVsblty');
+		const fmVsblty = document.getElementById('float-menu-visibility')
+		const menu = document.getElementById('module-visible-menu')
 		if (state) {
 			super.onDisplay(fmVsblty, TO_CLOSE);
+			menu.classList.remove('active-menu');
 		} else {
 			// this.expandMenu(TO_CLOSE);
 			// this.selectThemeMenu(TO_CLOSE);
 			super.onDisplay(fmVsblty, TO_OPEN);
+			menu.classList.add('active-menu');
 		}
 		this.state = !state
 	}
@@ -236,7 +242,10 @@ class Reflector {
 		document.getElementById(value).checked = true
 	}
 	tgglWebSearch(value) {
-		document.getElementById('web-search-area').style.display = value ? 'block' : 'none';
+		console.log(value)
+		if(value) {
+			document.getElementById('web-search-area').classList.remove('displayNone')
+		}
 	}
 }
 
@@ -246,12 +255,12 @@ class ContentsManager extends DefaultSettings {
 		this.addEventListener()
 	}
 	async addContents() {
-		const cg = new ContentsGenerator(this.settings)
+		const cg = new BookmarkContents(this.settings)
 		await cg.append()
 		this.reflect()
 	}
 	reloadContents() {
-		const cg = new ContentsGenerator(this.settings)
+		const cg = new BookmarkContents(this.settings)
 		cg.reload()
 	}
 
@@ -309,10 +318,10 @@ class SideBarManager {
 	constructor() {
 		this.activeItem = null
 		this.ev = {
-			expandMenu: new ExpandMenu,
-			searchMenu: new BookmarkSearch,
-			selectThemeMenu: new SelectTheme,
-			vsbltyMenu: new SwitchModuleVisible
+			'expand-menu': new ExpandMenu,
+			'search-menu': new BookmarkSearch,
+			'select-theme-menu': new SelectTheme,
+			'module-visible-menu': new SwitchModuleVisible
 		}
 		for(const item in this.ev) {
 			this.ev[item].state = NOW_CLOSE
