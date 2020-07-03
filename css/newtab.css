@@ -14,7 +14,7 @@ ul {
 #bookmark-search-group{
   left: -22rem;
   height: 100%;
-  width: 20rem;
+  width: 24rem;
   position: fixed;
   z-index: 14;
   overflow: hidden;
@@ -98,7 +98,6 @@ ul {
 }
 
 .bookmark-search-result-items:hover {
-  padding-left: 0.78rem;
 }
 
 .bookmark-search-result-items span {
@@ -153,7 +152,7 @@ ul {
 .menu-icon {
   height: 1.3rem;
   width: 1.3rem;
-  padding: 0 0.65rem 0 0;
+  padding: 0 0.65rem 0.2rem 0;
   vertical-align: middle;
   pointer-events: none;
 }
@@ -196,22 +195,21 @@ ul {
 .content-module ul li {
   position: relative;
   display: block;
-  cursor: pointer;
   -webkit-transition: .12s ease-out all;
 }
 
 .content-module ul li:hover {
-  margin-left: -0.39rem;
 }
 
 .content-module ul li a {
   height: 1.3rem;
-  padding: 0.4549rem 0.52rem 0.4549rem 0.52rem;
+  padding: 0.45rem 0.5rem 0.45rem 0.5rem;
   display: block;
   overflow: hidden;
   vertical-align: middle;
   white-space: nowrap;
   text-overflow: ellipsis;
+  cursor: pointer;
 }
 
 .bookmark-count {
@@ -234,7 +232,7 @@ ul {
 }
 
 .float-menu {
-  margin: -2.8rem 0 0 3rem;
+  margin: -2.8rem 0 0 1rem;
   padding: 0.5rem;
   position: fixed;
   visibility: hidden;
@@ -242,6 +240,11 @@ ul {
   border-radius: 0.65rem;
   opacity: 0;
   -webkit-transition: .14s cubic-bezier(.58, .11, .2, 1.05) all;
+}
+.activeFloatMenu {
+  margin: -2.8rem 0 0 3.8rem;
+  visibility: visible;
+  opacity: 1;
 }
 #float-menu-theme div {
   margin: 0.3rem 0.2rem 0.3rem 0;
@@ -306,3 +309,4 @@ ul {
 .displayNone {
   display: none;
 }
+

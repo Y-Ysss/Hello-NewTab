@@ -1,6 +1,6 @@
 :root {
   --accent1: #42a5f5;
-  --accent2: #e2effa;
+  --accent2: #cad1d6;
   --base1: #ebefef;
   --base2: #ebedee;
   --surface: #ffffff;
@@ -87,6 +87,7 @@ a {
 }
 
 .content-module ul li:hover {
+  margin-left: -0.39rem;
   background: var(--base2);
   box-shadow: .4rem .4rem .6rem var(--boundary), -.4rem -.4rem .6rem var(--surface);
   /*-webkit-transition: 0.25s ease-out all;*/
@@ -95,9 +96,22 @@ a {
 .bookmark-count {
 }
 
+.toggle {
+  height: 1.5rem;
+  width: 3rem;
+  border-radius: 3.0rem;
+  overflow: hidden;
+  margin: .1rem 1rem;
+  background-color: var(--base1);
+  box-shadow: inset 0.1rem 0.1rem 0 var(--boundary), inset -0.1rem -0.1rem 0 var(--surface);
+}
 
-.toggle-on {
+.toggle:after {
+  top: .1rem;
+  border-radius: 50%;
   background-color: var(--accent2);
+}
+.toggle-on {
 }
 .toggle-on:after {
   background-color: var(--accent1);
@@ -107,7 +121,7 @@ a {
 }
 
 .float-menu {
-  background-color: var(--surface);
+  background-color: var(--base1);
   box-shadow: 0 .1rem .8rem rgba(0, 0, 0, .4);
 }
 input[type=radio] + label {

@@ -46,6 +46,7 @@ a {
 }
 .bookmark-search-result-items:hover,
 .bookmark-search-result-items:focus {
+  padding-left: 0.78rem;
   background: var(--base2);
 }
 
@@ -84,6 +85,7 @@ a {
 }
 
 .content-module ul li:hover {
+  margin-left: -0.39rem;
   background: var(--base2);
   /*-webkit-transition: 0.25s ease-out all;*/
 }

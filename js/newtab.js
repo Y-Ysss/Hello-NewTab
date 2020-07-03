@@ -8,52 +8,52 @@ class BookmarkContents {
 	async append() {
 		await this.generateContents()
 		this.applyMacy()
-		document.getElementById('body-main').appendChild(this.fragment);
+		document.getElementById('body-main').appendChild(this.fragment)
 	}
 	reload() {
-		document.getElementById('body-main').textContent = null;
+		document.getElementById('body-main').textContent = null
 		this.append()
 	}
 	async generateContents() {
-		const data = await getStorage('jsonBookmarks');
+		const data = await getStorage('jsonBookmarks')
 		for(let i in data.jsonBookmarks) {
-			this.generate(data.jsonBookmarks[i].title, true, data.jsonBookmarks[i].children);
+			this.generate(data.jsonBookmarks[i].title, true, data.jsonBookmarks[i].children)
 		}
 	}
 	generate(folderName, visible, items) {
 		let contentModuleClone = document.importNode(this.contentModule.content, true),
 		contentModule = contentModuleClone.querySelector('.content-module'),
 		header = contentModuleClone.querySelector('.content-header'),
-		ul = contentModuleClone.querySelector('ul');
-		let folderFragment = document.createDocumentFragment();
-		header.textContent = folderName;
+		ul = contentModuleClone.querySelector('ul')
+		let folderFragment = document.createDocumentFragment()
+		header.textContent = folderName
 		if(!visible) {
-			contentModule.classList.add('hide-module', 'hide');
+			contentModule.classList.add('hide-module', 'hide')
 		}
 		items.forEach((item) => {
 			if("url" in item) {
 				let liClone = document.importNode(this.contentModuleList.content, true),
 				img = liClone.querySelector('img'),
-				a = liClone.querySelector('a');
-				a.appendChild(document.createTextNode(item.title));
+				a = liClone.querySelector('a')
+				a.appendChild(document.createTextNode(item.title))
 				a.setAttribute('title', item.title)
-				a.href = item.url;
-				img.src = `chrome://favicon/${item.url}`;
+				a.href = item.url
+				img.src = `chrome://favicon/${item.url}`
 				folderFragment.appendChild(liClone);
 			} 
 		})
-		const count = folderFragment.childElementCount;
+		const count = folderFragment.childElementCount
 		if(count > 0) {
-			let span = document.createElement('span');
+			let span = document.createElement('span')
 			span.className = "bookmark-count"
-			span.textContent = `${count} ${count === 1 ? 'bookmark' : 'bookmarks'}`;
+			span.textContent = `${count} ${count === 1 ? 'bookmark' : 'bookmarks'}`
 			folderFragment.appendChild(span)
-			ul.appendChild(folderFragment);
-			this.fragment.appendChild(contentModuleClone);
+			ul.appendChild(folderFragment)
+			this.fragment.appendChild(contentModuleClone)
 		}
 		items.forEach((item) => {
 			if("children" in item) {
-				this.generate(item.title, item.visible, item.children);
+				this.generate(item.title, item.visible, item.children)
 			}
 		})
 	}
@@ -89,13 +89,13 @@ class ExpandMenu {
 		// })
 	}
 	on(state = this.state) {
-		const sla = document.getElementById('system-link-area');
-		const mF = document.getElementById('overray');
+		const sla = document.getElementById('system-link-area')
+		// const mF = document.getElementById('overray')
 		if(state) {
-			sla.style.width = '2.6rem';
+			sla.style.width = '2.6rem'
 			// mF.classList.remove('filter');
 		} else {
-			sla.style.width = '14rem';
+			sla.style.width = '14rem'
 			// mF.classList.add('filter');
 		}
 		this.state = !state
@@ -112,75 +112,76 @@ class BookmarkSearch {
 		})
 	}
 	on(state = this.state) {
-		const bookmarkSearch = document.getElementById('bookmark-search-group');
-		const searchMenu = document.getElementById('search-menu');
-		const search = document.getElementById('bookmark-search');
+		const bookmarkSearch = document.getElementById('bookmark-search-group')
+		const searchMenu = document.getElementById('search-menu')
+		const search = document.getElementById('bookmark-search')
 		if(state) {
-			bookmarkSearch.style.left = '-34rem';
-			searchMenu.classList.remove('active-menu');
+			bookmarkSearch.style.left = '-34rem'
+			searchMenu.classList.remove('active-menu')
 			search.blur();
 			this.searchReset()
 		} else {
 			// this.expandMenu(TO_CLOSE);
 			// this.selectThemeMenu(TO_CLOSE);
 			// this.vsbltyMenu(TO_CLOSE);
-			bookmarkSearch.style.left = '2.6rem';
-			searchMenu.classList.add('active-menu');
+			bookmarkSearch.style.left = '2.6rem'
+			searchMenu.classList.add('active-menu')
 			search.focus();
 		}
 		this.state = !state
 	}
 	searchReset() {
-		document.getElementById('bookmark-search').value = "";
-		document.getElementById('bookmark-search-reset').classList.remove('search-reset-visible');
-		document.getElementById('bookmark-search-result').innerHTML = '';
+		document.getElementById('bookmark-search').value = ""
+		document.getElementById('bookmark-search-reset').classList.remove('search-reset-visible')
+		document.getElementById('bookmark-search-result').innerHTML = ''
 	}
 	searchView() {
-		const words = document.getElementById('bookmark-search').value;
+		const words = document.getElementById('bookmark-search').value
 		if(words == "") {
-			document.getElementById('bookmark-search-reset').classList.remove('search-reset-visible');
+			document.getElementById('bookmark-search-reset').classList.remove('search-reset-visible')
 		}
 		else{
-			document.getElementById('bookmark-search-reset').classList.add('search-reset-visible');
+			document.getElementById('bookmark-search-reset').classList.add('search-reset-visible')
 			chrome.bookmarks.search(words, async (results) => {
-				let joinResult = '';
+				let joinResult = ''
 				for(const item of results) {
 					if(item.url) {
-						const parent = await getBookmarkItems(item.parentId);
-						const title = item.title == "" ? item.url : item.title;
-						joinResult += `<a class="bookmark-search-result-items" href="${item.url}" title="${title}"><img class="favicon" src="chrome://favicon/${item.url}">${title}<span>${parent[0].title}</span></a>`;
+						const parent = await getBookmarkItems(item.parentId)
+						const title = item.title == "" ? item.url : item.title
+						joinResult += `<a class="bookmark-search-result-items" href="${item.url}" title="${title}"><img class="favicon" src="chrome://favicon/${item.url}">${title}<span>${parent[0].title}</span></a>`
 					}
 				}
-				document.getElementById('bookmark-search-result').innerHTML = `<div id="bookmark-result-count">${results.length} ${results.length === 1 ? 'bookmark' : 'bookmarks'}</div>${joinResult}`;
+				document.getElementById('bookmark-search-result').innerHTML = `<div id="bookmark-result-count">${results.length} ${results.length === 1 ? 'bookmark' : 'bookmarks'}</div>${joinResult}`
 			});
 		}
-		document.getElementById('bookmark-search-result').innerHTML = '';
+		document.getElementById('bookmark-search-result').innerHTML = ''
 	}
 }
 
 class FloatMenu {
 	onDisplay(obj, state) {
-		obj.style.margin = state ? '-2.8rem 0 0 1rem' : '-2.8rem 0 0 3.8rem';
-		obj.style.visibility = state ? 'hidden' : 'visible';
-		obj.style.opacity = state ? 0 : 1;
+		if(state) {
+			obj.classList.remove('activeFloatMenu')
+		} else {
+			obj.classList.add('activeFloatMenu')
+		}
+		// obj.style.margin = state ? '-2.8rem 0 0 1rem' : '-2.8rem 0 0 3.8rem';
+		// obj.style.visibility = state ? 'hidden' : 'visible';
+		// obj.style.opacity = state ? 0 : 1;
 	}
 }
 
 class SelectTheme extends FloatMenu {
 	on(state = this.state) {
-		const fmTheme = document.getElementById('float-menu-theme');
+		const floatMenu = document.getElementById('float-menu-theme')
 		const menu = document.getElementById('select-theme-menu')
 
 		if (state) {
-			super.onDisplay(fmTheme, TO_CLOSE);
-			menu.classList.remove('active-menu');
-			// $('#fmTheme').css({ margin: '-3rem 0 0 3rem', visibility: 'hidden', opacity: '0' });	 
+			super.onDisplay(floatMenu, TO_CLOSE)
+			menu.classList.remove('active-menu')
 		} else {
-			// this.expandMenu(TO_CLOSE);
-			// this.vsbltyMenu(TO_CLOSE);
-			super.onDisplay(fmTheme, TO_OPEN);
-			menu.classList.add('active-menu');
-			// $('#fmTheme').css({ margin: '-3rem 0 0 4rem', visibility: 'visible', opacity: '1' });
+			super.onDisplay(floatMenu, TO_OPEN)
+			menu.classList.add('active-menu')
 		}
 		this.state = !state
 	}
@@ -194,34 +195,31 @@ class SwitchModuleVisible extends FloatMenu {
 		})
 	}
 	on(state = this.state) {
-		const fmVsblty = document.getElementById('float-menu-visibility')
+		const floatMenu = document.getElementById('float-menu-visibility')
 		const menu = document.getElementById('module-visible-menu')
 		if (state) {
-			super.onDisplay(fmVsblty, TO_CLOSE);
-			menu.classList.remove('active-menu');
+			super.onDisplay(floatMenu, TO_CLOSE)
+			menu.classList.remove('active-menu')
 		} else {
-			// this.expandMenu(TO_CLOSE);
-			// this.selectThemeMenu(TO_CLOSE);
-			super.onDisplay(fmVsblty, TO_OPEN);
-			menu.classList.add('active-menu');
+			super.onDisplay(floatMenu, TO_OPEN)
+			menu.classList.add('active-menu')
 		}
 		this.state = !state
 	}
 	action() {
-		const tgVsblty = document.getElementById('tgglVisible');
-		tgVsblty.classList.toggle('toggle-on');
-		const items = document.getElementsByClassName('hide-module');
+		document.getElementById('tgglVisible').classList.toggle('toggle-on')
+		const items = document.getElementsByClassName('hide-module')
 		for (let i = items.length - 1 ; i >= 0; i--) {
-			items[i].classList.toggle('hide');
+			items[i].classList.toggle('hide')
 		}
 	}
 }
 
 class Reflector {
 	tgglIcon(value) {
-		const br = value ? '0%' : '50%';
+		const br = value ? '0%' : '50%'
 		for(const item of document.getElementsByClassName('favicon')) {
-			item.style.borderRadius = br;
+			item.style.borderRadius = br
 		}
 	}
 	tgglOpenTab(value) {
@@ -242,7 +240,6 @@ class Reflector {
 		document.getElementById(value).checked = true
 	}
 	tgglWebSearch(value) {
-		console.log(value)
 		if(value) {
 			document.getElementById('web-search-area').classList.remove('displayNone')
 		}
@@ -356,7 +353,7 @@ class SideBarManager {
 const cm = new ContentsManager()
 const ev = new SideBarManager()
 
-chrome.runtime.onMessage.addListener(async(request, sender, sendResponse) =>	{
+chrome.runtime.onMessage.addListener(async(request, sender, sendResponse) => {
 	if(request.newtab === 'reload') {
 		window.onbeforeunload = () => { window.scrollTo(0,0)}
 		window.location.reload()
