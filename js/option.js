@@ -30,7 +30,6 @@ class ReflectSettings extends DefaultSettings {
 	init() {
 		this.reflect()
 		this.addElementsEventListener()
-		rippleEffect()
 	}
 	reflect() {
 		const data = this.settings

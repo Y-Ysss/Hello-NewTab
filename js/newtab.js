@@ -10,9 +10,9 @@ class BookmarkContents {
 		this.applyMacy()
 		document.getElementById('body-main').appendChild(this.fragment)
 	}
-	reload() {
+	async reload() {
 		document.getElementById('body-main').textContent = null
-		this.append()
+		await this.append()
 	}
 	async generateContents() {
 		const data = await getStorage('jsonBookmarks')
@@ -256,9 +256,10 @@ class ContentsManager extends DefaultSettings {
 		await cg.append()
 		this.reflect()
 	}
-	reloadContents() {
+	async reloadContents() {
 		const cg = new BookmarkContents(this.settings)
-		cg.reload()
+		await cg.reload()
+		this.reflect()
 	}
 
 	addEventListener() {
