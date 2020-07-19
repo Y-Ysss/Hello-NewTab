@@ -112,6 +112,17 @@ ul {
   padding: 0.45rem 0.52rem;
 }
 
+#bookmark-no-results-found {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  font-size: 1.2rem;
+}
+
+#bookmark-no-results-found img {
+  width: 10rem;
+  margin: 4rem 0 0 0;
+}
 
 /*SideBar*/
 #system-link-area {
@@ -164,13 +175,13 @@ ul {
   opacity: 0;
   -webkit-transition: .5s cubic-bezier(.49, .03, .12, 1.00) all;
 }
-#body-main:empty{
+/* #body-main:empty{
   background-image: url(../img/emptyState_0.svg);
   background-attachment: fixed;
   background-repeat: no-repeat;
   -webkit-transition: none;
   background-position: center center;
-}
+} */
 .content-module {
   margin: 1.5rem 1.04rem;
   padding: 0;

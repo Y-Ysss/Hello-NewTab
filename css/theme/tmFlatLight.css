@@ -51,6 +51,12 @@ a {
 }
 #bookmark-result-count {
 }
+#bookmark-no-results-found {
+  color: var(--secondary);
+}
+#bookmark-no-results-found img {
+  filter: invert(50%);
+}
 #system-link-area {
   opacity: 1;
   background-color: var(--surface);

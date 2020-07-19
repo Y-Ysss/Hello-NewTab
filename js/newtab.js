@@ -11,7 +11,7 @@ class BookmarkContents {
 		document.getElementById('body-main').appendChild(this.fragment)
 	}
 	async reload() {
-		document.getElementById('body-main').textContent = null
+		document.getElementById('body-main').innerHTML = null
 		await this.append()
 	}
 	async generateContents() {
@@ -144,14 +144,19 @@ class BookmarkSearch {
 			document.getElementById('bookmark-search-reset').classList.add('search-reset-visible')
 			chrome.bookmarks.search(words, async (results) => {
 				let joinResult = ''
-				for(const item of results) {
-					if(item.url) {
-						const parent = await getBookmarkItems(item.parentId)
-						const title = item.title == "" ? item.url : item.title
-						joinResult += `<a class="bookmark-search-result-items" href="${item.url}" title="${title}"><img class="favicon" src="chrome://favicon/${item.url}">${title}<span>${parent[0].title}</span></a>`
+				if(results.length !== 0) {
+					for(const item of results) {
+						if(item.url) {
+							const parent = await getBookmarkItems(item.parentId)
+							const title = item.title == "" ? item.url : item.title
+							joinResult += `<a class="bookmark-search-result-items" href="${item.url}" title="${title}"><img class="favicon" src="chrome://favicon/${item.url}">${title}<span>${parent[0].title}</span></a>`
+						}
 					}
+					joinResult = `<div id="bookmark-result-count">${results.length} ${results.length === 1 ? 'bookmark' : 'bookmarks'}</div>${joinResult}`
+				} else {
+					joinResult = '<div id="bookmark-no-results-found"><img src="img/no-results-found.svg"><p>No results found</p></div>'
 				}
-				document.getElementById('bookmark-search-result').innerHTML = `<div id="bookmark-result-count">${results.length} ${results.length === 1 ? 'bookmark' : 'bookmarks'}</div>${joinResult}`
+				document.getElementById('bookmark-search-result').innerHTML = joinResult
 			});
 		}
 		document.getElementById('bookmark-search-result').innerHTML = ''
