@@ -68,7 +68,11 @@ class ReflectSettings extends DefaultSettings {
 			this.saveData()
 			chrome.runtime.sendMessage({newtab: 'reload'})
 			chrome.runtime.sendMessage({option: 'reload'})
-			if(this.settings.toggle.tgglAutoTheme){this.autoTheme(),this.setupAlarms()} else {chrome.alarms.clearAll(()=>{console.log('Alarms.clearAll')})}
+			if(this.settings.toggle.tgglAutoTheme){
+				this.autoTheme(),this.setupAlarms()
+			} else {
+				chrome.alarms.clearAll(()=>{console.log('Alarms.clearAll')})
+			}
 			let t = document.getElementById('toast')
 			t.style.transform  = 'translateY(-6rem)'
 			setTimeout((a) => {a.style.transform  = 'translateY(6rem)'}, 2000, t)
@@ -134,7 +138,7 @@ class ExtensionInfo {
 		let str
 		if(data.message !== undefined) {return}
 		if(manifestData.version !== data.name) {
-			str = `<div class="content-section"><div class="section-title">Latest Release</div><div class="section-items-slim"><div class="section-item-text">バージョン : ${data.name}</div></div><div class="section-items-slim"><div class="section-item-text">What's New : <br>${data.body}</div></div><div class="section-items-slim"><div class="section-item-text">URL : <a href="${data.html_url}"></a></div></div></div>`
+			str = `<div class="content-section"><div class="section-title">Latest Release</div><div class="section-items-slim"><div class="section-item-text">バージョン : ${data.name}</div></div><div class="section-items-slim"><div class="section-item-text">What's New : <br>${data.body}</div></div><div class="section-items-slim"><div class="section-item-text">URL : <a href="${data.html_url}" target="_blank"></a></div></div></div>`
 			// str += `<h2>#Latest Release</h2><div class="cardContents"><b>Version</b><br>${data.name}</div><div class="cardContents"><b>What\'s New</b><br>${data.body}</div><div class="cardContents"><b>URL</b><br><a href="${data.html_url}"></a></div>`
 			str = str.replace(/\r?\n/g, '<br>')
 		}
@@ -144,7 +148,7 @@ class ExtensionInfo {
 	gitCommitsInfo(data) {
 		let str = ''
 		for(let i = 0; i < 5; i++) {
-			str += `<div class="content-section"><div class="section-title">${data[i].commit.message}</div><div class="section-items-continuation"><div class="section-item-text">${(data[i].commit.author.date).replace('T', ', ').slice(0, -1)} (UTC)</div></div><div class="section-items"><div class="section-item-text"><a href="${data[i].html_url}"></a></div></div></div>`;
+			str += `<div class="content-section"><div class="section-title">${data[i].commit.message}</div><div class="section-items-continuation"><div class="section-item-text">${(data[i].commit.author.date).replace('T', ', ').slice(0, -1)} (UTC)</div></div><div class="section-items"><div class="section-item-text"><a href="${data[i].html_url}" target="_blank"></a></div></div></div>`;
 		}
 		document.getElementById('gitCommitsInfo').insertAdjacentHTML('beforeend', str);
 	}

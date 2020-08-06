@@ -1,14 +1,13 @@
 class BookmarkContents {
 	constructor(settings) {
 		this.settings = settings
-		this.contentModule = document.getElementById('content-module-template')
-		this.contentModuleList = document.getElementById('li-template')
 		this.fragment = document.createDocumentFragment()
 	}
 	async append() {
 		await this.generateContents()
 		this.applyMacy()
 		document.getElementById('body-main').appendChild(this.fragment)
+		this.fragment = null
 	}
 	async reload() {
 		document.getElementById('body-main').innerHTML = null
@@ -21,25 +20,32 @@ class BookmarkContents {
 		}
 	}
 	generate(folderName, visible, items) {
-		let contentModuleClone = document.importNode(this.contentModule.content, true),
-		contentModule = contentModuleClone.querySelector('.content-module'),
-		header = contentModuleClone.querySelector('.content-header'),
-		ul = contentModuleClone.querySelector('ul')
+		const contentModule = document.createElement('div')
+		contentModule.className = 'content-module'
+		const header = document.createElement('div')
+		header.className = 'content-header'
+		header.innerText = folderName
+		contentModule.appendChild(header)
 		let folderFragment = document.createDocumentFragment()
-		header.textContent = folderName
 		if(!visible) {
 			contentModule.classList.add('hide-module', 'hide')
 		}
+		let liBase = document.createElement('li')
+		let aBase = document.createElement('a')
+		let imgBase = document.createElement('img')
+		imgBase.className = 'favicon'
 		items.forEach((item) => {
 			if("url" in item) {
-				let liClone = document.importNode(this.contentModuleList.content, true),
-				img = liClone.querySelector('img'),
-				a = liClone.querySelector('a')
-				a.appendChild(document.createTextNode(item.title))
-				a.setAttribute('title', item.title)
-				a.href = item.url
+				const li = liBase.cloneNode()
+				const a = aBase.cloneNode()
+				const img = imgBase.cloneNode()
 				img.src = `chrome://favicon/${item.url}`
-				folderFragment.appendChild(liClone);
+				a.appendChild(img)
+				a.title = item.title
+				a.appendChild(document.createTextNode(item.title))
+				a.href = item.url
+				li.appendChild(a)
+				folderFragment.appendChild(li);
 			} 
 		})
 		const count = folderFragment.childElementCount
@@ -48,8 +54,10 @@ class BookmarkContents {
 			span.className = "bookmark-count"
 			span.textContent = `${count} ${count === 1 ? 'bookmark' : 'bookmarks'}`
 			folderFragment.appendChild(span)
+			const ul = document.createElement('ul')
 			ul.appendChild(folderFragment)
-			this.fragment.appendChild(contentModuleClone)
+			contentModule.appendChild(ul)
+			this.fragment.appendChild(contentModule)
 		}
 		items.forEach((item) => {
 			if("children" in item) {
@@ -121,9 +129,6 @@ class BookmarkSearch {
 			search.blur();
 			this.searchReset()
 		} else {
-			// this.expandMenu(TO_CLOSE);
-			// this.selectThemeMenu(TO_CLOSE);
-			// this.vsbltyMenu(TO_CLOSE);
 			bookmarkSearch.style.left = '2.6rem'
 			searchMenu.classList.add('active-menu')
 			search.focus();
@@ -170,9 +175,6 @@ class FloatMenu {
 		} else {
 			obj.classList.add('activeFloatMenu')
 		}
-		// obj.style.margin = state ? '-2.8rem 0 0 1rem' : '-2.8rem 0 0 3.8rem';
-		// obj.style.visibility = state ? 'hidden' : 'visible';
-		// obj.style.opacity = state ? 0 : 1;
 	}
 }
 
@@ -228,17 +230,13 @@ class Reflector {
 		}
 	}
 	tgglOpenTab(value) {
-		if(value) {
-			document.head.insertAdjacentHTML('beforeend', '<base id="head-target" target="_blank">')
-		} else {
-			const el = document.getElementById("head-target")
-			if(el !== null) {
-				el.remove()
-			}
-		}
+		const el = document.getElementById("head-target")
+		el.setAttribute('target', value ? '_blank' : '')
 	}
 	txtScale(value) {
-		if(isFinite(value) && value !== '') {document.documentElement.style.zoom = value + '%'}
+		if(isFinite(value) && value !== '') {
+			document.documentElement.style.zoom = value + '%'
+		}
 	}
 	theme(value) {
 		document.getElementById('head-theme').href = `css/theme/${value}.css`
