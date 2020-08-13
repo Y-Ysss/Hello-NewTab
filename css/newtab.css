@@ -63,7 +63,6 @@ ul {
   right: 0;
   height: 2.8rem;
   width: 10%;
-  padding-top: 0.195rem;
   position: absolute;
   display: block;
   cursor: pointer;
@@ -75,7 +74,7 @@ ul {
   background-position: center;
 }
 #searchView:hover {
-  padding-left: 0.5850rem;
+  /*padding-left: 0.5850rem;*/
 }
 #searchReset {
   line-height: 1rem;
@@ -105,7 +104,7 @@ ul {
   opacity: .98;
 }
 
-#bookmark-search-result a {
+.search-result-items {
   padding: 0.4549rem 0.52rem 0.4549rem 0.52rem;
   z-index: 1;
   display: block;
@@ -114,10 +113,20 @@ ul {
   white-space: nowrap;
   text-overflow: ellipsis;
   -webkit-transition: .12s ease-out all;
+  outline: none;
 }
 
-#bookmark-search-result a:hover {
+.search-result-items:hover {
   padding-left: 0.78rem;
+}
+
+.search-result-items span {
+    background-color: var(--base-color2);
+    padding: .2rem .4rem;
+    margin: 0 .4rem;
+    border-radius: .5rem;
+    right: 0;
+    position: absolute;
 }
 
 #bookmark-result-count {
@@ -172,7 +181,6 @@ ul {
   z-index: 10;
   background-color: rgba(0, 0, 0, .3);
 }
-
 
 .menu {
   height: 1.5rem;
