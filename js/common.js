@@ -25,7 +25,8 @@ class DefaultSettings {
       "radio": {"theme": "tmFlatLight"},
       "text": { "txtScale": "", "txtRegexpPattern":"", "txtMacyColumns":"", "txtMacyMarginX":"", "txtMacyBreak":""},
       "range":{ "sliderLower": "", "sliderUpper": ""},
-      "select": {"autoThemePrimary": "tmFlatLight", "autoThemeSecondary": "tmFlatDark"}
+      "select": {"autoThemePrimary": "tmFlatLight", "autoThemeSecondary": "tmFlatDark"},
+      "format_version": "0.1"
     }
     this.loadData()
   }
