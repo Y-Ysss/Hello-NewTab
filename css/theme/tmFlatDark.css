@@ -42,7 +42,7 @@ a {
 #searchReset {
     color: #ccc;
 }
-#resultNum {
+#bookmark-result-count {
     color: #789;
 }
 #bookmark-search-result {
@@ -75,7 +75,7 @@ a {
     background-color: #284250;
 }
 .menu-icon {
-    fill:#fff;
+    filter: invert(85%);
 }
 
 #body-main {
@@ -97,7 +97,7 @@ a {
     /*-webkit-transition: 0.25s ease-out all;*/
 }
 
-.bkmrkNum {
+.bookmark-count {
     color: #999;
 }
 
@@ -114,11 +114,11 @@ a {
 .form_tggl:hover:after {
 }
 
-.form_tggl_on {
+.toggle-on {
     background-color: #BBDEFB;
 }
 
-.form_tggl_on:after {
+.toggle-on:after {
     background-color: #42A5F5;
 }
 
@@ -188,9 +188,9 @@ input[type=radio] + label:after {
 .text-input:focus::-webkit-input-placeholder {
   color: #999;
 }
-.textSubmit{
+#web-search-submit{
   background-color: #465258;
 }
-.textSubmit:hover{
+#web-search-submit:hover{
   background-color: #0C5073;
 }

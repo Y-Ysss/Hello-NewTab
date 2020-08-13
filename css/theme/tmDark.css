@@ -44,7 +44,7 @@ a {
 #searchReset {
     color: #ccc;
 }
-#resultNum {
+#bookmark-result-count {
     color: #789;
 }
 #bookmark-search-result {
@@ -105,7 +105,7 @@ a {
     /*-webkit-transition: 0.25s ease-out all;*/
 }
 
-.bkmrkNum {
+.bookmark-count {
     color: #999;
 }
 
@@ -124,11 +124,11 @@ a {
     box-shadow: 0 0 0.6rem rgba(0, 0, 0, 0.4);
 }
 
-.form_tggl_on {
+.toggle-on {
     background-color: #BBDEFB;
 }
 
-.form_tggl_on:after {
+.toggle-on:after {
     background-color: #42A5F5;
 }
 
@@ -204,9 +204,9 @@ input[type=radio] + label:after {
 .text-input:focus::-webkit-input-placeholder {
   color: #999;
 }
-.textSubmit{
+#web-search-submit{
   background-color: #465258;
 }
-.textSubmit:hover{
+#web-search-submit:hover{
   background-color: #0C5073;
 }

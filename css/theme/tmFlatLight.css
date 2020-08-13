@@ -54,7 +54,7 @@ a {
 #bookmark-search-result a:hover {
   background: var(--base-color2);
 }
-#resultNum {
+#bookmark-result-count {
   color: var(--foreground-color1);
 }
 #system-link-area {
@@ -69,6 +69,9 @@ a {
 }
 .menu:hover {
   background-color: var(--base-color2);
+}
+.menu-icon {
+  filter: invert(30%);
 }
 .systemLink {
   color: var(--foreground-color1);
@@ -97,26 +100,15 @@ a {
   /*-webkit-transition: 0.25s ease-out all;*/
 }
 
-.bkmrkNum {
+.bookmark-count {
   color: #999;
 }
 
-.form_tggl {
-  background-color: #ccc;
-  transition: .4s;
-}
-.form_tggl:after {
-  background-color: #eceff1;
-  box-shadow: 0 0 .2rem rgba(0, 0, 0, .35);
-  transition: .3s;
-}
-.form_tggl:hover:after {
-  box-shadow: 0 0 .6rem rgba(0, 0, 0, .4);
-}
-.form_tggl_on {
+
+.toggle-on {
   background-color: #bbdefb;
 }
-.form_tggl_on:after {
+.toggle-on:after {
   background-color: var(--accent-color1);
 }
 .bg-searchMenu {
@@ -165,7 +157,7 @@ input[type=radio] + label:after {
 }
 
 
-.text-input {
+#web-search-input {
   color: #444;
   background-color: var(--base-color1);
   border: 0.05rem solid #ccc;
@@ -175,12 +167,17 @@ input[type=radio] + label:after {
   color: #89a;
 }
 
-.text-input:focus::-webkit-input-placeholder {
+#web-search-input:focus::-webkit-input-placeholder {
   color: #999;
 }
 
-.textSubmit{
+#web-search-submit{
+  color: #5F6368;
+  border: 0.05rem solid #ccc;
   background-color: var(--base-color2);
-}.textSubmit:hover{
-  background-color: #abc;
+}
+
+#web-search-submit:hover{
+  color: #444;
+  background-color: #bed2e6;
 }
