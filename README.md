@@ -1,5 +1,4 @@
 # Hello NewTab
-====
 This extension allows you to quickly access your bookmarks on the new tab.
 
 ## Description
