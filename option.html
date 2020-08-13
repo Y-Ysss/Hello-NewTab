@@ -4,8 +4,6 @@
 <head>
   <meta charset="utf-8">
   <title>Option_Page</title>
-  <base target="_blank">
-  <!-- <link href="css/option.css" rel="stylesheet" type="text/css"> -->
   <link href="css/common.css" rel="stylesheet" type="text/css">
   <link href="css/option.css" rel="stylesheet" type="text/css">
 </head>
@@ -14,16 +12,15 @@
   <div id="toast">設定を保存しました</div>
   <div id="side-menu">
     <div>Options</div>
-    <a href="#option" class="ripple" target="_self">Option</a>
-    <a href="#howtouse" class="ripple" target="_self">How To Use</a>
-    <a href="#about" class="ripple" target="_self">About</a>
-    <a href="#attribution" class="ripple" target="_self">Attribution</a>
-    <a href="#exinfo" class="ripple" target="_self">Extension Info</a>
-    <a href="#githubcmmt" class="ripple" target="_self">GitHub Commits</a>
+    <a href="#option">Option</a>
+    <a href="#howtouse">How To Use</a>
+    <a href="#about">About</a>
+    <a href="#attributions">Attributions</a>
+    <a href="#exinfo">Extension Info</a>
+    <a href="#githubcmmt">GitHub Commits</a>
   </div>
   <div id="body-main">
-    <span id="option"></span>
-    <div class="card">
+    <div id="option" class="card">
       <div class="card-head">#Options</div>
       <div class="card-contents">
         <div class="section-items-continuation">
@@ -74,6 +71,8 @@
                 <label for="tmFlatDark">Flat Dark</label>
                 <input type="radio" name="theme" id="tmFullFlatLight" value="tmFullFlatLight">
                 <label for="tmFullFlatLight">FullFlat Light</label>
+                <input type="radio" name="theme" id="tmStylishWhite" value="tmStylishWhite">
+                <label for="tmStylishWhite">Stylish White</label>
               </div>
             </div>
           </div>
@@ -121,7 +120,7 @@
 
               <div class="section-title">オートテーマ</div>
               <div class="section-items">
-                <div class="section-item-text">オートテーマを有効にする</div>
+                <div class="section-item-text">オートテーマを有効にする (ページのスタイルより優先)</div>
                 <div class="section-item-action"><div id="tgglAutoTheme" class="toggle"></div></div>
               </div>
               <div class="section-items-continuation">
@@ -139,7 +138,7 @@
                   </label>
                   <span>&ensp;:&ensp;
                     <input name="sliderLower" class="sliderLower short text-synchronize-slider" type="number" min="0" max="24" step="1">時 ～ 
-                    <input name="sliderUpper" class="sliderUpper short text-synchronize-slider" type="number" min="0" max="24" step="1">時
+                    <input name="sliderUpper" class="sliderUpper short text-synchronize-slider" type="number" min="0" max="24" step="1">時まで
                   </span>
                 </div>
               </div>
@@ -160,7 +159,7 @@
                   </label>
                   <span>&ensp;:&ensp;
                     <input name="sliderUpper" class="sliderUpper short text-synchronize-slider" type="number" min="0" max="24" step="1">時 ～
-                    <input name="sliderLower" class="sliderLower short text-synchronize-slider" type="number" min="0" max="24" step="1">時 
+                    <input name="sliderLower" class="sliderLower short text-synchronize-slider" type="number" min="0" max="24" step="1">時まで
                   </span>
                 </div>
               </div>
@@ -202,8 +201,7 @@
       </div>
     </div>
 
-    <span id="howtouse"></span>
-    <div class="card">
+    <div id="howtouse" class="card">
       <div class="card-head">#How to use</div>
       <div class="card-contents">
         <div class="content-section">
@@ -267,8 +265,7 @@
       </div>
     </div>
 
-    <span id="about"></span>
-    <div class="card">
+    <div id="about" class="card">
       <div class="card-head">#About</div>
       <div class="card-contents">
         <div class="content-section">
@@ -277,37 +274,24 @@
             <div class="section-item-text">Name : Y-Ysss</div>
           </div>
           <div class="section-items-slim">
-            <div class="section-item-text">Blog : <a href="https://ysss.hateblo.jp/"></a></div>
+            <div class="section-item-text">Blog : <a href="https://ysss.hateblo.jp/" target="_blank"></a></div>
           </div>
           <div class="section-items-slim">
-            <div class="section-item-text">GitHub : <a href="https://github.com/Y-Ysss"></a></div>
+            <div class="section-item-text">GitHub : <a href="https://github.com/Y-Ysss" target="_blank"></a></div>
           </div>
         </div>
       </div>
     </div>
 
-    <span id="attribution"></span>
-    <div class="card">
+    <div id="attributions" class="card">
       <div class="card-head">#Attributions</div>
       <div class="card-contents">
         <div class="content-section">
           <div class="section-title">Javascript Libraries</div>
           <div class="section-items-slim">
-            <div class="section-item-text">deSVG (GitHub : benhowdle89)</div>
+            <div class="section-item-text">Macy.js (GitHub : bigbite)</div>
             <div class="section-item-action">
-              <a href="https://github.com/benhowdle89/deSVG"></a>
-            </div>
-          </div>
-          <div class="section-items-slim">
-            <div class="section-item-text">macy (GitHub : bigbitecreative)</div>
-            <div class="section-item-action">
-              <a href="https://github.com/bigbitecreative/macy.js"></a>
-            </div>
-          </div>
-          <div class="section-items-slim">
-            <div class="section-item-text">Ripple Effect (Qiita : nekoneko-wanwan)</div>
-            <div class="section-item-action">
-              <a href="http://qiita.com/nekoneko-wanwan/items/c9f26ce049bd422e555c"></a>
+              <a href="https://github.com/bigbite/macy.js" target="_blank"></a>
             </div>
           </div>
         </div>
@@ -316,29 +300,26 @@
           <div class="section-items-slim">
             <div class="section-item-text">Material Icons</div>
             <div class="section-item-action">
-              <a href="https://material.io/resources/icons/"></a>
+              <a href="https://material.io/resources/icons/" target="_blank"></a>
             </div>
           </div>
         </div>
       </div>
     </div>
 
-    <span id="exinfo"></span>
-    <div class="card">
+    <div id="exinfo" class="card">
       <div class="card-head">#Extension's Info</div>
       <div id="ExtensionInfo" class="card-contents">
       </div>
     </div>
 
-    <span id="githubcmmt"></span>
-    <div class="card">
+    <div id="githubcmmt" class="card">
       <div class="card-head">#Recently GitHub Commits</div>
       <div id="gitCommitsInfo" class="card-contents">
         
       </div>
     </div>
   </div>
-  <script type="text/javascript" src="js/lib/rippleEffect.js"></script>
   <script type="text/javascript" src="js/common.js"></script>
   <script type="text/javascript" src="js/option.js"></script>
 </body>

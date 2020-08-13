@@ -10,7 +10,17 @@ Open new tab in Google Chrome (or Chromium based Browser). Now you will see a "H
 ## Install
 1. Open Google Chrome (or Chromium based Browser), type "chrome://extensions" in the address bar and press the "Enter" key. Enable developer mode extensions.
 2. Now you will see a checkbox with the label "developer mode". Check the checkbox and now you can easily install any extension that's not coming from the Chrome Web Store.
-3. Open File Explorer and find the zipped folder.To unzip the folder, select the zipped folder and right-click it, select Extract All, and then follow the instructions.
+3. Open File Explorer and find the zipped folder. To unzip the folder, select the zipped folder and right-click it, select Extract All, and then follow the instructions.
 4. Save the expanded folder in any place.
 5. Click the "Pack extension" button. A dialog appears.
 6. Finished install.
+
+## Attributions
+### Javascript Libraries
+- <a href="https://github.com/bigbite/macy.js">Macy.js</a>
+
+### Icons
+- <a href="https://material.io/resources/icons/">Material Icons</a>
+
+## License
+MIT License Copyright (c) 2020 Y-Ysss

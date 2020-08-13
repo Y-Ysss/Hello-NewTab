@@ -1,6 +1,6 @@
 :root {
   --accent1: #42a5f5;
-  --accent2: #e2effa;
+  --accent2: #d3e5f5;
   --base1: #f6f6f6;
   --base2: #ebedee;
   --surface: #ffffff;
@@ -10,17 +10,13 @@
 }
 body {
   color: var(--primary);
-  background-color: var(--surface);
+  background-color: var(--base1);
 }
 a {
   color: var(--primary);
 }
 
 #bookmark-search-group{
-  border-radius:1rem;
-  margin: 0.5% 0 0 1rem;
-  height: 98%;
-  z-index: 16;
   background-color: var(--surface);
   box-shadow: 0rem .2rem .5rem rgba(0, 0, 0, .5);
   /*-webkit-transition: 0.35s cubic-bezier(0.58, 0.11, 0.2, 1.05) all;*/
@@ -29,29 +25,42 @@ a {
   background-color: var(--surface);
 }
 #bookmark-search {
+  height: 2.2rem;
+  width: 96%;
+  margin: 0.6rem .4rem;
+  padding: 0.4rem 2rem 0.4rem 0.4rem;
+  border-radius: 0.6rem;
   color: var(--secondary);
-  background-color: var(--base1);
+  font-size: 1rem;
+  background-color: var(--base2);
 }
 #bookmark-search:focus {
 }
 #bookmark-search::-webkit-input-placeholder {
+  font-size: 1rem;
   color: var(--secondary);
 }
 #bookmark-search-reset {
+  line-height: 1.6rem;
 }
 #bookmark-search-result {
   background-color: var(--surface);
 }
 .bookmark-search-result-items {
+  padding: 0.25rem 0.3rem 0.25rem 0.3rem;
+  margin: .4rem;
+  border-radius: .4rem;
 }
 .bookmark-search-result-items:hover,
 .bookmark-search-result-items:focus {
-  padding-left: 0.78rem;
   background: var(--base2);
 }
 
 .bookmark-search-result-items span {
   background-color: var(--accent2);
+  padding: .1rem .4rem;
+  margin: 0 .8rem;
+  border-radius: .4rem;
 }
 #bookmark-result-count {
 }
@@ -64,9 +73,12 @@ a {
 #system-link-area {
   opacity: 1;
   background-color: var(--surface);
+  border-right: 1px solid var(--boundary);
 }
 .menu {
-  border-radius: 0 2.2rem 2.2rem 0;
+  padding: 0.35rem;
+  margin: .6rem .3rem;
+  border-radius: .4rem;
   transition: .3s all;
 }
 .menu:hover {
@@ -87,19 +99,35 @@ a {
 }
 .content-header {
   color: var(--primary);
-  border-bottom: 0.05rem solid var(--boundary);
 }
 
 .content-module ul li:hover {
-  margin-left: -0.39rem;
-  background: var(--base2);
   /*-webkit-transition: 0.25s ease-out all;*/
+}
+.content-module ul li a {
+  border-radius: .4rem;
+  margin: .3rem;
+  padding: .3rem;
+}
+.content-module ul li:hover a {
+  background: var(--base2);
 }
 
 .bookmark-count {
 }
 
+.toggle {
+  height: 1.3rem;
+  width: 3rem;
+  border-radius: 3.0rem;
+  overflow: hidden;
+  margin: .1rem 1rem;
+}
 
+.toggle:after {
+  top: 0;
+  border-radius: 50%;
+}
 .toggle-on {
   background-color: var(--accent2);
 }
@@ -153,3 +181,4 @@ input[type=radio] + label:after {
 #web-search-submit:hover{
   background-color: var(--accent2);
 }
+
