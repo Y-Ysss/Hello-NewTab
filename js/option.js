@@ -45,8 +45,6 @@ class ReflectSettings extends DefaultSettings {
 			Reflector[type](key, data[key])
 		}
 	}
-	// toast() {
-	// }
 	wrapper(key, action, func) {
 		const all = document.querySelectorAll(key)
 		for(const item of all) {
@@ -128,7 +126,6 @@ class ExtensionInfo {
 
 	versionInfo() {
 		const manifestData = chrome.runtime.getManifest();
-		// let str = `<div class="cardContents"><b>Installed Version</b><br>${manifestData.version}</div>`
 		let str = `<div class="content-section"><div class="section-title">Installed Extension</div><div class="section-items-slim"><div class="section-item-text">バージョン : ${manifestData.version}</div></div></div>`
 		document.getElementById('ExtensionInfo').insertAdjacentHTML('beforeend', str);
 	}
@@ -138,17 +135,17 @@ class ExtensionInfo {
 		let str
 		if(data.message !== undefined) {return}
 		if(manifestData.version !== data.name) {
-			str = `<div class="content-section"><div class="section-title">Latest Release</div><div class="section-items-slim"><div class="section-item-text">バージョン : ${data.name}</div></div><div class="section-items-slim"><div class="section-item-text">What's New : <br>${data.body}</div></div><div class="section-items-slim"><div class="section-item-text">URL : <a href="${data.html_url}" target="_blank"></a></div></div></div>`
-			// str += `<h2>#Latest Release</h2><div class="cardContents"><b>Version</b><br>${data.name}</div><div class="cardContents"><b>What\'s New</b><br>${data.body}</div><div class="cardContents"><b>URL</b><br><a href="${data.html_url}"></a></div>`
+			const body = data.body.replace(/#{1,6}(.+?)\r?\n/g, '<span>$1</span><br>')
+			str = `<div class="content-section"><div class="section-title">Latest Release</div><div class="section-items-slim"><div class="section-item-text">バージョン : ${data.name}</div></div><div class="section-items-slim"><div class="section-item-text"><b>What's New</b><br>${body}</div></div><div class="section-items-slim"><div class="section-item-text">URL : <a class="url-text" href="${data.html_url}" target="_blank"></a></div></div></div>`
 			str = str.replace(/\r?\n/g, '<br>')
+			document.getElementById('ExtensionInfo').insertAdjacentHTML('beforeend', str);
 		}
-		document.getElementById('ExtensionInfo').insertAdjacentHTML('beforeend', str);
 	}
 
 	gitCommitsInfo(data) {
 		let str = ''
 		for(let i = 0; i < 5; i++) {
-			str += `<div class="content-section"><div class="section-title">${data[i].commit.message}</div><div class="section-items-continuation"><div class="section-item-text">${(data[i].commit.author.date).replace('T', ', ').slice(0, -1)} (UTC)</div></div><div class="section-items"><div class="section-item-text"><a href="${data[i].html_url}" target="_blank"></a></div></div></div>`;
+			str += `<div class="content-section"><div class="section-title">${data[i].commit.message}</div><div class="section-items-continuation"><div class="section-item-text">${(data[i].commit.author.date).replace('T', ', ').slice(0, -1)} (UTC)</div></div><div class="section-items"><div class="section-item-text"><a class="url-text" href="${data[i].html_url}" target="_blank"></a></div></div></div>`;
 		}
 		document.getElementById('gitCommitsInfo').insertAdjacentHTML('beforeend', str);
 	}

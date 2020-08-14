@@ -3,7 +3,7 @@ html {
   scroll-padding-top: 1rem;
 }
 body {
-  background-color: #f7f7f7;
+  background-color: #f5f5f5;
   font-size: .9rem;
 }
 ul {
@@ -190,20 +190,27 @@ summary {
   max-width: 100%;
   padding-right: 1rem;
 }
-.card-contents a {
+.url-text {
   text-decoration: none;
-  color: #3478a4;
+  color: #379dd9;
   transition: .5s;
 }
-.card-contents a:hover {
+.url-text:hover {
   color: #00a7f4;
 }
-.card-contents a:after {
+.url-text:after {
   word-wrap: break-word;
   content: attr(href);
 }
 .section-item-action {
   flex-direction: column;
+}
+
+.sub-text {
+  text-decoration: none;
+  font-size: .75rem;
+  color: #666;
+  font-weight: 400;
 }
 
 .radio-group {
@@ -225,31 +232,4 @@ summary {
   box-shadow: 0rem .1rem 1.6rem rgba(0, 0, 0, .4);
   border-radius: .5rem;
   -webkit-transition: .14s ease-in-out;
-}
-
-/* Ripple Effect */
-.ripple {
-  position: relative;
-  overflow: hidden;
-}
-
-.ripple .rp-effect {
-  position: absolute;
-  pointer-events: none;
-  background: #37819e;
-  border-radius: 50%;
-  opacity: .35;
-  transform: scale(0);
-  animation: ripple 1s;
-}
-
-@-webkit-keyframes ripple {
-  0% {
-    opacity: .35;
-    transform: scale(.2);
-  }
-  100% {
-    opacity: 0;
-    transform: scale(2.0);
-  }
 }
