@@ -2,45 +2,45 @@
 <html>
 
 <head>
-  <meta charset="utf-8">
-  <title>Hello-NewTab</title>
-  <!-- <base target="_blank"> -->
-  <!-- <link rel="stylesheet" type="text/css" href="css/newtab.css"> -->
-  <link rel="stylesheet" type="text/css" href="css/common.css">
-  <link rel="stylesheet" type="text/css" href="css/newtab.css">
-  <link id="head-theme" rel="stylesheet" type="text/css" href="">
-  <link rel="icon" type="image/png" href="img/icon_016.png" sizes="16x16">
-  <link rel="icon" type="image/png" href="img/icon_032.png" sizes="32x32">
-  <link rel="icon" type="image/png" href="img/icon_096.png" sizes="96x96">
-  <base id="head-target" target="">
+    <meta charset="utf-8">
+    <title>Hello-NewTab</title>
+    <!-- <base target="_blank"> -->
+    <!-- <link rel="stylesheet" type="text/css" href="css/newtab.css"> -->
+    <link rel="stylesheet" type="text/css" href="css/common.css">
+    <link rel="stylesheet" type="text/css" href="css/newtab.css">
+    <link id="head-theme" rel="stylesheet" type="text/css" href="">
+    <link rel="icon" type="image/png" href="img/icon_016.png" sizes="16x16">
+    <link rel="icon" type="image/png" href="img/icon_032.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="img/icon_096.png" sizes="96x96">
+    <base id="head-target" target="">
 </head>
 
 <body>
-  <div id="bookmark-search-group">
-    <div id="bookmark-search-header">Search</div>
-    <div id="bookmark-search-input-area">
-      <input id="bookmark-search" type="text" placeholder="ブックマークの検索" required>
-      <!-- <span id="searchView" class="action-item" title="検索結果の再読込"></span> -->
-      <span id="bookmark-search-reset" class="bookmark-search-input-clear">×</span>
+    <div id="bookmark-search-group">
+        <div id="bookmark-search-header">Search</div>
+        <div id="bookmark-search-input-area">
+            <input id="bookmark-search" type="text" placeholder="ブックマークの検索" required>
+            <!-- <span id="searchView" class="action-item" title="検索結果の再読込"></span> -->
+            <span id="bookmark-search-reset" class="bookmark-search-input-clear">×</span>
+        </div>
+        <div id="bookmark-search-result">
+        </div>
     </div>
-    <div id="bookmark-search-result">
-    </div>
-  </div>
-  <!-- <div id="overray"></div> -->
-  <div id="system-link-area">
-    <div id="expand-menu" class="menu action-item"><img class="menu-icon" src="img/icon-menu.svg">System Pages</div>
-    <div id="search-menu" class="menu action-item"><img class="menu-icon" src="img/icon-search.svg">Search Bookmarks</div>
-    <div class="menu create-system-tab" data-href="chrome://apps/"><img class="menu-icon" src="img/icon-apps.svg">Apps</div>
-    <div class="menu create-system-tab" data-href="chrome://bookmarks/"><img class="menu-icon" src="img/icon-bookmarks.svg">Bookmarks</div>
-    <div class="menu create-system-tab" data-href="chrome://history/"><img class="menu-icon" src="img/icon-history.svg">History</div>
-    <div class="menu create-system-tab" data-href="chrome://downloads/"><img class="menu-icon" src="img/icon-downloads.svg">Downloads</div>
-    <div class="menu create-system-tab" data-href="chrome://extensions/"><img class="menu-icon" src="img/icon-extensions.svg">Extensions</div>
-    <div class="menu create-system-tab" data-href="chrome://settings/"><img class="menu-icon" src="img/icon-settings.svg">Settings</div>
-    <div class="menu create-system-tab" data-href="option.html"><img class="menu-icon" src="img/icon-options.svg">Options</div>
-    
-    <div id="select-theme-menu" class="menu action-item"><img class="menu-icon" src="img/icon-theme.svg">Switch Theme</div>
-    <div id="float-menu-theme" class="float-menu">
-      <div>
+    <!-- <div id="overray"></div> -->
+    <div id="system-link-area">
+        <div id="expand-menu" class="menu action-item"><img class="menu-icon" src="img/icon-menu.svg">System Pages</div>
+        <div id="search-menu" class="menu action-item"><img class="menu-icon" src="img/icon-search.svg">Search Bookmarks</div>
+        <div class="menu create-system-tab" data-href="chrome://apps/"><img class="menu-icon" src="img/icon-apps.svg">Apps</div>
+        <div class="menu create-system-tab" data-href="chrome://bookmarks/"><img class="menu-icon" src="img/icon-bookmarks.svg">Bookmarks</div>
+        <div class="menu create-system-tab" data-href="chrome://history/"><img class="menu-icon" src="img/icon-history.svg">History</div>
+        <div class="menu create-system-tab" data-href="chrome://downloads/"><img class="menu-icon" src="img/icon-downloads.svg">Downloads</div>
+        <div class="menu create-system-tab" data-href="chrome://extensions/"><img class="menu-icon" src="img/icon-extensions.svg">Extensions</div>
+        <div class="menu create-system-tab" data-href="chrome://settings/"><img class="menu-icon" src="img/icon-settings.svg">Settings</div>
+        <div class="menu create-system-tab" data-href="option.html"><img class="menu-icon" src="img/icon-options.svg">Options</div>
+
+        <div id="select-theme-menu" class="menu action-item"><img class="menu-icon" src="img/icon-theme.svg">Switch Theme</div>
+        <div id="float-menu-theme" class="float-menu">
+            <!-- <div>
         <input type="radio" name="theme" id="tmLight" value="tmLight">
         <label for="tmLight">Modern Light</label>
       </div>
@@ -71,23 +71,23 @@
       <div>
         <input type="radio" name="theme" id="tmStylishWhite" value="tmStylishWhite">
         <label for="tmStylishWhite">Stylish White</label>
-      </div>
+      </div> -->
+        </div>
+        <div id="module-visible-menu" class="menu action-item"><img class="menu-icon" src="img/icon-visibility.svg">Visibility</div>
+        <div id="float-menu-visibility" class="float-menu">
+            <div>Visible Folders</div>
+            <div class="toggle" id="tgglVisible"></div>
+        </div>
     </div>
-    <div id="module-visible-menu" class="menu action-item"><img class="menu-icon" src="img/icon-visibility.svg">Visibility</div>
-      <div id="float-menu-visibility" class="float-menu">
-        <div>Visible Folders</div>
-        <div class="toggle" id="tgglVisible"></div>
-      </div>
-  </div>
     <div id="web-search-area" class="displayNone">
-      <input id="web-search-input" type="text" placeholder="Google Search">
-      <input id="web-search-submit" type="submit" value="Search"></input>
+        <input id="web-search-input" type="text" placeholder="Google Search">
+        <input id="web-search-submit" type="submit" value="Search"></input>
     </div>
-  <div id="body-main">
-  </div>
-  <script type="text/javascript" src="js/lib/macy.js"></script>
-  <script type="text/javascript" src="js/common.js"></script>
-  <script type="text/javascript" src="js/newtab.js"></script>
+    <div id="body-main">
+    </div>
+    <script type="text/javascript" src="js/lib/macy.js"></script>
+    <script type="text/javascript" src="js/common.js"></script>
+    <script type="text/javascript" src="js/newtab.js"></script>
 </body>
 
 </html>
