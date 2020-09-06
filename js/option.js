@@ -33,32 +33,41 @@ class ReflectSettings extends DefaultSettings {
         this.addElementsEventListener()
     }
     addThemeOptions() {
-        const radioFragment = document.createDocumentFragment()
-        const option1Fragment = document.createDocumentFragment()
-        const option2Fragment = document.createDocumentFragment()
+        const styles = this.themes.styles
+        const colors = this.themes.colors
+        document.getElementById('theme-styles').appendChild(this.generateRadio(styles, 'style'))
+        document.getElementById('theme-colors').appendChild(this.generateRadio(colors, 'color'))
+        document.getElementById('theme-primary-style').appendChild(this.generateOption(styles))
+        document.getElementById('theme-primary-color').appendChild(this.generateOption(colors))
+        document.getElementById('theme-secondary-style').appendChild(this.generateOption(styles))
+        document.getElementById('theme-secondary-color').appendChild(this.generateOption(colors))
+    }
+    generateRadio(items, name) {
+        const fragment = document.createDocumentFragment()
         const inputBase = document.createElement('input')
         const labelBase = document.createElement('label')
-        const optionBase = document.createElement('option')
-        const themes = this.themes
-        for(const theme of themes) {
+        for(const item of items) {
             const inpt = inputBase.cloneNode()
             const labl = labelBase.cloneNode()
-            const optn1 = optionBase.cloneNode()
-            const optn2 = optionBase.cloneNode()
             inpt.type = 'radio'
-            inpt.name = 'theme'
-            inpt.id = inpt.value = labl.htmlFor = optn1.value = optn2.value = theme.id
-            labl.appendChild(document.createTextNode(theme.label))
-            optn1.appendChild(document.createTextNode(theme.label))
-            optn2.appendChild(document.createTextNode(theme.label))
-            radioFragment.appendChild(inpt)
-            radioFragment.appendChild(labl)
-            option1Fragment.appendChild(optn1)
-            option2Fragment.appendChild(optn2)
+            inpt.name = name
+            inpt.id = inpt.value = labl.htmlFor = item.id
+            labl.appendChild(document.createTextNode(item.label))
+            fragment.appendChild(inpt)
+            fragment.appendChild(labl)
         }
-        document.getElementById('theme-group').appendChild(radioFragment)
-        document.getElementById('theme-primary').appendChild(option1Fragment)
-        document.getElementById('theme-secondary').appendChild(option2Fragment)
+        return fragment
+    }
+    generateOption(items) {
+        const fragment = document.createDocumentFragment()
+        const optionBase = document.createElement('option')
+        for(const item of items) {
+            const optn = optionBase.cloneNode()
+            optn.value = item.id
+            optn.appendChild(document.createTextNode(item.label))
+            fragment.appendChild(optn)
+        }
+        return fragment
     }
     reflect() {
         const data = this.settings

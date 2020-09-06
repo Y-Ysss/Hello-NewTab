@@ -31,22 +31,27 @@ class DefaultSettings {
     constructor() {
         this.settings = {
             "toggle": { "tgglIcon": false, "tgglOpenTab": true, "tgglWebSearch": false, "tgglAutoTheme": false },
-            "radio": { "theme": "tmFlatLight" },
+            "radio": { "tmStyle": "Flat", "tmColor": "Light" },
             "text": { "txtScale": "", "txtRegexpPattern": "", "txtMacyColumns": "", "txtMacyMarginX": "", "txtMacyBreak": "" },
-            "range": { "sliderLower": "", "sliderUpper": "" },
-            "select": { "autoThemePrimary": "tmFlatLight", "autoThemeSecondary": "tmFlatDark" },
-            "format_version": "0.1"
+            "range": { "sliderLower": "7", "sliderUpper": "17" },
+            "select": { "autoThemePrimaryStyle": "Flat", "autoThemePrimaryColor": "Light", "autoThemeSecondaryStyle": "Flat", "autoThemeSecondaryColor": "Dark" },
+            "format_version": "0.6"
         }
-        this.themes = [
-            { "id": "tmLight", "label": "Modern Light" },
-            { "id": "tmDark", "label": "Modern Dark" },
-            { "id": "tmOrange", "label": "Modern Orange" },
-            { "id": "tmFlatLight", "label": "Flat Light" },
-            { "id": "tmFlatDark", "label": "Flat Dark" },
-            { "id": "tmFullFlatLight", "label": "FullFlat Light" },
-            { "id": "tmStylishWhite", "label": "Stylish White" },
-            { "id": "tmStylishDark", "label": "Stylish Dark" },
-        ]
+        this.themes = {
+            "styles": [
+                { "id": "Modern", "label": "Modern" },
+                { "id": "Flat", "label": "Flat" },
+                { "id": "FullFlat", "label": "Full Flat" },
+                { "id": "Stylish", "label": "Stylish" },
+                { "id": "Neumorphism", "label": "Neumorphism" },
+            ],
+            "colors": [
+                { "id": "Light", "label": "Light" },
+                { "id": "Dark", "label": "Dark" },
+                { "id": "Orange", "label": "Orange" },
+                { "id": "White", "label": "White" }
+            ]
+        }
         this.loadData()
     }
     async loadData() {

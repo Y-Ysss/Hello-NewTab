@@ -66,7 +66,7 @@
                     <div class="section-items">
                         <div class="section-item-text">ページのスタイル</div>
                         <div class="section-item-action">
-                            <div id="theme-group" class="radio-group">
+                            <div id="theme-styles" class="radio-group">
                                 <!-- 
                 <input type="radio" name="theme" id="tmLight" value="tmLight">
                 <label for="tmLight">Modern Light</label>
@@ -86,6 +86,13 @@
                             </div>
                         </div>
                     </div>
+                    <div class="section-items">
+                        <div class="section-item-text">ページカラー</div>
+                        <div class="section-item-action">
+                            <div id="theme-colors" class="radio-group">
+                            </div>
+                        </div>
+                    </div>
 
                     <div class="content-section">
                         <!-- <div class="section-title">Unimplemented</div> -->
@@ -99,43 +106,42 @@
                                 </div>
                             </div>
                             <div class="section-items-continuation">
-                                <div class="section-item-text">テーマ1の選択と時間設定</div>
-                                <div class="section-item-action">
+                                <div class="section-item-text">テーマ1</div>
+                            </div>
+                            <div class="section-items">
+                                <div class="section-item-text">
                                     <label class="selector">
-                    <select id="theme-primary" name="autoThemePrimary">
-                      <!-- <option value="tmLight">Modern Light</option>
-                      <option value="tmDark">Modern Dark</option>
-                      <option value="tmOrange">Modern Orange</option>
-                      <option value="tmFlatLight">Flat Light</option>
-                      <option value="tmFlatDark">Flat Dark</option>
-                      <option value="tmFullFlatLight">FullFlat Light</option> -->
-                    </select>
-                  </label>
-                                    <span>&ensp;:&ensp;
-                    <input name="sliderLower" class="sliderLower short text-synchronize-slider" type="number" min="0" max="24" step="1">時 ～ 
-                    <input name="sliderUpper" class="sliderUpper short text-synchronize-slider" type="number" min="0" max="24" step="1">時まで
-                  </span>
+                                        <select id="theme-primary-style" name="autoThemePrimaryStyle"></select>
+                                    </label>
+                                    <label class="selector">
+                                        <select id="theme-primary-color" name="autoThemePrimaryColor"></select>
+                                    </label></div>
+                                <div class="section-item-action">
+                                    <span>
+                                        <input name="sliderLower" class="sliderLower short text-synchronize-slider" type="number" min="0" max="24" step="1">時 ～ 
+                                        <input name="sliderUpper" class="sliderUpper short text-synchronize-slider" type="number" min="0" max="24" step="1">時まで
+                                    </span>
                                 </div>
                             </div>
 
 
                             <div class="section-items-continuation">
-                                <div class="section-item-text">テーマ2の選択と時間設定</div>
-                                <div class="section-item-action">
+                                <div class="section-item-text">テーマ2</div>
+                            </div>
+                            <div class="section-items">
+                                <div class="section-item-text">
                                     <label class="selector">
-                    <select id="theme-secondary" name="autoThemeSecondary">
-                      <!-- <option value="tmLight">Modern Light</option>
-                      <option value="tmDark">Modern Dark</option>
-                      <option value="tmOrange">Modern Orange</option>
-                      <option value="tmFlatLight">Flat Light</option>
-                      <option value="tmFlatDark">Flat Dark</option>
-                      <option value="tmFullFlatLight">FullFlat Light</option> -->
-                    </select>
-                  </label>
-                                    <span>&ensp;:&ensp;
-                    <input name="sliderUpper" class="sliderUpper short text-synchronize-slider" type="number" min="0" max="24" step="1">時 ～
-                    <input name="sliderLower" class="sliderLower short text-synchronize-slider" type="number" min="0" max="24" step="1">時まで
-                  </span>
+                                        <select id="theme-secondary-style" name="autoThemeSecondaryStyle"></select>
+                                    </label>
+                                    <label class="selector">
+                                        <select id="theme-secondary-color" name="autoThemeSecondaryColor"></select>
+                                    </label>
+                                </div>
+                                <div class="section-item-action">
+                                    <span>
+                                        <input name="sliderUpper" class="sliderUpper short text-synchronize-slider" type="number" min="0" max="24" step="1">時 ～
+                                        <input name="sliderLower" class="sliderLower short text-synchronize-slider" type="number" min="0" max="24" step="1">時まで
+                                    </span>
                                 </div>
                             </div>
                             <div class="section-items">

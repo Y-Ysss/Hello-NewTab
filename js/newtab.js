@@ -237,8 +237,12 @@ class Reflector {
             document.documentElement.style.zoom = value + '%'
         }
     }
-    theme(value) {
-        document.getElementById('head-theme').href = `css/theme/${value}.css`
+    tmStyle(value) {
+        document.getElementById('head-theme-style').href = `css/theme/theme-style/tm${value}.css`
+        document.getElementById(value).checked = true
+    }
+    tmColor(value) {
+        document.getElementById('head-theme-color').href = `css/theme/theme-color/cl${value}.css`
         document.getElementById(value).checked = true
     }
     tgglWebSearch(value) {
@@ -271,32 +275,43 @@ class ContentsManager extends DefaultSettings {
     }
 
     addThemeOptions() {
+        document.getElementById('theme-style').appendChild(this.generateRadio(this.themes.styles, 'tmStyle'))
+        document.getElementById('theme-color').appendChild(this.generateRadio(this.themes.colors, 'tmColor'))
+    }
+    generateRadio(items, name) {
         const fragment = document.createDocumentFragment()
-        const divBase = document.createElement('div')
         const inputBase = document.createElement('input')
         const labelBase = document.createElement('label')
-        const themes = this.themes
-        for(const theme of themes) {
-            const div = divBase.cloneNode()
+        for(const item of items) {
             const inpt = inputBase.cloneNode()
             const labl = labelBase.cloneNode()
             inpt.type = 'radio'
-            inpt.name = 'theme'
-            inpt.id = inpt.value = labl.htmlFor = theme.id
-            labl.appendChild(document.createTextNode(theme.label))
-            div.appendChild(inpt)
-            div.appendChild(labl)
-            fragment.appendChild(div)
+            inpt.name = name
+            inpt.id = inpt.value = labl.htmlFor = item.id
+            labl.appendChild(document.createTextNode(item.label))
+            fragment.appendChild(inpt)
+            fragment.appendChild(labl)
         }
-        document.getElementById('float-menu-theme').appendChild(fragment)
+        return fragment
     }
-
+    generateOption(items) {
+        const fragment = document.createDocumentFragment()
+        const optionBase = document.createElement('option')
+        for(const item of items) {
+            const optn = optionBase.cloneNode()
+            optn.value = styles.id
+            optn.appendChild(document.createTextNode(item.label))
+            fragment.appendChild(optn)
+        }
+        return fragment
+    }
     addEventListener() {
         wrapper('input[type=radio]', 'click', (event) => {
-            this.settings.radio.theme = event.target.id
+            const target = event.target
+            this.settings.radio[target.name] = target.id
             this.setState(this.settings.radio)
             this.saveData()
-            chrome.runtime.sendMessage({ contents: 'theme' })
+            chrome.runtime.sendMessage({ contents: target.name })
             chrome.runtime.sendMessage({ option: 'reload' })
         })
         wrapper('html', 'keydown', (event) => {
