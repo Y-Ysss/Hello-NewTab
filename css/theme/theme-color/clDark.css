@@ -1,0 +1,14 @@
+:root {
+    --accent1: #0C5073;
+    --accent2: #37819e;
+    --base1: #253036;
+    --base2: #284250;
+    --surface: #171E22;
+    --boundary: #354046;
+    --primary: #9ba3a7;
+    --secondary: #abadae;
+    --shadow1: rgba(0, 0, 0, .45);
+    --shadow2: rgba(0, 0, 0, .45);
+    --filter1: invert(50%);
+    --filter2: invert(70%);
+}
