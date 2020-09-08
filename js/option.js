@@ -99,6 +99,10 @@ class ReflectSettings extends DefaultSettings {
     }
 
     addElementsEventListener() {
+        this.wrapper('#side-menu a', 'click', (event) => {
+            window.scrollTo(0, document.getElementById(event.target.dataset.anchor).offsetTop - 16)
+            console.log(event.target.dataset.anchor)
+        })
         this.wrapper('#save-settings', 'click', (event) => {
             this.saveData()
             chrome.runtime.sendMessage({ newtab: 'reload' })

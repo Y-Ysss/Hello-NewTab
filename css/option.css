@@ -5,6 +5,9 @@ html {
 body {
   background-color: #f5f5f5;
   font-size: .9rem;
+  display: grid;
+  grid-column-gap: 1em;
+  grid-template-columns: 13rem 1fr;
 }
 ul {
   margin: 0;
@@ -73,30 +76,24 @@ summary {
 }
 
 #side-menu {
-  height: 100%;
-  width: 10rem;
-  overflow-y: hidden;
+  top: 0;
+  position: sticky;
+  height: 100vh;
   z-index: 5;
-  position: fixed;
-  cursor: default;
-  background-color: #fff;
-  box-shadow: 0rem .2rem .5rem rgba(0, 0, 0, .3);
-  border-right: .1rem solid #ccc;
 }
-
-#side-menu > div {
-  padding: 1.2rem .8rem 1.6rem .8rem;
-  vertical-align: middle;
-  border-bottom: .1rem solid #ccc;
-}
-
 
 #side-menu a {
-  padding: 1rem 1.6rem;
+  padding: .6rem 1.6rem;
+  margin: 1rem;
   display: block;
+  border-radius: 2rem;
   text-decoration: none;
   color: #345;
+  background-color: #fff;
+  border: 1px solid #ddd;
   transition: .3s all;
+  cursor: pointer;
+  font-weight: 500;
 }
 
 #side-menu a:hover {
@@ -104,7 +101,6 @@ summary {
 }
 
 #body-main {
-  margin-left: 10rem;
   padding: 0 2rem;
   display: flex;
   flex-wrap: wrap;
@@ -137,8 +133,6 @@ summary {
   padding: 1rem 0;
 }
 
-.card-contents {
-}
 .section-title {
   font-weight: bold;
   padding: .6rem 0;
@@ -215,11 +209,12 @@ summary {
 
 .radio-group {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
   grid-column-gap: 1em;
+  grid-template-columns: repeat(3, minmax(8rem, 1fr));
 }
 
 #toast {
+  min-width: 9rem;
   bottom: -5rem;
   left: 50%;
   padding: .6rem 3rem;
@@ -231,5 +226,5 @@ summary {
   background-color: #444;
   box-shadow: 0rem .1rem 1.6rem rgba(0, 0, 0, .4);
   border-radius: .5rem;
-  -webkit-transition: .14s ease-in-out;
+  transition: .14s ease-in-out;
 }

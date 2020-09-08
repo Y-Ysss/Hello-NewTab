@@ -94,27 +94,31 @@ class DefaultSettings {
         const now = new Date()
         console.log(this.formatTime(now))
         const h = now.getHours()
-        let tm
+        let tm, cl
         if(t1 <= t2) {
             if(t1 <= h && h < t2) {
                 console.log('theme1')
-                tm = data.settings.select.autoThemePrimary
+                tm = data.settings.select.autoThemePrimaryStyle
+                cl = data.settings.select.autoThemePrimaryColor
             } else if(h < t1 || t2 <= h) {
                 console.log('theme2')
-                tm = data.settings.select.autoThemeSecondary
+                tm = data.settings.select.autoThemeSecondaryStyle
+                cl = data.settings.select.autoThemeSecondaryColor
             }
         } else if(t2 < t1) {
             if(t2 <= h && h < t1) {
                 console.log('theme2')
-                tm = data.settings.select.autoThemeSecondary
+                tm = data.settings.select.autoThemeSecondaryStyle
+                cl = data.settings.select.autoThemeSecondaryColor
             } else if(t1 <= h || h < t2) {
                 console.log('theme1')
-                tm = data.settings.select.autoThemePrimary
+                tm = data.settings.select.autoThemePrimaryStyle
+                cl = data.settings.select.autoThemePrimaryColor
             }
         }
-        if(this.settings.radio.theme !== tm) {
-            this.settings.radio.theme = tm
-            console.log('tm:', tm)
+        if(this.settings.radio.tmStyle !== tm || this.settings.radio.tmColor !== cl) {
+            this.settings.radio.tmStyle = tm
+            this.settings.radio.tmColor = cl
             this.saveData()
             chrome.runtime.sendMessage({ newtab: 'reload' })
             chrome.runtime.sendMessage({ option: 'reload' })
