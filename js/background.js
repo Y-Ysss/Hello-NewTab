@@ -8,6 +8,7 @@ class ContentsController extends DefaultSettings {
     async saveBookmarks() {
         const data = await getStorage('settings')
         console.log(data.settings)
+        this.hideFolderPattern = data.settings.text.txtRegexpPattern
         const itemTree = await getBookmarksTree();
         itemTree.forEach((items) => {
             if('children' in items) {
@@ -28,7 +29,7 @@ class ContentsController extends DefaultSettings {
                 delete item[key]
             }
             if("children" in item && item.children.length > 0) {
-                item['visible'] = !item.title.match(/^#/);
+                item['visible'] = !item.title.match(new RegExp(this.hideFolderPattern));
                 item.children.forEach((sub) => {
                     this.OrganizeElementsKey(el, sub);
                 });
