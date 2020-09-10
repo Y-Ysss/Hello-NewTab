@@ -1,6 +1,6 @@
 body {
     color: var(--primary);
-    background-color: var(--base1);
+    background-color: var(--base);
 }
 
 a {
@@ -19,34 +19,26 @@ a {
 
 #bookmark-search {
     color: var(--secondary);
-    background-color: var(--base1);
+    background-color: var(--base);
 }
-
-#bookmark-search:focus {}
 
 #bookmark-search::-webkit-input-placeholder {
     color: var(--secondary);
 }
 
-#bookmark-search-reset {}
-
 #bookmark-search-result {
     background-color: var(--surface);
 }
 
-.bookmark-search-result-items {}
-
 .bookmark-search-result-items:hover,
 .bookmark-search-result-items:focus {
     padding-left: 0.78rem;
-    background: var(--base2);
+    background: var(--accent3);
 }
 
 .bookmark-search-result-items span {
     background-color: var(--accent2);
 }
-
-#bookmark-result-count {}
 
 #bookmark-no-results-found {
     color: var(--secondary);
@@ -68,7 +60,7 @@ a {
 }
 
 .menu:hover {
-    background-color: var(--base2);
+    background-color: var(--accent3);
 }
 
 .menu-icon {
@@ -93,11 +85,9 @@ a {
 
 .content-module ul li:hover {
     margin-left: -0.39rem;
-    background: var(--base2);
+    background: var(--accent3);
     /*-webkit-transition: 0.25s ease-out all;*/
 }
-
-.bookmark-count {}
 
 .toggle-on {
     background-color: var(--accent2);
@@ -108,15 +98,13 @@ a {
 }
 
 .active-menu {
-    background-color: var(--base2);
+    background-color: var(--accent3);
 }
 
 .float-menu {
     background-color: var(--surface);
     box-shadow: 0 .1rem .8rem var(--shadow1);
 }
-
-input[type=radio]+label {}
 
 input[type=radio]:hover+label::before {
     border-color: var(--accent1);
@@ -150,7 +138,7 @@ input[type=radio]+label:after {
 
 #web-search-submit {
     border-color: var(--boundary);
-    background-color: var(--base2);
+    background-color: var(--accent3);
 }
 
 #web-search-submit:hover {
