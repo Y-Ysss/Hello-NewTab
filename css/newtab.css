@@ -171,7 +171,6 @@ ul {
     pointer-events: none;
 }
 
-
 /*Body*/
 
 #body-main {
@@ -266,8 +265,17 @@ ul {
     opacity: 1;
 }
 
-#float-menu-theme div {
-    margin: 0.3rem 0.2rem 0.3rem 0;
+#float-menu-theme {
+    display: grid;
+    grid-column-gap: 1em;
+    grid-template-columns: 1fr 1fr;
+    padding: .8rem;
+}
+#float-menu-theme div span {
+    font-weight: 500;
+}
+.design-options {
+    padding-bottom: .8rem;
 }
 
 #float-menu-visibility {

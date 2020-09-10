@@ -238,11 +238,15 @@ class Reflector {
         }
     }
     tmStyle(value) {
-        document.getElementById('head-theme-style').href = `css/theme/theme-style/tm${value}.css`
+        document.getElementById('head-design-style').href = `css/design/style/st${value}.css`
+        document.getElementById(value).checked = true
+    }
+    tmTheme(value) {
+        document.getElementById('head-design-theme').href = `css/design/theme/tm${value}.css`
         document.getElementById(value).checked = true
     }
     tmColor(value) {
-        document.getElementById('head-theme-color').href = `css/theme/theme-color/cl${value}.css`
+        document.getElementById('head-design-color').href = `css/design/color/cl${value}.css`
         document.getElementById(value).checked = true
     }
     tgglWebSearch(value) {
@@ -276,6 +280,7 @@ class ContentsManager extends DefaultSettings {
 
     addThemeOptions() {
         document.getElementById('theme-style').appendChild(this.generateRadio(this.themes.styles, 'tmStyle'))
+        document.getElementById('theme-theme').appendChild(this.generateRadio(this.themes.themes, 'tmTheme'))
         document.getElementById('theme-color').appendChild(this.generateRadio(this.themes.colors, 'tmColor'))
     }
     generateRadio(items, name) {

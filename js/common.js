@@ -31,10 +31,13 @@ class DefaultSettings {
     constructor() {
         this.settings = {
             "toggle": { "tgglIcon": false, "tgglOpenTab": true, "tgglWebSearch": false, "tgglAutoTheme": false },
-            "radio": { "tmStyle": "Flat", "tmColor": "Light" },
+            "radio": { "tmStyle": "Flat", "tmTheme": "Light" , "tmColor": "LightBlue" },
             "text": { "txtScale": "", "txtRegexpPattern": "", "txtMacyColumns": "", "txtMacyMarginX": "", "txtMacyBreak": "" },
             "range": { "sliderLower": "7", "sliderUpper": "17" },
-            "select": { "autoThemePrimaryStyle": "Flat", "autoThemePrimaryColor": "Light", "autoThemeSecondaryStyle": "Flat", "autoThemeSecondaryColor": "Dark" },
+            "select": {
+                "autoThemePrimaryStyle": "Flat", "autoThemePrimaryTheme": "Light","autoThemePrimaryColor": "LightBlue",
+                "autoThemeSecondaryStyle": "Flat", "autoThemeSecondaryTheme": "Dark", "autoThemeSecondaryColor": "LightBlue"
+            },
             "format_version": "0.6"
         }
         this.themes = {
@@ -45,10 +48,16 @@ class DefaultSettings {
                 { "id": "Stylish", "label": "Stylish" },
                 { "id": "Neumorphism", "label": "Neumorphism" },
             ],
-            "colors": [
+            "themes": [
                 { "id": "Light", "label": "Light" },
-                { "id": "Dark", "label": "Dark" },
+                { "id": "Dark", "label": "Dark" }
+            ],
+            "colors": [
+                { "id": "LightBlue", "label": "Light Blue" },
+                { "id": "DarkBlue", "label": "Dark Blue" },
+                { "id": "Magenta", "label": "Magenta" },
                 { "id": "Orange", "label": "Orange" },
+                { "id": "Lime", "label": "Lime" },
                 { "id": "White", "label": "White" }
             ]
         }
@@ -94,30 +103,35 @@ class DefaultSettings {
         const now = new Date()
         console.log(this.formatTime(now))
         const h = now.getHours()
-        let tm, cl
+        let st, tm, cl
         if(t1 <= t2) {
             if(t1 <= h && h < t2) {
                 console.log('theme1')
-                tm = data.settings.select.autoThemePrimaryStyle
+                st = data.settings.select.autoThemePrimaryStyle
+                tm = data.settings.select.autoThemePrimaryTheme
                 cl = data.settings.select.autoThemePrimaryColor
             } else if(h < t1 || t2 <= h) {
                 console.log('theme2')
-                tm = data.settings.select.autoThemeSecondaryStyle
+                st = data.settings.select.autoThemeSecondaryStyle
+                tm = data.settings.select.autoThemeSecondaryTheme
                 cl = data.settings.select.autoThemeSecondaryColor
             }
         } else if(t2 < t1) {
             if(t2 <= h && h < t1) {
                 console.log('theme2')
-                tm = data.settings.select.autoThemeSecondaryStyle
+                st = data.settings.select.autoThemeSecondaryStyle
+                tm = data.settings.select.autoThemeSecondaryTheme
                 cl = data.settings.select.autoThemeSecondaryColor
             } else if(t1 <= h || h < t2) {
                 console.log('theme1')
-                tm = data.settings.select.autoThemePrimaryStyle
+                st = data.settings.select.autoThemePrimaryStyle
+                tm = data.settings.select.autoThemePrimaryTheme
                 cl = data.settings.select.autoThemePrimaryColor
             }
         }
-        if(this.settings.radio.tmStyle !== tm || this.settings.radio.tmColor !== cl) {
-            this.settings.radio.tmStyle = tm
+        if(this.settings.radio.tmStyle !== st || this.settings.radio.tmTheme !== tm || this.settings.radio.tmColor !== cl) {
+            this.settings.radio.tmStyle = st
+            this.settings.radio.tmTheme = tm
             this.settings.radio.tmColor = cl
             this.saveData()
             chrome.runtime.sendMessage({ newtab: 'reload' })

@@ -17,6 +17,7 @@ class Reflector {
         document.getElementById(value).checked = true
     }
     static select(key, value) {
+        console.log(key, value)
         for(const item of document.querySelectorAll(`select[name="${key}"]`)) {
             item.value = value
         }
@@ -34,12 +35,16 @@ class ReflectSettings extends DefaultSettings {
     }
     addThemeOptions() {
         const styles = this.themes.styles
+        const themes = this.themes.themes
         const colors = this.themes.colors
         document.getElementById('theme-styles').appendChild(this.generateRadio(styles, 'style'))
+        document.getElementById('theme-themes').appendChild(this.generateRadio(themes, 'theme'))
         document.getElementById('theme-colors').appendChild(this.generateRadio(colors, 'color'))
         document.getElementById('theme-primary-style').appendChild(this.generateOption(styles))
+        document.getElementById('theme-primary-theme').appendChild(this.generateOption(themes))
         document.getElementById('theme-primary-color').appendChild(this.generateOption(colors))
         document.getElementById('theme-secondary-style').appendChild(this.generateOption(styles))
+        document.getElementById('theme-secondary-theme').appendChild(this.generateOption(themes))
         document.getElementById('theme-secondary-color').appendChild(this.generateOption(colors))
     }
     generateRadio(items, name) {
