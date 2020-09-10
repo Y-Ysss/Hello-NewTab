@@ -1,7 +1,7 @@
 {
     "manifest_version": 2,
     "name": "Hello NewTab",
-    "version": "0.5",
+    "version": "0.6",
     "description": "This extension allows you to quickly access your bookmarks on the new tab.",
     "permissions": [
         "bookmarks",
@@ -10,7 +10,7 @@
         "alarms",
         "chrome://favicon/"
     ],
-    "incognito":"split",
+    "incognito": "split",
     "background": {
         "scripts": [
             "js/common.js",

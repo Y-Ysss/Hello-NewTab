@@ -7,7 +7,7 @@ For all those who are in search for a cool way to access your bookmarks, this sl
 ## Usage
 Open new tab in Google Chrome (or Chromium based Browser). Now you will see a "Hello NewTab" page. On this page, your bookmarks are displayed for each folder. Click the bookmark name or icon, the page opens in a new tab.
 
-## Install
+## Installation
 1. Open Google Chrome (or Chromium based Browser), type "chrome://extensions" in the address bar and press the "Enter" key. Enable developer mode extensions.
 2. Now you will see a checkbox with the label "developer mode". Check the checkbox and now you can easily install any extension that's not coming from the Chrome Web Store.
 3. Open File Explorer and find the zipped folder. To unzip the folder, select the zipped folder and right-click it, select Extract All, and then follow the instructions.
@@ -16,11 +16,13 @@ Open new tab in Google Chrome (or Chromium based Browser). Now you will see a "H
 6. Finished install.
 
 ## Attributions
-### Javascript Libraries
-- <a href="https://github.com/bigbite/macy.js">Macy.js</a>
+### Javascript Library
+- [Macy.js](https://github.com/bigbite/macy.js) [MIT License]
 
 ### Icons
-- <a href="https://material.io/resources/icons/">Material Icons</a>
+- [Material Icons](https://material.io/resources/icons/) [Apache license version 2.0]
 
 ## License
 MIT License Copyright (c) 2020 Y-Ysss
+
+This software includes the work that is distributed in the Apache License 2.0.

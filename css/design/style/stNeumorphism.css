@@ -1,0 +1,164 @@
+body {
+    color: var(--primary);
+    background-color: var(--base);
+}
+
+a {
+    color: var(--primary);
+}
+
+#bookmark-search-group {
+    height: calc(100% - 2rem);
+    background-color: #fafafa;
+    box-shadow: 0rem .2rem .5rem var(--shadow1);
+    border-radius: 1rem;
+    margin: 1rem 0 0 1rem;
+    z-index: 16;
+    /*-webkit-transition: 0.35s cubic-bezier(0.58, 0.11, 0.2, 1.05) all;*/
+}
+
+#bookmark-search-header {
+    background-color: var(--surface);
+}
+
+#bookmark-search {
+    color: var(--secondary);
+    background-color: var(--base);
+}
+
+#bookmark-search::-webkit-input-placeholder {
+    color: var(--secondary);
+}
+
+#bookmark-search-result {
+    background-color: var(--surface);
+}
+
+.bookmark-search-result-items:hover,
+.bookmark-search-result-items:focus {
+    background: var(--base);
+}
+
+.bookmark-search-result-items span {
+    background-color: var(--accent2);
+}
+
+#bookmark-no-results-found {
+    color: var(--secondary);
+}
+
+#bookmark-no-results-found img {
+    filter: var(--filter1);
+}
+
+#system-link-area {
+    opacity: 1;
+    height: calc(100% - 2rem);
+    border-radius: 0 0.65rem 0.65rem 0;
+    margin: 1rem 0;
+    background-color: var(--base);
+    box-shadow: inset .4rem .4rem .6rem var(--boundary), inset -.4rem -.4rem .6rem var(--surface);
+}
+
+.menu {
+    transition: .3s all;
+}
+
+.menu:hover {
+    background-color: var(--base);
+    box-shadow: .4rem .4rem .6rem var(--boundary), -.4rem -.4rem .6rem var(--surface);
+}
+
+.menu-icon {
+    filter: var(--filter2);
+}
+
+#body-main {
+    opacity: 1;
+}
+
+.content-module {
+    box-shadow: inset .4rem .4rem .6rem var(--boundary), inset -.4rem -.4rem .6rem var(--surface);
+    /*box-shadow: 0 .2rem .5rem rgba(0, 0, 0, .3);*/
+    /*-webkit-transition: 0.48s cubic-bezier(0.58, 0.11, 0.2, 1.00) all;*/
+}
+
+.content-header {
+    height: 1.6rem;
+    color: var(--primary);
+}
+
+.content-module ul li:hover {
+    margin-left: -0.39rem;
+    background: var(--base);
+    box-shadow: .4rem .4rem .6rem var(--boundary), -.4rem -.4rem .6rem var(--surface);
+    /*-webkit-transition: 0.25s ease-out all;*/
+}
+
+.toggle {
+    height: 1.5rem;
+    width: 3rem;
+    border-radius: 3.0rem;
+    overflow: hidden;
+    margin: .1rem 1rem;
+    background-color: var(--base);
+    box-shadow: inset 0.1rem 0.1rem 0 var(--boundary), inset -0.1rem -0.1rem 0 var(--surface);
+}
+
+.toggle:after {
+    top: .1rem;
+    border-radius: 50%;
+    background-color: var(--accent2);
+}
+
+.toggle-on:after {
+    background-color: var(--accent1);
+}
+
+.active-menu {
+    background-color: var(--base);
+}
+
+.float-menu {
+    background-color: var(--base);
+    box-shadow: 0 .1rem .8rem var(--shadow1);
+}
+
+input[type=radio]:hover+label::before {
+    border-color: var(--accent1);
+}
+
+input[type=radio]+label::before {
+    border-color: var(--boundary);
+}
+
+input[type=radio]:checked+label:before {
+    border-color: var(--accent1);
+}
+
+input[type=radio]+label:after {
+    background-color: var(--accent1);
+}
+
+#web-search-input {
+    color: var(--secondary);
+    background-color: var(--surface);
+    border-color: var(--boundary);
+}
+
+ ::-webkit-input-placeholder {
+    color: var(--secondary);
+}
+
+#web-search-input:focus {
+    border-color: var(--accent1);
+}
+
+#web-search-submit {
+    border-color: var(--boundary);
+    background-color: var(--accent3);
+}
+
+#web-search-submit:hover {
+    background-color: var(--accent2);
+}
