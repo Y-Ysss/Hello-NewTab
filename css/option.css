@@ -166,7 +166,7 @@ summary {
   padding: .5rem 0;
 }
 .section-items > div {
-  display: flex;
+  /* display: flex; */
 }
 .section-items-slim > div {
   padding: .2rem 0;
@@ -181,6 +181,7 @@ summary {
 }
 .section-item-text{
   flex: 1 0 auto;
+  line-height: 2rem;
   max-width: 100%;
   padding-right: 1rem;
 }
@@ -211,6 +212,12 @@ summary {
   display: grid;
   grid-column-gap: 1em;
   grid-template-columns: repeat(3, minmax(8rem, 1fr));
+}
+
+.txt-error-message {
+  font-size: .8rem;
+  color: #ef6262;
+  padding: 0 .8rem;
 }
 
 #toast {

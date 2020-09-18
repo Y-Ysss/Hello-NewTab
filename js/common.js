@@ -32,13 +32,13 @@ class DefaultSettings {
         this.settings = {
             "toggle": { "tgglIcon": false, "tgglOpenTab": true, "tgglWebSearch": false, "tgglAutoTheme": false },
             "radio": { "tmStyle": "Flat", "tmTheme": "Light" , "tmColor": "LightBlue" },
-            "text": { "txtScale": "", "txtRegexpPattern": "^'", "txtMacyColumns": "", "txtMacyMarginX": "", "txtMacyBreak": "" },
+            "text": { "txtScale": "", "txtRegexpPattern": "^'", "txtDisableFolderPattern": "", "txtMacyColumns": "", "txtMacyMarginX": "", "txtMacyBreak": "" },
             "range": { "sliderLower": "7", "sliderUpper": "17" },
             "select": {
                 "autoThemePrimaryStyle": "Flat", "autoThemePrimaryTheme": "Light","autoThemePrimaryColor": "LightBlue",
                 "autoThemeSecondaryStyle": "Flat", "autoThemeSecondaryTheme": "Dark", "autoThemeSecondaryColor": "LightBlue"
             },
-            "format_version": "0.6"
+            "format_version": "0.7"
         }
         this.themes = {
             "styles": [
