@@ -23,9 +23,6 @@ Color options (Left: LightBlue, Right:Lime)
 Light/Dark Theme options (Left: Light, Right: Dark)
 <img src="https://user-images.githubusercontent.com/10232644/99703050-fca6ed00-2ad9-11eb-8c57-f5076408716d.png">
 
-Stylish style & Dark Theme & Magenta AccentColor
-<img src="https://user-images.githubusercontent.com/10232644/99703383-658e6500-2ada-11eb-8189-42c2a86d8d35.png" width="50%">
-
 These three options combine to provide the best possible experience.
 
 ## Installation
