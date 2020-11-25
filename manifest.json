@@ -5,7 +5,6 @@
     "description": "This extension allows you to quickly access your bookmarks on the new tab.",
     "permissions": [
         "bookmarks",
-        "tabs",
         "storage",
         "alarms",
         "chrome://favicon/"
