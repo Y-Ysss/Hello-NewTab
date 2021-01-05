@@ -78,7 +78,7 @@ a {
 }
 
 .content-module {
-    box-shadow: inset .4rem .4rem .6rem var(--boundary), inset -.4rem -.4rem .6rem var(--surface);
+    box-shadow: inset .1rem .2rem .3rem var(--boundary), inset -.1rem -.2rem .3rem var(--surface);
     /*box-shadow: 0 .2rem .5rem rgba(0, 0, 0, .3);*/
     /*-webkit-transition: 0.48s cubic-bezier(0.58, 0.11, 0.2, 1.00) all;*/
 }
@@ -91,7 +91,7 @@ a {
 .content-module ul li:hover {
     margin-left: -0.39rem;
     background: var(--base);
-    box-shadow: .4rem .4rem .6rem var(--boundary), -.4rem -.4rem .6rem var(--surface);
+    box-shadow: .1rem .2rem .3rem var(--boundary), -.1rem -.2rem .3rem var(--surface);
     /*-webkit-transition: 0.25s ease-out all;*/
 }
 

@@ -72,7 +72,7 @@ class BookmarkContents {
             waitForImages: true,
             columns: 8,
             margin: { x: 30, y: 15 },
-            breakAt: { 1200: 5, 990: 4, 780: 3, 620: 2, 430: 1 }
+            breakAt: { 1400: 6, 1200: 5, 990: 4, 780: 3, 620: 2, 430: 1 }
         }
         const data = this.settings.text
         conf.columns = this.checkValue(data.txtMacyColumns, conf.columns)
@@ -257,11 +257,6 @@ class Reflector {
 }
 
 class ContentsManager extends DefaultSettings {
-
-    // 	<div>
-    // 	<input type="radio" name="theme" id="tmLight" value="tmLight">
-    // 	<label for="tmLight">Modern Light</label>
-    //   </div>
     init() {
         this.addContents()
         this.addThemeOptions()

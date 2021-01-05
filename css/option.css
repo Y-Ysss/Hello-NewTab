@@ -114,7 +114,6 @@ summary {
 }
 
 .card {
-  height: 100%;
   min-width: 30rem;
   padding: 1.6rem 2rem;
   overflow: hidden;
