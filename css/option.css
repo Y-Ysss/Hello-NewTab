@@ -60,7 +60,7 @@ table tr:last-child td{
 }
 
 details[open] summary ~ *{
-    height: 100%;
+    /* height: 100%; */
     animation: detailsMotion .6s ease-in-out;
 }
 
