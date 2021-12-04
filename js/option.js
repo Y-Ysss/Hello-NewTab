@@ -29,6 +29,7 @@ class ReflectSettings extends DefaultSettings {
         super()
     }
     init() {
+        this.regenerate = false
         this.addThemeOptions()
         this.reflect()
         this.addElementsEventListener()
@@ -106,10 +107,14 @@ class ReflectSettings extends DefaultSettings {
     addElementsEventListener() {
         this.wrapper('#side-menu a', 'click', (event) => {
             window.scrollTo(0, document.getElementById(event.target.dataset.anchor).offsetTop - 16)
-            console.log(event.target.dataset.anchor)
+            // console.log(event.target.dataset.anchor)
         })
         this.wrapper('#save-settings', 'click', (event) => {
             this.saveData()
+            if(this.regenerate) {
+                chrome.runtime.sendMessage({ background: 'reload' })
+                this.regenerate = false
+            }
             chrome.runtime.sendMessage({ newtab: 'reload' })
             chrome.runtime.sendMessage({ option: 'reload' })
             if(this.settings.toggle.tgglAutoTheme) {
@@ -127,6 +132,24 @@ class ReflectSettings extends DefaultSettings {
         })
         this.wrapper('.text-input', 'blur', (event) => {
             this.settings.text[event.target.id] = event.target.value
+        })
+        this.wrapper('.sw-disable', 'click', (event) => {
+            const name = event.target.dataset.targetInput
+            document.getElementById('txt' + name).disabled = !event.target.checked
+            this.regenerate = true
+        })
+        this.wrapper('.regenerate', 'keyup', (event) => {
+            let saveBtn = document.getElementById('save-settings')
+            let errorMsg = document.getElementById(event.target.id + 'Error')
+            try {
+                new RegExp(event.target.value)
+                errorMsg.innerText = ''
+                saveBtn.disabled = false
+            } catch (error) {
+                errorMsg.innerText = '正規表現が正しくありません'
+                saveBtn.disabled = true
+            }
+            this.regenerate = true
         })
         this.wrapper('input[type="radio"]', 'click', (event) => {
             this.settings.radio[event.target.name] = event.target.id

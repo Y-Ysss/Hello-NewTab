@@ -168,10 +168,12 @@ select {
     font-weight: bold;
     letter-spacing: .1em;
     color: #42a5f5;
+    background-color: #fff;
     border: .1rem solid #42a5f5;
     box-shadow: 0 0 .3rem rgba(0, 0, 0, .35);
     /*background-color: #115273;*/
     border-radius: .5rem;
+    outline: none;
     /* transition: .2s ease-out; */
 }
 
@@ -184,7 +186,15 @@ select {
 .button:active {
     box-shadow: 0 0 0.2rem rgba(0, 0, 0, .5);
 }
-
+.button:focus {
+    border: .1rem solid #42a5f5;
+}
+.button:disabled {
+    color: #999;
+    background-color: #e4e4e4;
+    border: .1rem solid #999;
+    box-shadow: 0 0 0;
+}
 
 /*ToggleButton*/
 

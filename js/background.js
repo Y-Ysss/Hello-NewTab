@@ -8,7 +8,8 @@ class ContentsController extends DefaultSettings {
     async saveBookmarks() {
         const data = await getStorage('settings')
         console.log(data.settings)
-        this.hideFolderPattern = data.settings.text.txtRegexpPattern
+        this.hideFolderPattern = data.settings.text.txtRegexpPattern || null
+        this.disableFolderPattern = data.settings.text.txtDisableFolderPattern || null
         const itemTree = await getBookmarksTree();
         itemTree.forEach((items) => {
             if('children' in items) {
@@ -28,8 +29,16 @@ class ContentsController extends DefaultSettings {
             if(el.indexOf(key) < 0) {
                 delete item[key]
             }
+            // if(item.title.match(new RegExp('^En'))){
+            //     console.log(item.title)
+            //     continue
+            // }
+            if(new RegExp(this.disableFolderPattern).test(item.title) && "children" in item){
+                delete item['children']
+                continue
+            }
             if("children" in item && item.children.length > 0) {
-                item['visible'] = !item.title.match(new RegExp(this.hideFolderPattern));
+                item['visible'] = !new RegExp(this.hideFolderPattern).test(item.title)
                 item.children.forEach((sub) => {
                     this.OrganizeElementsKey(el, sub);
                 });
@@ -48,6 +57,11 @@ chrome.runtime.onInstalled.addListener(() => {
     console.log('Extension installed')
         // chrome.tabs.create({url: 'option.html' }) // ------------------------Debug
 })
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+    if(request.background === 'reload') {
+        con.saveBookmarks()
+    }
+});
 chrome.alarms.onAlarm.addListener((alarm) => {
         console.log(alarm.name, ':', new Date())
         if(alarm.name === 'adjustment') {

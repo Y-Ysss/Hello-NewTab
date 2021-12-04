@@ -177,7 +177,7 @@ ul {
     margin: 0 2.6rem 0 3.25rem;
     font-size: .96rem;
     opacity: 0;
-    transition: .5s cubic-bezier(.49, .03, .12, 1.00) all;
+    transition: .12s cubic-bezier(.49, .03, .12, 1.00) all;
 }
 
 

@@ -31,14 +31,14 @@ class DefaultSettings {
     constructor() {
         this.settings = {
             "toggle": { "tgglIcon": false, "tgglOpenTab": true, "tgglWebSearch": false, "tgglAutoTheme": false },
-            "radio": { "tmStyle": "Flat", "tmTheme": "Light" , "tmColor": "LightBlue" },
-            "text": { "txtScale": "", "txtRegexpPattern": "^'", "txtMacyColumns": "", "txtMacyMarginX": "", "txtMacyBreak": "" },
+            "radio": { "tmStyle": "Stylish", "tmTheme": "Light" , "tmColor": "LightBlue" },
+            "text": { "txtScale": "", "txtRegexpPattern": "^'", "txtDisableFolderPattern": "", "txtMacyColumns": "", "txtMacyMarginX": "", "txtMacyBreak": "" },
             "range": { "sliderLower": "7", "sliderUpper": "17" },
             "select": {
                 "autoThemePrimaryStyle": "Flat", "autoThemePrimaryTheme": "Light","autoThemePrimaryColor": "LightBlue",
                 "autoThemeSecondaryStyle": "Flat", "autoThemeSecondaryTheme": "Dark", "autoThemeSecondaryColor": "LightBlue"
             },
-            "format_version": "0.6"
+            "format_version": "0.7"
         }
         this.themes = {
             "styles": [
@@ -50,7 +50,8 @@ class DefaultSettings {
             ],
             "themes": [
                 { "id": "Light", "label": "Light" },
-                { "id": "Dark", "label": "Dark" }
+                { "id": "Dark", "label": "Dark" },
+                { "id": "Black", "label": "Black" }
             ],
             "colors": [
                 { "id": "LightBlue", "label": "Light Blue" },
