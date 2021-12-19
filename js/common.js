@@ -32,7 +32,7 @@ class DefaultSettings {
         this.settings = {
             "toggle": { "tgglIcon": false, "tgglOpenTab": true, "tgglWebSearch": false, "tgglAutoTheme": false },
             "radio": { "tmStyle": "Stylish", "tmTheme": "Light" , "tmColor": "LightBlue" },
-            "text": { "txtScale": "", "txtRegexpPattern": "^'", "txtDisableFolderPattern": "", "txtMacyColumns": "", "txtMacyMarginX": "", "txtMacyBreak": "" },
+            "text": { "txtScale": "", "txtRegexpPattern": "^'", "txtDisableFolderPattern": "", "txtMacyColumns": "", "txtMacyMarginX": "", "txtMacyMarginY": "", "txtMacyBreak": "" },
             "range": { "sliderLower": "7", "sliderUpper": "17" },
             "select": {
                 "autoThemePrimaryStyle": "Flat", "autoThemePrimaryTheme": "Light","autoThemePrimaryColor": "LightBlue",

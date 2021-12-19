@@ -155,18 +155,28 @@
                             <div class="section-items">
                                 <div class="section-item-text">列数 (Default:8)</div>
                                 <div class="section-item-action">
-                                    <input id="txtMacyColumns" class="text-input" type="number" placeholder="Number">
+                                    <input type="checkbox" class="sw-disable" data-target-input="MacyColumns">
+                                    <input id="txtMacyColumns" class="text-input" type="number" placeholder="Number" disabled="disable">
                                 </div>
                             </div>
                             <div class="section-items">
                                 <div class="section-item-text">Margin X (Default:30)</div>
                                 <div class="section-item-action">
-                                    <input id="txtMacyMarginX" class="text-input" type="number" placeholder="Number">
+                                    <input type="checkbox" class="sw-disable" data-target-input="MacyMarginX">
+                                    <input id="txtMacyMarginX" class="text-input" type="number" placeholder="Number" disabled="disable">
                                 </div>
                             </div>
                             <div class="section-items">
-                                <div class="section-item-text">ブレークポイント (Default: { 1200:5, 990:4, 780:3, 620:2, 430:1 })</div>
+                                <div class="section-item-text">Margin Y (Default:15)</div>
                                 <div class="section-item-action">
+                                    <input type="checkbox" class="sw-disable" data-target-input="MacyMarginY">
+                                    <input id="txtMacyMarginY" class="text-input" type="number" placeholder="Number" disabled="disable">
+                                </div>
+                            </div>
+                            <div class="section-items">
+                                <div class="section-item-text">ブレークポイント (Default: { 1400: 6, 1200: 5, 990: 4, 780: 3, 620: 2, 430: 1 })</div>
+                                <div class="section-item-action">
+                                    <input type="checkbox" class="sw-disable" data-target-input="MacyBreak">
                                     <input id="txtMacyBreak" class="text-input" type="text" placeholder="{key:value}" disabled="disable">
                                 </div>
                             </div>
@@ -366,6 +376,15 @@
                         </div>
                     </div>
                 </div>
+                <div class="content-section">
+                    <div class="section-title">Chrome Web Store</div>
+                    <div class="section-items-slim">
+                        <div class="section-item-text">
+                            <a class="url-text" href="https://chrome.google.com/webstore/detail/hello-newtab/gcheeeiicddnpmmlpidigaepkfhpedfb" target="_blank"></a>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
 

@@ -75,13 +75,22 @@ class BookmarkContents {
             breakAt: { 1400: 6, 1200: 5, 990: 4, 780: 3, 620: 2, 430: 1 }
         }
         const data = this.settings.text
-        conf.columns = this.checkValue(data.txtMacyColumns, conf.columns)
-        conf.margin.x = this.checkValue(data.txtMacyMarginX, conf.margin.x)
-
+        conf.columns = this.checkValue(data.txtMacyColumns, conf.columns, 'number')
+        conf.margin.x = this.checkValue(data.txtMacyMarginX, conf.margin.x, 'number')
+        conf.margin.y = this.checkValue(data.txtMacyMarginY, conf.margin.y, 'number')
+        conf.breakAt = this.checkValue(data.txtMacyBreak, conf.breakAt, 'object')
         let macy = Macy(conf)
     }
-    checkValue(a, b) {
-        return(a !== "" ? a : b)
+    checkValue(a, b, datatype=null) {
+        let val = a !== "" ? a : b
+        switch (datatype) {
+            case 'number':
+                return Number(val)
+            case 'object':
+                return JSON.parse(JSON.stringify(val))
+            default:
+                return val
+        }
     }
 }
 
