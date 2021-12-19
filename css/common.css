@@ -170,21 +170,25 @@ select {
     color: #42a5f5;
     background-color: #fff;
     border: .1rem solid #42a5f5;
-    box-shadow: 0 0 .3rem rgba(0, 0, 0, .35);
+    /* box-shadow: 0 0 .3rem rgba(0, 0, 0, .35); */
+    box-shadow: 0 0.2rem 0.4rem rgb(0 0 0 / 20%);
     /*background-color: #115273;*/
     border-radius: .5rem;
     outline: none;
+    transition: linear 0.14s;
     /* transition: .2s ease-out; */
 }
 
 .button:hover {
     color: #fff;
     background-color: #42a5f5;
-    box-shadow: 0 0 .6rem rgba(0, 0, 0, .4);
+    box-shadow: 0 0.2rem 0.2rem rgb(0 0 0 / 20%);
+    /* box-shadow: 0 0 .6rem rgba(0, 0, 0, .4); */
 }
 
 .button:active {
-    box-shadow: 0 0 0.2rem rgba(0, 0, 0, .5);
+    transform: translateY(.1rem);
+    box-shadow: none;
 }
 .button:focus {
     border: .1rem solid #42a5f5;
