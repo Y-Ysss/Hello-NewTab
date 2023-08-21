@@ -1,3 +1,15 @@
+
+import { DefaultSettings } from './defaultSettings.js';
+import { getStorage, getBookmarkItems } from './browser.js';
+import { wrapper } from './wrapper.js';
+
+const getFaviconUrl = (url, size = 16) => {
+    const faviconUrl = new URL(chrome.runtime.getURL('/_favicon/'));
+    faviconUrl.searchParams.set('pageUrl', url); // this encodes the URL as well
+    faviconUrl.searchParams.set('size', String(size));
+    return faviconUrl.toString();
+}
+
 class BookmarkContents {
     constructor(settings) {
         this.settings = settings
@@ -39,7 +51,7 @@ class BookmarkContents {
                 const li = liBase.cloneNode()
                 const a = aBase.cloneNode()
                 const img = imgBase.cloneNode()
-                img.src = `chrome://favicon/${item.url}`
+                img.src = getFaviconUrl(item.url)
                 a.appendChild(img)
                 a.title = item.title
                 a.appendChild(document.createTextNode(item.title))
@@ -153,7 +165,7 @@ class BookmarkSearch {
                         if(item.url) {
                             const parent = await getBookmarkItems(item.parentId)
                             const title = item.title == "" ? item.url : item.title
-                            joinResult += `<a class="bookmark-search-result-items" href="${item.url}" title="${title}"><img class="favicon" src="chrome://favicon/${item.url}">${title}<span>${parent[0].title}</span></a>`
+                            joinResult += `<a class="bookmark-search-result-items" href="${item.url}" title="${title}"><img class="favicon" src="${getFaviconUrl(item.url)}">${title}<span>${parent[0].title}</span></a>`
                         }
                     }
                     joinResult = `<div id="bookmark-result-count">${results.length} ${results.length === 1 ? 'bookmark' : 'bookmarks'}</div>${joinResult}`
@@ -306,20 +318,23 @@ class ContentsManager extends DefaultSettings {
         return fragment
     }
     addEventListener() {
-        wrapper('input[type=radio]', 'click', (event) => {
+        wrapper('input[type=radio]', 'click', async (event) => {
             const target = event.target
             this.settings.radio[target.name] = target.id
             this.setState(this.settings.radio)
             this.saveData()
-            chrome.runtime.sendMessage({ contents: target.name })
-            chrome.runtime.sendMessage({ option: 'reload' })
+            try{
+                await chrome.runtime.sendMessage({ contents: target.name })
+                await chrome.runtime.sendMessage({ option: 'reload' })
+            } catch(err) {
+                console.log(err);
+            }
         })
         wrapper('html', 'keydown', (event) => {
-            if(event.altKey && event.keyCode === 66 || event.keyCode === 27 && (document.activeElement === document.getElementById('search'))) {
-                this.eventFunc.searchMenu()
-                console.log('Alt + B')
+            if(event.altKey && event.keyCode === 76 || event.keyCode === 27 && (document.activeElement === document.getElementById('search'))) {
+                document.getElementById('search-menu').click();
             }
-            // [ B ] : 66
+            // [ L ] : 76
             // [ Esc ] : 27
         })
 

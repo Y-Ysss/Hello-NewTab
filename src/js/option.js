@@ -1,3 +1,6 @@
+
+import { DefaultSettings } from './defaultSettings.js';
+
 class Reflector {
     static toggle(key, value) {
         if(value) {
@@ -38,9 +41,9 @@ class ReflectSettings extends DefaultSettings {
         const styles = this.themes.styles
         const themes = this.themes.themes
         const colors = this.themes.colors
-        document.getElementById('theme-styles').appendChild(this.generateRadio(styles, 'style'))
-        document.getElementById('theme-themes').appendChild(this.generateRadio(themes, 'theme'))
-        document.getElementById('theme-colors').appendChild(this.generateRadio(colors, 'color'))
+        document.getElementById('theme-styles').appendChild(this.generateRadio(styles, 'tmStyle'))
+        document.getElementById('theme-themes').appendChild(this.generateRadio(themes, 'tmTheme'))
+        document.getElementById('theme-colors').appendChild(this.generateRadio(colors, 'tmColor'))
         document.getElementById('theme-primary-style').appendChild(this.generateOption(styles))
         document.getElementById('theme-primary-theme').appendChild(this.generateOption(themes))
         document.getElementById('theme-primary-color').appendChild(this.generateOption(colors))
@@ -109,14 +112,23 @@ class ReflectSettings extends DefaultSettings {
             window.scrollTo(0, document.getElementById(event.target.dataset.anchor).offsetTop - 16)
             // console.log(event.target.dataset.anchor)
         })
-        this.wrapper('#save-settings', 'click', (event) => {
+        this.wrapper('#save-settings', 'click', async(event) => {
             this.saveData()
+            
             if(this.regenerate) {
-                chrome.runtime.sendMessage({ background: 'reload' })
+                try{
+                    await chrome.runtime.sendMessage({ background: 'reload' })
+                } catch(err) {
+                    console.log(err);
+                }
                 this.regenerate = false
             }
-            chrome.runtime.sendMessage({ newtab: 'reload' })
-            chrome.runtime.sendMessage({ option: 'reload' })
+            try{
+                await chrome.runtime.sendMessage({ newtab: 'reload' })
+                await chrome.runtime.sendMessage({ option: 'reload' })
+            } catch(err) {
+                console.log(err);
+            }
             if(this.settings.toggle.tgglAutoTheme) {
                 this.autoTheme(), this.setupAlarms()
             } else {
@@ -184,7 +196,6 @@ class ExtensionInfo {
     constructor() {
         this.versionInfo()
         this.wrapper('https://api.github.com/repos/Y-Ysss/Hello-NewTab/releases/latest', this.gitReleaseInfo)
-        this.wrapper('https://api.github.com/repos/Y-Ysss/Hello-NewTab/commits', this.gitCommitsInfo)
     }
     wrapper(url, func) {
         fetch(url).then((response) => response.json()).then((data) => {
@@ -208,14 +219,6 @@ class ExtensionInfo {
             str = str.replace(/\r?\n/g, '<br>')
             document.getElementById('ExtensionInfo').insertAdjacentHTML('beforeend', str);
         }
-    }
-
-    gitCommitsInfo(data) {
-        let str = ''
-        for(let i = 0; i < 5; i++) {
-            str += `<div class="content-section"><div class="section-title">${data[i].commit.message}</div><div class="section-items-continuation"><div class="section-item-text">${(data[i].commit.author.date).replace('T', ', ').slice(0, -1)} (UTC)</div></div><div class="section-items"><div class="section-item-text"><a class="url-text" href="${data[i].html_url}" target="_blank"></a></div></div></div>`;
-        }
-        document.getElementById('gitCommitsInfo').insertAdjacentHTML('beforeend', str);
     }
 }
 

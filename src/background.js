@@ -1,3 +1,7 @@
+
+import { DefaultSettings } from './js/defaultSettings.js';
+import { getBookmarksTree, getStorage } from './js/browser.js';
+
 class ContentsController extends DefaultSettings {
     constructor() {
         super()
@@ -17,7 +21,11 @@ class ContentsController extends DefaultSettings {
             }
         })
         chrome.storage.local.set({ 'jsonBookmarks': itemTree[0].children });
-        chrome.runtime.sendMessage({ contents: 'reload' })
+        try{
+            await chrome.runtime.sendMessage({ contents: 'reload' })
+        } catch(err) {
+            console.log(err);
+        }
     }
     FormatBookmarks(item) {
         const el = ['children', 'id', 'parentId', 'title', 'url']

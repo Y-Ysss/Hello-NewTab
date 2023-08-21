@@ -1,21 +1,18 @@
 {
-    "manifest_version": 2,
+    "manifest_version": 3,
     "name": "Hello NewTab",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "description": "This extension allows you to quickly access your bookmarks on the new tab.",
     "permissions": [
         "bookmarks",
         "storage",
         "alarms",
-        "chrome://favicon/"
+        "favicon"
     ],
     "incognito": "split",
     "background": {
-        "scripts": [
-            "js/common.js",
-            "js/background.js"
-        ],
-        "persistent": false
+        "service_worker": "background.js",
+        "type": "module"
     },
     "icons": {
         "16": "img/icon_016.png",
@@ -25,6 +22,8 @@
     "chrome_url_overrides": {
         "newtab": "newtab.html"
     },
-    "content_security_policy": "script-src 'self'; object-src 'self'",
+    "content_security_policy": {
+        "extension_pages": "script-src 'self'; object-src 'self'"
+    },
     "options_page": "option.html"
 }
