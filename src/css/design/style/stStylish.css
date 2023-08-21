@@ -21,11 +21,12 @@ a {
     height: 2.2rem;
     width: 96%;
     margin: 0.6rem .4rem;
-    padding: 0.4rem 2rem 0.4rem 0.4rem;
+    padding: 0.4rem 2rem 0.4rem 0.8rem;
     border-radius: 0.6rem;
     color: var(--secondary);
     font-size: 1rem;
-    background-color: var(--accent3);
+    background-color: var(--base);    
+    border: solid 1px var(--boundary)
 }
 
 #bookmark-search::-webkit-input-placeholder {
@@ -53,9 +54,10 @@ a {
 }
 
 .bookmark-search-result-items span {
-    background-color: var(--accent2);
-    padding: .1rem .4rem;
-    margin: 0 .8rem;
+    border: solid 1px var(--accent2);
+    background-color: var(--surface);
+    padding: .16rem .4rem;
+    margin: -.1rem .8rem;
     border-radius: .4rem;
 }
 

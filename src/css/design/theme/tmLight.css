@@ -5,7 +5,7 @@
     --primary: #456;
     --secondary: #678;
     --shadow1: rgba(0, 0, 0, .45);
-    --shadow2: rgba(0, 0, 0, .45);
+    --shadow2: rgba(0, 0, 0, .25);
     --filter1: invert(50%);
     --filter2: invert(30%);
 }

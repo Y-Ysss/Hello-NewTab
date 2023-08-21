@@ -41,7 +41,7 @@ ul {
 #bookmark-search {
     height: 2.8rem;
     width: 100%;
-    padding: 0.4rem 2rem 0.4rem 0.4rem;
+    padding: 0.4rem 2rem 0.4rem 0.8rem;
     box-sizing: border-box;
     position: absolute;
     display: block;
