@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.1.0 (2023-08-21)
+### Changes
+- Migrate from Manifest V2 to Manifest V3
+- Adjustments to theme design
+
 ## 1.0.0 (2021-12-04)
 ### Changes
 - Delete unused permission
