@@ -41,21 +41,23 @@
         <div class="menu create-system-tab" data-href="option.html"><img class="menu-icon" src="img/icon-options.svg">Options</div>
 
         <div id="select-theme-menu" class="menu action-item"><img class="menu-icon" src="img/icon-theme.svg">Switch Theme</div>
-        <div id="float-menu-theme" class="float-menu">
-            <div>
-                <span>Style</span>
-                <div id="theme-style" class="design-options"></div>
-                <span>Theme</span>
-                <div id="theme-theme" class="design-options"></div>
-            </div>
-            <div>
-                <span>Color</span>
-                <div id="theme-color" class="design-options"></div>
-            </div>
-        </div>
         <div id="module-visible-menu" class="menu action-item"><img class="menu-icon" src="img/icon-visibility.svg">Visibility</div>
-        <div id="float-menu-visibility" class="float-menu">
-            <div>Visible Folders</div>
+    </div>
+    <div id="float-menu-theme" class="float-menu">
+        <div class="theme-menu-primary">
+            <span class="float-menu-title">Style</span>
+            <div id="theme-style" class="design-options"></div>
+            <span class="float-menu-title">Theme</span>
+            <div id="theme-theme" class="design-options"></div>
+        </div>
+        <div class="theme-menu-secondary">
+            <span class="float-menu-title">Color</span>
+            <div id="theme-color" class="design-options"></div>
+        </div>
+    </div>
+    <div id="float-menu-visibility" class="float-menu">
+        <div class="float-menu-title">Visible Folders</div>
+        <div class="float-menu-inline">
             <div class="toggle" id="tgglVisible"></div>
         </div>
     </div>

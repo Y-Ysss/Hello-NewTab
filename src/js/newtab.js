@@ -245,10 +245,28 @@ class BookmarkSearch {
 }
 
 class FloatMenu {
-    onDisplay(obj, state) {
+    positionMenu(menu, anchor) {
+        const anchorRect = anchor.getBoundingClientRect()
+        const menuRect = menu.getBoundingClientRect()
+        const gap = 12
+        const viewportPadding = 12
+        const maxTop = window.innerHeight - menuRect.height - viewportPadding
+        const maxLeft = window.innerWidth - menuRect.width - viewportPadding
+        const top = Math.max(viewportPadding, Math.min(anchorRect.top, maxTop))
+        const preferredLeft = anchorRect.right + gap
+        const fallbackLeft = anchorRect.left - menuRect.width - gap
+        const left = preferredLeft <= maxLeft
+            ? preferredLeft
+            : Math.max(viewportPadding, Math.min(fallbackLeft, maxLeft))
+
+        menu.style.top = `${top}px`
+        menu.style.left = `${left}px`
+    }
+    onDisplay(obj, state, anchor) {
         if(state) {
             obj.classList.remove('activeFloatMenu')
         } else {
+            this.positionMenu(obj, anchor)
             obj.classList.add('activeFloatMenu')
         }
     }
@@ -260,10 +278,10 @@ class SelectTheme extends FloatMenu {
         const menu = document.getElementById('select-theme-menu')
 
         if(state) {
-            super.onDisplay(floatMenu, TO_CLOSE)
+            super.onDisplay(floatMenu, TO_CLOSE, menu)
             menu.classList.remove('active-menu')
         } else {
-            super.onDisplay(floatMenu, TO_OPEN)
+            super.onDisplay(floatMenu, TO_OPEN, menu)
             menu.classList.add('active-menu')
         }
         this.state = !state
@@ -281,10 +299,10 @@ class SwitchModuleVisible extends FloatMenu {
         const floatMenu = document.getElementById('float-menu-visibility')
         const menu = document.getElementById('module-visible-menu')
         if(state) {
-            super.onDisplay(floatMenu, TO_CLOSE)
+            super.onDisplay(floatMenu, TO_CLOSE, menu)
             menu.classList.remove('active-menu')
         } else {
-            super.onDisplay(floatMenu, TO_OPEN)
+            super.onDisplay(floatMenu, TO_OPEN, menu)
             menu.classList.add('active-menu')
         }
         this.state = !state

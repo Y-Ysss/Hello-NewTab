@@ -18,6 +18,7 @@ export class DefaultSettings {
                 { "id": "Modern", "label": "Modern" },
                 { "id": "Flat", "label": "Flat" },
                 { "id": "FullFlat", "label": "Full Flat" },
+                { "id": "Glass", "label": "Glass" },
                 { "id": "Stylish", "label": "Stylish" },
                 { "id": "Neumorphism", "label": "Neumorphism" },
             ],

@@ -116,16 +116,20 @@ a {
 }
 
 .toggle {
-    height: 1.3rem;
-    width: 3rem;
-    border-radius: 3.0rem;
-    overflow: hidden;
-    margin: .1rem 1rem;
+    background-color: var(--accent2);
 }
 
 .toggle:after {
-    top: 0;
+    background-color: var(--surface);
     border-radius: 50%;
+}
+
+.toggle-on {
+    background-color: var(--accent2);
+}
+
+.toggle-on:after {
+    background-color: var(--accent1);
 }
 
 .toggle-on {
