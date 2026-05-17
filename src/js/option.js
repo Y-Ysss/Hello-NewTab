@@ -109,8 +109,8 @@ class ReflectSettings extends DefaultSettings {
 
     addElementsEventListener() {
         this.wrapper('#side-menu a', 'click', (event) => {
-            window.scrollTo(0, document.getElementById(event.target.dataset.anchor).offsetTop - 16)
-            // console.log(event.target.dataset.anchor)
+            window.scrollTo(0, document.getElementById(event.currentTarget.dataset.anchor).offsetTop - 16)
+            // console.log(event.currentTarget.dataset.anchor)
         })
         this.wrapper('#save-settings', 'click', async(event) => {
             this.saveData()
@@ -139,11 +139,11 @@ class ReflectSettings extends DefaultSettings {
             setTimeout((a) => { a.style.transform = 'translateY(6rem)' }, 2000, t)
         })
         this.wrapper('.toggle', 'click', (event) => {
-            event.target.classList.toggle('toggle-on')
-            this.settings.toggle[event.target.id] = event.target.classList.contains('toggle-on')
+            event.currentTarget.classList.toggle('toggle-on')
+            this.settings.toggle[event.currentTarget.id] = event.currentTarget.classList.contains('toggle-on')
         })
         this.wrapper('.text-input', 'blur', (event) => {
-            this.settings.text[event.target.id] = event.target.value
+            this.settings.text[event.currentTarget.id] = event.currentTarget.value
         })
         this.wrapper('.sw-disable', 'click', (event) => {
             const name = event.target.dataset.targetInput

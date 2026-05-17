@@ -1,6 +1,6 @@
 
 import { DefaultSettings } from './js/defaultSettings.js';
-import { getBookmarksTree, getStorage } from './js/browser.js';
+import { getBookmarksTree, getStorage, setStorage } from './js/browser.js';
 
 class ContentsController extends DefaultSettings {
     constructor() {
@@ -45,7 +45,7 @@ class ContentsController extends DefaultSettings {
                 items.children.forEach((bookmark) => { this.FormatBookmarks(bookmark) })
             }
         })
-        chrome.storage.local.set({ 'jsonBookmarks': itemTree[0].children });
+        await setStorage({ 'jsonBookmarks': itemTree[0].children });
         try{
             await chrome.runtime.sendMessage({ contents: 'reload' })
         } catch(err) {

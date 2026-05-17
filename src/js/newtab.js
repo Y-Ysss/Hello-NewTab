@@ -22,7 +22,7 @@ class BookmarkContents {
         this.fragment = null
     }
     async reload() {
-        document.getElementById('body-main').innerHTML = null
+        document.getElementById('body-main').innerHTML = ''
         await this.append()
     }
     async generateContents() {
@@ -311,7 +311,7 @@ class ContentsManager extends DefaultSettings {
         const optionBase = document.createElement('option')
         for(const item of items) {
             const optn = optionBase.cloneNode()
-            optn.value = styles.id
+            optn.value = item.id
             optn.appendChild(document.createTextNode(item.label))
             fragment.appendChild(optn)
         }
@@ -387,14 +387,14 @@ class SideBarManager {
     }
     addEventListener() {
         wrapper('.action-item', 'click', (event) => {
-            const target = event.target.id
+            const target = event.currentTarget.id
             this.ev[target].on()
             this.activeItem = this.ev[target].state ? target : null
             this.closeMenu(target)
         })
         wrapper('.create-system-tab', 'click', (event) => {
             this.closeMenu()
-            chrome.tabs.create({ url: event.target.dataset.href })
+            chrome.tabs.create({ url: event.currentTarget.dataset.href })
         })
         wrapper('#body-main', 'click', (event) => {
             this.closeMenu()
