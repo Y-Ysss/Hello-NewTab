@@ -5,7 +5,7 @@ export class DefaultSettings {
         this.settings = {
             "toggle": { "tgglIcon": false, "tgglOpenTab": true, "tgglWebSearch": false, "tgglAutoTheme": false },
             "radio": { "tmStyle": "Stylish", "tmTheme": "Light" , "tmColor": "LightBlue", "bgPattern": "StyleDefault" },
-            "text": { "txtScale": "", "txtRegexpPattern": "^'", "txtDisableFolderPattern": "", "txtMacyColumns": "", "txtMacyMarginX": "", "txtMacyBreak": "", "txtBgImage": "", "txtBgBaseColor": "#ffffff", "txtBgPatternColor": "#c8c8c8", "txtBgGradientColor1": "#c8dcff", "txtBgGradientColor2": "#dcc8ff" },
+            "text": { "txtScale": "", "txtRegexpPattern": "^'", "txtDisableFolderPattern": "", "txtMacyColumns": "", "txtMacyMarginX": "", "txtMacyBreak": "", "txtBgImage": "", "txtBgBaseColor": "#ffffff", "txtBgPatternColor": "#c8c8c8", "txtBgGradientColor1": "#c8dcff", "txtBgGradientColor2": "#dcc8ff", "txtBgGridLineWidth": "2", "txtBgGridSpacingX": "60", "txtBgGridSpacingY": "60", "txtBgGridOpacity": "50", "txtBgDotsLineWidth": "1", "txtBgDotsSpacingX": "20", "txtBgDotsSpacingY": "20", "txtBgDotsOpacity": "50" },
             "range": { "sliderLower": "7", "sliderUpper": "17" },
             "select": {
                 "autoThemePrimaryStyle": "Flat", "autoThemePrimaryTheme": "Light","autoThemePrimaryColor": "LightBlue",

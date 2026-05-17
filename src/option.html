@@ -50,15 +50,15 @@
                 <div class="content-section">
                     <div class="section-title">Page</div>
                     <div class="section-items">
-                        <div class="section-item-text">デフォルトのファビコン（Webページのアイコン）を使用する</div>
+                        <div class="section-item-text">デフォルトのファビコン (Webページのアイコン)を使用する</div>
                         <div class="section-item-action">
                             <div id="tgglIcon" class="toggle"></div>
                         </div>
                     </div>
                     <div class="section-items">
-                        <div class="section-item-text">ページの拡大/縮小（Default : 100）[%]</div>
+                        <div class="section-item-text">ページの拡大/縮小 (Default : 100%)</div>
                         <div class="section-item-action">
-                            <input id="txtScale" class="text-input" type="number" placeholder="Number" value="100">
+                            <input id="txtScale" class="text-input" type="number" placeholder="0-100%" value="100">
                         </div>
                     </div>
                     <div class="section-items">
@@ -109,6 +109,50 @@
                         <div class="section-item-text">パターン色</div>
                         <div class="section-item-action">
                             <input id="txtBgPatternColor" class="text-input" type="color" value="#c8c8c8">
+                        </div>
+                    </div>
+
+                    <div class="section-items" id="bgGridLineWidthInputSection" style="display:none;">
+                        <div class="section-item-text">Grid 線幅 [px]</div>
+                        <div class="section-item-action">
+                            <input id="txtBgGridLineWidth" class="text-input" type="number" min="1" step="1" placeholder="px" value="2">
+                        </div>
+                    </div>
+
+                    <div class="section-items" id="bgGridSpacingInputSection" style="display:none;">
+                        <div class="section-item-text">Grid 間隔 X/Y [px]</div>
+                        <div class="section-item-action">
+                            <input id="txtBgGridSpacingX" class="text-input short" type="number" min="1" step="1" placeholder="px" value="60">
+                            <input id="txtBgGridSpacingY" class="text-input short" type="number" min="1" step="1" placeholder="px" value="60">
+                        </div>
+                    </div>
+
+                    <div class="section-items" id="bgGridOpacityInputSection" style="display:none;">
+                        <div class="section-item-text">Grid 透過度 [%]</div>
+                        <div class="section-item-action">
+                            <input id="txtBgGridOpacity" class="text-input" type="number" min="0" max="100" step="1" placeholder="0-100%" value="50">
+                        </div>
+                    </div>
+
+                    <div class="section-items" id="bgDotsLineWidthInputSection" style="display:none;">
+                        <div class="section-item-text">Dots 点サイズ [px]</div>
+                        <div class="section-item-action">
+                            <input id="txtBgDotsLineWidth" class="text-input" type="number" min="1" step="1" placeholder="px" value="1">
+                        </div>
+                    </div>
+
+                    <div class="section-items" id="bgDotsSpacingInputSection" style="display:none;">
+                        <div class="section-item-text">Dots 間隔 X/Y [px]</div>
+                        <div class="section-item-action">
+                            <input id="txtBgDotsSpacingX" class="text-input short" type="number" min="1" step="1" placeholder="px" value="20">
+                            <input id="txtBgDotsSpacingY" class="text-input short" type="number" min="1" step="1" placeholder="px" value="20">
+                        </div>
+                    </div>
+
+                    <div class="section-items" id="bgDotsOpacityInputSection" style="display:none;">
+                        <div class="section-item-text">Dots 透過度 [%]</div>
+                        <div class="section-item-action">
+                            <input id="txtBgDotsOpacity" class="text-input" type="number" min="0" max="100" step="1" placeholder="0-100%" value="50">
                         </div>
                     </div>
 
@@ -280,7 +324,7 @@
                                         </tr>
                                         <tr>
                                             <td><span class="fBlue">...</span>|<span class="fBlue">...</span></td>
-                                            <td>左右のいずれかの条件（OR）</td>
+                                            <td>左右のいずれかの条件 (OR)</td>
                                         </tr>
                                         <tr>
                                             <td>[<span class="fBlue">...</span>]</td>

@@ -317,6 +317,20 @@ class SwitchModuleVisible extends FloatMenu {
 }
 
 class Reflector {
+    toPixelValue(value, fallback) {
+        const n = Number(value)
+        if(Number.isFinite(n) && n > 0) {
+            return `${n}px`
+        }
+        return fallback
+    }
+    toPercentageValue(value, fallback) {
+        const n = Number(value)
+        if(Number.isFinite(n)) {
+            return `${Math.min(100, Math.max(0, n))}%`
+        }
+        return fallback
+    }
     tgglIcon(value) {
         const br = value ? '0%' : '50%'
         for(const item of document.getElementsByClassName('favicon')) {
@@ -372,6 +386,30 @@ class Reflector {
     }
     txtBgGradientColor2(value) {
         document.documentElement.style.setProperty('--bg-gradient-color2', value || '#dcc8ff')
+    }
+    txtBgGridLineWidth(value) {
+        document.documentElement.style.setProperty('--bg-grid-line-width', this.toPixelValue(value, '2px'))
+    }
+    txtBgGridSpacingX(value) {
+        document.documentElement.style.setProperty('--bg-grid-spacing-x', this.toPixelValue(value, '60px'))
+    }
+    txtBgGridSpacingY(value) {
+        document.documentElement.style.setProperty('--bg-grid-spacing-y', this.toPixelValue(value, '60px'))
+    }
+    txtBgGridOpacity(value) {
+        document.documentElement.style.setProperty('--bg-grid-opacity', this.toPercentageValue(value, '50%'))
+    }
+    txtBgDotsLineWidth(value) {
+        document.documentElement.style.setProperty('--bg-dots-size', this.toPixelValue(value, '1px'))
+    }
+    txtBgDotsSpacingX(value) {
+        document.documentElement.style.setProperty('--bg-dots-spacing-x', this.toPixelValue(value, '20px'))
+    }
+    txtBgDotsSpacingY(value) {
+        document.documentElement.style.setProperty('--bg-dots-spacing-y', this.toPixelValue(value, '20px'))
+    }
+    txtBgDotsOpacity(value) {
+        document.documentElement.style.setProperty('--bg-dots-opacity', this.toPercentageValue(value, '50%'))
     }
 }
 
@@ -464,9 +502,8 @@ class ContentsManager extends DefaultSettings {
     }
     setState(data) {
         for(const key in data) {
-            const func = this.reflector[key]
-            if(typeof func === 'function') {
-                func(data[key])
+            if(typeof this.reflector[key] === 'function') {
+                this.reflector[key](data[key])
             }
         }
     }

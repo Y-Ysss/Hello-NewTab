@@ -97,6 +97,18 @@ class ReflectSettings extends DefaultSettings {
             (pattern === 'SingleColor' || pattern === 'Grid' || pattern === 'Dots') ? 'flex' : 'none'
         document.getElementById('bgPatternColorInputSection').style.display = 
             (pattern === 'Grid' || pattern === 'Dots') ? 'flex' : 'none'
+        document.getElementById('bgGridLineWidthInputSection').style.display = 
+            pattern === 'Grid' ? 'flex' : 'none'
+        document.getElementById('bgGridSpacingInputSection').style.display = 
+            pattern === 'Grid' ? 'flex' : 'none'
+        document.getElementById('bgGridOpacityInputSection').style.display = 
+            pattern === 'Grid' ? 'flex' : 'none'
+        document.getElementById('bgDotsLineWidthInputSection').style.display = 
+            pattern === 'Dots' ? 'flex' : 'none'
+        document.getElementById('bgDotsSpacingInputSection').style.display = 
+            pattern === 'Dots' ? 'flex' : 'none'
+        document.getElementById('bgDotsOpacityInputSection').style.display = 
+            pattern === 'Dots' ? 'flex' : 'none'
         document.getElementById('bgGradientColor1InputSection').style.display = 
             pattern === 'Gradient' ? 'flex' : 'none'
         document.getElementById('bgGradientColor2InputSection').style.display = 
@@ -180,6 +192,18 @@ class ReflectSettings extends DefaultSettings {
                     (pattern === 'SingleColor' || pattern === 'Grid' || pattern === 'Dots') ? 'flex' : 'none'
                 document.getElementById('bgPatternColorInputSection').style.display = 
                     (pattern === 'Grid' || pattern === 'Dots') ? 'flex' : 'none'
+                document.getElementById('bgGridLineWidthInputSection').style.display = 
+                    pattern === 'Grid' ? 'flex' : 'none'
+                document.getElementById('bgGridSpacingInputSection').style.display = 
+                    pattern === 'Grid' ? 'flex' : 'none'
+                document.getElementById('bgGridOpacityInputSection').style.display = 
+                    pattern === 'Grid' ? 'flex' : 'none'
+                document.getElementById('bgDotsLineWidthInputSection').style.display = 
+                    pattern === 'Dots' ? 'flex' : 'none'
+                document.getElementById('bgDotsSpacingInputSection').style.display = 
+                    pattern === 'Dots' ? 'flex' : 'none'
+                document.getElementById('bgDotsOpacityInputSection').style.display = 
+                    pattern === 'Dots' ? 'flex' : 'none'
                 document.getElementById('bgGradientColor1InputSection').style.display = 
                     pattern === 'Gradient' ? 'flex' : 'none'
                 document.getElementById('bgGradientColor2InputSection').style.display = 
