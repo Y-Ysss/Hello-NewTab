@@ -7,7 +7,32 @@ class ContentsController extends DefaultSettings {
         super()
     }
     init() {
-        this.saveBookmarks()
+        this.queueSaveBookmarks()
+    }
+    queueSaveBookmarks() {
+        this.saveBookmarksDirty = true
+        if(this.saveBookmarksTimer !== null) {
+            clearTimeout(this.saveBookmarksTimer)
+        }
+        this.saveBookmarksTimer = setTimeout(() => {
+            this.saveBookmarksTimer = null
+            this.runSaveBookmarks()
+        }, 100)
+    }
+    async runSaveBookmarks() {
+        if(this.saveBookmarksRunning) {
+            return
+        }
+        this.saveBookmarksRunning = true
+        this.saveBookmarksDirty = false
+        try {
+            await this.saveBookmarks()
+        } finally {
+            this.saveBookmarksRunning = false
+            if(this.saveBookmarksDirty) {
+                this.queueSaveBookmarks()
+            }
+        }
     }
     async saveBookmarks() {
         const data = await getStorage('settings')
@@ -56,18 +81,18 @@ class ContentsController extends DefaultSettings {
 
 }
 const con = new ContentsController()
-chrome.bookmarks.onCreated.addListener(() => { con.saveBookmarks() })
-chrome.bookmarks.onChanged.addListener(() => { con.saveBookmarks() })
-chrome.bookmarks.onMoved.addListener(() => { con.saveBookmarks() })
-chrome.bookmarks.onChildrenReordered.addListener(() => { con.saveBookmarks() })
-chrome.bookmarks.onRemoved.addListener(() => { con.saveBookmarks() })
+chrome.bookmarks.onCreated.addListener(() => { con.queueSaveBookmarks() })
+chrome.bookmarks.onChanged.addListener(() => { con.queueSaveBookmarks() })
+chrome.bookmarks.onMoved.addListener(() => { con.queueSaveBookmarks() })
+chrome.bookmarks.onChildrenReordered.addListener(() => { con.queueSaveBookmarks() })
+chrome.bookmarks.onRemoved.addListener(() => { con.queueSaveBookmarks() })
 chrome.runtime.onInstalled.addListener(() => {
     console.log('Extension installed')
         // chrome.tabs.create({url: 'option.html' }) // ------------------------Debug
 })
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     if(request.background === 'reload') {
-        con.saveBookmarks()
+        con.queueSaveBookmarks()
     }
 });
 chrome.alarms.onAlarm.addListener((alarm) => {
