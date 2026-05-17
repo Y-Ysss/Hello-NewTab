@@ -15,7 +15,10 @@ class Reflector {
         document.getElementById(`${key}Range`).value = value
     }
     static radio(key, value) {
-        document.getElementById(value).checked = true
+        const radio = document.getElementById(value)
+        if(radio !== null) {
+            radio.checked = true
+        }
     }
     static select(key, value) {
         for(const item of document.querySelectorAll(`select[name="${key}"]`)) {
@@ -27,12 +30,14 @@ class Reflector {
 class ReflectSettings extends DefaultSettings {
     constructor() {
         super()
+        this.isReady = false
     }
     init() {
         this.regenerate = false
         this.addThemeOptions()
         this.reflect()
         this.addElementsEventListener()
+        this.isReady = true
     }
     addThemeOptions() {
         const styles = this.themes.styles
@@ -213,7 +218,7 @@ const opt = new ReflectSettings()
 const info = new ExtensionInfo()
 
 chrome.storage.onChanged.addListener((changes, areaName) => {
-    if(areaName !== 'local' || !changes.settings) {
+    if(areaName !== 'local' || !changes.settings || !opt.isReady) {
         return
     }
     opt.settings = changes.settings.newValue

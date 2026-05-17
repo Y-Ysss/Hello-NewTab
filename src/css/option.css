@@ -109,8 +109,36 @@ summary {
 }
 
 #save-settings {
-  right: 0;
-  display: inline-block;
+  min-width: 11rem;
+  padding: .85rem 1.6rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 999rem;
+  color: #fff;
+  background: linear-gradient(135deg, #2f80ed 0%, #56a8ff 100%);
+  box-shadow: 0 .65rem 1.4rem rgba(47, 128, 237, .28);
+  letter-spacing: .08em;
+  font-weight: 700;
+  appearance: none;
+  transition: transform .16s ease, box-shadow .16s ease, filter .16s ease, background-color .16s ease;
+}
+
+#save-settings:hover:not(:disabled) {
+  transform: translateY(-1px);
+  filter: brightness(1.04);
+  box-shadow: 0 .8rem 1.6rem rgba(47, 128, 237, .34);
+}
+
+#save-settings:active:not(:disabled) {
+  transform: translateY(1px);
+  box-shadow: 0 .35rem .85rem rgba(47, 128, 237, .24);
+}
+
+#save-settings:focus-visible {
+  outline: 3px solid rgba(86, 168, 255, .32);
+  outline-offset: 3px;
 }
 
 .card {
