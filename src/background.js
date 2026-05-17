@@ -36,7 +36,6 @@ class ContentsController extends DefaultSettings {
     }
     async saveBookmarks() {
         const data = await getStorage('settings')
-        console.log(data.settings)
         this.hideFolderPattern = data.settings.text.txtRegexpPattern || null
         this.disableFolderPattern = data.settings.text.txtDisableFolderPattern || null
         const itemTree = await getBookmarksTree();
@@ -46,11 +45,6 @@ class ContentsController extends DefaultSettings {
             }
         })
         await setStorage({ 'jsonBookmarks': itemTree[0].children });
-        try{
-            await chrome.runtime.sendMessage({ contents: 'reload' })
-        } catch(err) {
-            console.log(err);
-        }
     }
     FormatBookmarks(item) {
         const el = ['children', 'id', 'parentId', 'title', 'url']
@@ -90,11 +84,16 @@ chrome.runtime.onInstalled.addListener(() => {
     console.log('Extension installed')
         // chrome.tabs.create({url: 'option.html' }) // ------------------------Debug
 })
-chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-    if(request.background === 'reload') {
+chrome.storage.onChanged.addListener((changes, areaName) => {
+    if(areaName !== 'local' || !changes.settings) {
+        return
+    }
+    const oldText = changes.settings.oldValue?.text ?? {}
+    const newText = changes.settings.newValue?.text ?? {}
+    if(oldText.txtRegexpPattern !== newText.txtRegexpPattern || oldText.txtDisableFolderPattern !== newText.txtDisableFolderPattern) {
         con.queueSaveBookmarks()
     }
-});
+})
 chrome.alarms.onAlarm.addListener((alarm) => {
         console.log(alarm.name, ':', new Date())
         if(alarm.name === 'adjustment') {
@@ -104,9 +103,3 @@ chrome.alarms.onAlarm.addListener((alarm) => {
             con.autoTheme()
         }
     })
-    // chrome.storage.onChanged.addListener((changes) => {
-    // 	console.log(changes)
-    // 	if(changes.hasOwnProperty('settings')) {
-    // 		con.saveBookmarks()
-    // 	}
-    // })

@@ -327,9 +327,7 @@ class Reflector {
         document.getElementById(value).checked = true
     }
     tgglWebSearch(value) {
-        if(value) {
-            document.getElementById('web-search-area').classList.remove('displayNone')
-        }
+        document.getElementById('web-search-area').classList.toggle('displayNone', !value)
     }
 }
 
@@ -388,11 +386,6 @@ class ContentsManager extends DefaultSettings {
             this.settings.radio[target.name] = target.id
             this.setState(this.settings.radio)
             await this.saveData()
-            try{
-                await chrome.runtime.sendMessage({ option: 'reload' })
-            } catch(err) {
-                console.log(err);
-            }
         })
         wrapper('html', 'keydown', (event) => {
             if(event.altKey && event.keyCode === 76 || event.keyCode === 27 && (document.activeElement === document.getElementById('search'))) {
@@ -477,14 +470,15 @@ class SideBarManager {
 const cm = new ContentsManager()
 const ev = new SideBarManager()
 
-chrome.runtime.onMessage.addListener(async(request, sender, sendResponse) => {
-    if(request.newtab === 'reload') {
-        window.onbeforeunload = () => { window.scrollTo(0, 0) }
-        window.location.reload()
-    } else if(request.contents === 'reload') {
-        cm.reloadContents()
-    } else if(request.contents === 'theme') {
-        const data = await getStorage('settings')
-        cm.setState(data.settings.radio)
+chrome.storage.onChanged.addListener((changes, areaName) => {
+    if(areaName !== 'local') {
+        return
+    }
+    if(changes.settings) {
+        cm.settings = changes.settings.newValue
+        cm.reflect()
+    }
+    if(changes.jsonBookmarks) {
+        void cm.reloadContents()
     }
 })

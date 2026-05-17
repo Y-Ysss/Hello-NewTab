@@ -3,9 +3,7 @@ import { DefaultSettings } from './defaultSettings.js';
 
 class Reflector {
     static toggle(key, value) {
-        if(value) {
-            document.getElementById(key).classList.add('toggle-on')
-        }
+        document.getElementById(key).classList.toggle('toggle-on', Boolean(value))
     }
     static text(key, value) {
         document.getElementById(key).value = value
@@ -113,29 +111,15 @@ class ReflectSettings extends DefaultSettings {
         })
         this.wrapper('#save-settings', 'click', async(event) => {
             await this.saveData()
-            
-            if(this.regenerate) {
-                try{
-                    await chrome.runtime.sendMessage({ background: 'reload' })
-                } catch(err) {
-                    console.log(err);
-                }
-                this.regenerate = false
-            }
-            try{
-                await chrome.runtime.sendMessage({ newtab: 'reload' })
-                await chrome.runtime.sendMessage({ option: 'reload' })
-            } catch(err) {
-                console.log(err);
-            }
+
             if(this.settings.toggle.tgglAutoTheme) {
-                this.autoTheme()
+                await this.autoTheme()
                 this.setupAlarms()
             } else {
                 chrome.alarms.clear('adjustment', () => { console.log('Alarms.clear adjustment') })
                 chrome.alarms.clear('interval', () => { console.log('Alarms.clear interval') })
             }
-            let t = document.getElementById('toast')
+            const t = document.getElementById('toast')
             t.style.transform = 'translateY(-6rem)'
             setTimeout((a) => { a.style.transform = 'translateY(6rem)' }, 2000, t)
         })
@@ -228,15 +212,10 @@ class ExtensionInfo {
 const opt = new ReflectSettings()
 const info = new ExtensionInfo()
 
-chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-    if(request.option === 'reload') {
-        window.location.reload()
+chrome.storage.onChanged.addListener((changes, areaName) => {
+    if(areaName !== 'local' || !changes.settings) {
+        return
     }
-});
-
-// chrome.storage.onChanged.addListener((changes) => {
-// 	console.log(changes)
-// 	if(changes.hasOwnProperty('settings')) {
-// 		window.location.reload()
-// 	}
-// })
+    opt.settings = changes.settings.newValue
+    opt.reflect()
+})

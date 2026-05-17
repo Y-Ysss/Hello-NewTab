@@ -134,13 +134,7 @@ class DefaultSettings {
             this.settings.radio.tmStyle = st
             this.settings.radio.tmTheme = tm
             this.settings.radio.tmColor = cl
-            this.saveData()
-            try{
-                await chrome.runtime.sendMessage({ newtab: 'reload' })
-                await chrome.runtime.sendMessage({ option: 'reload' })
-            } catch(err) {
-                console.log(err);
-            }
+            await this.saveData()
         }
     }
 }
