@@ -99,8 +99,8 @@ chrome.alarms.onAlarm.addListener((alarm) => {
         console.log(alarm.name, ':', new Date())
         if(alarm.name === 'adjustment') {
             con.autoTheme()
-            chrome.alarms.create("interval", { "delayInMinutes": 1 });
-        } else {
+            chrome.alarms.create('interval', { 'periodInMinutes': 1 })
+        } else if(alarm.name === 'interval') {
             con.autoTheme()
         }
     })

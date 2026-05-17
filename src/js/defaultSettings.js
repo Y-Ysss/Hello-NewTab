@@ -47,7 +47,6 @@ export class DefaultSettings {
         this.init()
     }
     async saveData() {
-        console.log(this.settings)
         await setStorage({ 'settings': this.settings })
     }
     init() {}

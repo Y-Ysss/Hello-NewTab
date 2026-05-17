@@ -20,7 +20,6 @@ class Reflector {
         document.getElementById(value).checked = true
     }
     static select(key, value) {
-        console.log(key, value)
         for(const item of document.querySelectorAll(`select[name="${key}"]`)) {
             item.value = value
         }
@@ -113,7 +112,7 @@ class ReflectSettings extends DefaultSettings {
             // console.log(event.currentTarget.dataset.anchor)
         })
         this.wrapper('#save-settings', 'click', async(event) => {
-            this.saveData()
+            await this.saveData()
             
             if(this.regenerate) {
                 try{
@@ -130,9 +129,11 @@ class ReflectSettings extends DefaultSettings {
                 console.log(err);
             }
             if(this.settings.toggle.tgglAutoTheme) {
-                this.autoTheme(), this.setupAlarms()
+                this.autoTheme()
+                this.setupAlarms()
             } else {
-                chrome.alarms.clearAll(() => { console.log('Alarms.clearAll') })
+                chrome.alarms.clear('adjustment', () => { console.log('Alarms.clear adjustment') })
+                chrome.alarms.clear('interval', () => { console.log('Alarms.clear interval') })
             }
             let t = document.getElementById('toast')
             t.style.transform = 'translateY(-6rem)'
@@ -146,15 +147,15 @@ class ReflectSettings extends DefaultSettings {
             this.settings.text[event.currentTarget.id] = event.currentTarget.value
         })
         this.wrapper('.sw-disable', 'click', (event) => {
-            const name = event.target.dataset.targetInput
-            document.getElementById('txt' + name).disabled = !event.target.checked
+            const name = event.currentTarget.dataset.targetInput
+            document.getElementById('txt' + name).disabled = !event.currentTarget.checked
             this.regenerate = true
         })
         this.wrapper('.regenerate', 'keyup', (event) => {
-            let saveBtn = document.getElementById('save-settings')
-            let errorMsg = document.getElementById(event.target.id + 'Error')
+            const saveBtn = document.getElementById('save-settings')
+            const errorMsg = document.getElementById(event.currentTarget.id + 'Error')
             try {
-                new RegExp(event.target.value)
+                new RegExp(event.currentTarget.value)
                 errorMsg.innerText = ''
                 saveBtn.disabled = false
             } catch (error) {
@@ -164,20 +165,20 @@ class ReflectSettings extends DefaultSettings {
             this.regenerate = true
         })
         this.wrapper('input[type="radio"]', 'click', (event) => {
-            this.settings.radio[event.target.name] = event.target.id
+            this.settings.radio[event.currentTarget.name] = event.currentTarget.id
         })
         this.wrapper('input[type="range"]', 'change', (event) => {
-            this.settings.range[event.target.name] = event.target.value
-            for(const item of document.querySelectorAll(`.${event.target.name}`)) {
-                item.value = event.target.value
+            this.settings.range[event.currentTarget.name] = event.currentTarget.value
+            for(const item of document.querySelectorAll(`.${event.currentTarget.name}`)) {
+                item.value = event.currentTarget.value
             }
         })
         this.wrapper('.text-synchronize-slider', 'change', (event) => {
-            let val = event.target.value;
+            let val = event.currentTarget.value;
             if(!Number.isInteger(val)) { val = Math.round(val) }
             if(val < 0) { val = 0 } else if(val > 24) { val = 24 }
 
-            const name = event.target.name
+            const name = event.currentTarget.name
             this.settings.range[name] = val
             for(const item of document.querySelectorAll(`.${name}`)) {
                 item.value = val
@@ -187,7 +188,7 @@ class ReflectSettings extends DefaultSettings {
             }
         })
         this.wrapper('select', 'change', (event) => {
-            this.settings.select[event.target.name] = event.target.value
+            this.settings.select[event.currentTarget.name] = event.currentTarget.value
         })
     }
 }
@@ -200,6 +201,8 @@ class ExtensionInfo {
     wrapper(url, func) {
         fetch(url).then((response) => response.json()).then((data) => {
             func(data)
+        }).catch((error) => {
+            console.log(error)
         })
     }
 

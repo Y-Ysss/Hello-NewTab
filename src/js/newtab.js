@@ -10,6 +10,13 @@ const getFaviconUrl = (url, size = 16) => {
     return faviconUrl.toString();
 }
 
+const escapeHtml = (value) => String(value)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;')
+
 class BookmarkContents {
     constructor(settings) {
         this.settings = settings
@@ -124,6 +131,7 @@ class ExpandMenu {
 
 class BookmarkSearch {
     constructor() {
+        this.searchToken = 0
         wrapper('#bookmark-search', 'keyup', (event) => {
             this.searchView()
         })
@@ -153,29 +161,40 @@ class BookmarkSearch {
         document.getElementById('bookmark-search-result').innerHTML = ''
     }
     searchView() {
-        const words = document.getElementById('bookmark-search').value
+        const searchToken = ++this.searchToken
+        const words = document.getElementById('bookmark-search').value.trim()
         if(words == "") {
             document.getElementById('bookmark-search-reset').classList.remove('search-reset-visible')
+            document.getElementById('bookmark-search-result').innerHTML = ''
+            return
         } else {
             document.getElementById('bookmark-search-reset').classList.add('search-reset-visible')
             chrome.bookmarks.search(words, async(results) => {
+                if(searchToken !== this.searchToken) {
+                    return
+                }
                 let joinResult = ''
                 if(results.length !== 0) {
                     for(const item of results) {
                         if(item.url) {
                             const parent = await getBookmarkItems(item.parentId)
+                            if(searchToken !== this.searchToken) {
+                                return
+                            }
                             const title = item.title == "" ? item.url : item.title
-                            joinResult += `<a class="bookmark-search-result-items" href="${item.url}" title="${title}"><img class="favicon" src="${getFaviconUrl(item.url)}">${title}<span>${parent[0].title}</span></a>`
+                            const parentTitle = parent?.[0]?.title ?? ''
+                            joinResult += `<a class="bookmark-search-result-items" href="${escapeHtml(item.url)}" title="${escapeHtml(title)}"><img class="favicon" src="${getFaviconUrl(item.url)}">${escapeHtml(title)}<span>${escapeHtml(parentTitle)}</span></a>`
                         }
                     }
                     joinResult = `<div id="bookmark-result-count">${results.length} ${results.length === 1 ? 'bookmark' : 'bookmarks'}</div>${joinResult}`
                 } else {
                     joinResult = '<div id="bookmark-no-results-found"><img src="img/no-results-found.svg"><p>No results found</p></div>'
                 }
-                document.getElementById('bookmark-search-result').innerHTML = joinResult
+                if(searchToken === this.searchToken) {
+                    document.getElementById('bookmark-search-result').innerHTML = joinResult
+                }
             })
         }
-        document.getElementById('bookmark-search-result').innerHTML = ''
     }
 }
 
@@ -319,12 +338,11 @@ class ContentsManager extends DefaultSettings {
     }
     addEventListener() {
         wrapper('input[type=radio]', 'click', async (event) => {
-            const target = event.target
+            const target = event.currentTarget
             this.settings.radio[target.name] = target.id
             this.setState(this.settings.radio)
-            this.saveData()
+            await this.saveData()
             try{
-                await chrome.runtime.sendMessage({ contents: target.name })
                 await chrome.runtime.sendMessage({ option: 'reload' })
             } catch(err) {
                 console.log(err);
@@ -340,8 +358,8 @@ class ContentsManager extends DefaultSettings {
 
         wrapper('#web-search-input', 'keyup', (event) => {
             if((event.which && event.which == 13) || (event.keyCode && event.keyCode == 13)) {
-                chrome.tabs.create({ url: "https://www.google.com/search?q=" + event.target.value })
-                event.target.value = ''
+                chrome.tabs.create({ url: "https://www.google.com/search?q=" + event.currentTarget.value })
+                event.currentTarget.value = ''
             }
         })
 
