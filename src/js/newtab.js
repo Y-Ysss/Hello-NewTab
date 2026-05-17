@@ -10,17 +10,11 @@ const getFaviconUrl = (url, size = 16) => {
     return faviconUrl.toString();
 }
 
-const escapeHtml = (value) => String(value)
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#39;')
-
 class BookmarkContents {
     constructor(settings) {
         this.settings = settings
         this.fragment = document.createDocumentFragment()
+        this.macy = null
     }
     async append() {
         await this.generateContents()
@@ -29,6 +23,10 @@ class BookmarkContents {
         this.fragment = null
     }
     async reload() {
+        if(this.macy !== null) {
+            this.macy.remove()
+            this.macy = null
+        }
         document.getElementById('body-main').innerHTML = ''
         await this.append()
     }
@@ -97,7 +95,7 @@ class BookmarkContents {
         conf.columns = this.checkValue(data.txtMacyColumns, conf.columns)
         conf.margin.x = this.checkValue(data.txtMacyMarginX, conf.margin.x)
 
-        let macy = Macy(conf)
+        this.macy = Macy(conf)
     }
     checkValue(a, b) {
         return(a !== "" ? a : b)
@@ -156,16 +154,18 @@ class BookmarkSearch {
         this.state = !state
     }
     searchReset() {
+        this.searchToken += 1
         document.getElementById('bookmark-search').value = ""
         document.getElementById('bookmark-search-reset').classList.remove('search-reset-visible')
-        document.getElementById('bookmark-search-result').innerHTML = ''
+        document.getElementById('bookmark-search-result').textContent = ''
     }
     searchView() {
         const searchToken = ++this.searchToken
         const words = document.getElementById('bookmark-search').value.trim()
+        const resultArea = document.getElementById('bookmark-search-result')
         if(words == "") {
             document.getElementById('bookmark-search-reset').classList.remove('search-reset-visible')
-            document.getElementById('bookmark-search-result').innerHTML = ''
+            resultArea.textContent = ''
             return
         } else {
             document.getElementById('bookmark-search-reset').classList.add('search-reset-visible')
@@ -173,7 +173,8 @@ class BookmarkSearch {
                 if(searchToken !== this.searchToken) {
                     return
                 }
-                let joinResult = ''
+                const fragment = document.createDocumentFragment()
+                const bookmarkResults = []
                 if(results.length !== 0) {
                     for(const item of results) {
                         if(item.url) {
@@ -181,17 +182,62 @@ class BookmarkSearch {
                             if(searchToken !== this.searchToken) {
                                 return
                             }
-                            const title = item.title == "" ? item.url : item.title
-                            const parentTitle = parent?.[0]?.title ?? ''
-                            joinResult += `<a class="bookmark-search-result-items" href="${escapeHtml(item.url)}" title="${escapeHtml(title)}"><img class="favicon" src="${getFaviconUrl(item.url)}">${escapeHtml(title)}<span>${escapeHtml(parentTitle)}</span></a>`
+                            bookmarkResults.push({
+                                url: item.url,
+                                title: item.title == "" ? item.url : item.title,
+                                parentTitle: parent?.[0]?.title ?? ''
+                            })
                         }
                     }
-                    joinResult = `<div id="bookmark-result-count">${results.length} ${results.length === 1 ? 'bookmark' : 'bookmarks'}</div>${joinResult}`
+                    if(bookmarkResults.length !== 0) {
+                        const count = document.createElement('div')
+                        count.id = 'bookmark-result-count'
+                        count.textContent = `${bookmarkResults.length} ${bookmarkResults.length === 1 ? 'bookmark' : 'bookmarks'}`
+                        fragment.appendChild(count)
+                        for(const item of bookmarkResults) {
+                            const link = document.createElement('a')
+                            link.className = 'bookmark-search-result-items'
+                            link.href = item.url
+                            link.title = item.title
+
+                            const favicon = document.createElement('img')
+                            favicon.className = 'favicon'
+                            favicon.src = getFaviconUrl(item.url)
+
+                            const title = document.createTextNode(item.title)
+                            const parent = document.createElement('span')
+                            parent.textContent = item.parentTitle
+
+                            link.appendChild(favicon)
+                            link.appendChild(title)
+                            link.appendChild(parent)
+                            fragment.appendChild(link)
+                        }
+                    } else {
+                        const noResults = document.createElement('div')
+                        noResults.id = 'bookmark-no-results-found'
+                        const image = document.createElement('img')
+                        image.src = 'img/no-results-found.svg'
+                        const paragraph = document.createElement('p')
+                        paragraph.textContent = 'No results found'
+                        noResults.appendChild(image)
+                        noResults.appendChild(paragraph)
+                        fragment.appendChild(noResults)
+                    }
                 } else {
-                    joinResult = '<div id="bookmark-no-results-found"><img src="img/no-results-found.svg"><p>No results found</p></div>'
+                    const noResults = document.createElement('div')
+                    noResults.id = 'bookmark-no-results-found'
+                    const image = document.createElement('img')
+                    image.src = 'img/no-results-found.svg'
+                    const paragraph = document.createElement('p')
+                    paragraph.textContent = 'No results found'
+                    noResults.appendChild(image)
+                    noResults.appendChild(paragraph)
+                    fragment.appendChild(noResults)
                 }
                 if(searchToken === this.searchToken) {
-                    document.getElementById('bookmark-search-result').innerHTML = joinResult
+                    resultArea.textContent = ''
+                    resultArea.appendChild(fragment)
                 }
             })
         }
