@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.0.0 (Unreleased 2026)
+### Changes
+- Add new themes (Glass)
+- Add background color options
+- Add Appearance Preview in options page
+- Refactor codebase
+
+
 ## 1.1.0 (2023-08-21)
 ### Changes
 - Migrate from Manifest V2 to Manifest V3
