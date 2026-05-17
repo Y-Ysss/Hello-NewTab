@@ -43,9 +43,11 @@ class ReflectSettings extends DefaultSettings {
         const styles = this.themes.styles
         const themes = this.themes.themes
         const colors = this.themes.colors
+        const backgrounds = this.themes.backgrounds
         document.getElementById('theme-styles').appendChild(this.generateRadio(styles, 'tmStyle'))
         document.getElementById('theme-themes').appendChild(this.generateRadio(themes, 'tmTheme'))
         document.getElementById('theme-colors').appendChild(this.generateRadio(colors, 'tmColor'))
+        document.getElementById('bg-patterns').appendChild(this.generateRadio(backgrounds, 'bgPattern'))
         document.getElementById('theme-primary-style').appendChild(this.generateOption(styles))
         document.getElementById('theme-primary-theme').appendChild(this.generateOption(themes))
         document.getElementById('theme-primary-color').appendChild(this.generateOption(colors))
@@ -87,6 +89,18 @@ class ReflectSettings extends DefaultSettings {
                 this.setState(type, data[type])
             }
         }
+        // Show/hide background image and color input based on initial pattern
+        const pattern = this.settings.radio.bgPattern
+        document.getElementById('bgImageInputSection').style.display = 
+            pattern === 'Image' ? 'flex' : 'none'
+        document.getElementById('bgColorInputSection').style.display = 
+            (pattern === 'SingleColor' || pattern === 'Grid' || pattern === 'Dots') ? 'flex' : 'none'
+        document.getElementById('bgPatternColorInputSection').style.display = 
+            (pattern === 'Grid' || pattern === 'Dots') ? 'flex' : 'none'
+        document.getElementById('bgGradientColor1InputSection').style.display = 
+            pattern === 'Gradient' ? 'flex' : 'none'
+        document.getElementById('bgGradientColor2InputSection').style.display = 
+            pattern === 'Gradient' ? 'flex' : 'none'
     }
     setState(type, data) {
         for(const key in data) {
@@ -155,6 +169,22 @@ class ReflectSettings extends DefaultSettings {
         })
         this.wrapper('input[type="radio"]', 'click', (event) => {
             this.settings.radio[event.currentTarget.name] = event.currentTarget.id
+            // Show/hide background image and color input fields based on pattern selection
+            if(event.currentTarget.name === 'bgPattern') {
+                const pattern = event.currentTarget.id
+                // Image field visibility
+                document.getElementById('bgImageInputSection').style.display = 
+                    pattern === 'Image' ? 'flex' : 'none'
+                // Color field visibility based on pattern
+                document.getElementById('bgColorInputSection').style.display = 
+                    (pattern === 'SingleColor' || pattern === 'Grid' || pattern === 'Dots') ? 'flex' : 'none'
+                document.getElementById('bgPatternColorInputSection').style.display = 
+                    (pattern === 'Grid' || pattern === 'Dots') ? 'flex' : 'none'
+                document.getElementById('bgGradientColor1InputSection').style.display = 
+                    pattern === 'Gradient' ? 'flex' : 'none'
+                document.getElementById('bgGradientColor2InputSection').style.display = 
+                    pattern === 'Gradient' ? 'flex' : 'none'
+            }
         })
         this.wrapper('input[type="range"]', 'change', (event) => {
             this.settings.range[event.currentTarget.name] = event.currentTarget.value

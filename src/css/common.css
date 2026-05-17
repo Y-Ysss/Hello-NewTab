@@ -27,6 +27,9 @@ input:disabled {
     outline: none;
     transition: .6s ease all;
 }
+.text-input[type="color"] {
+    padding: 0.2rem 0.5rem;
+}
 
 .wide {
     width: 20rem;

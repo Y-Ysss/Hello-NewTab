@@ -335,3 +335,39 @@ ul {
 .displayNone {
     display: none;
 }
+
+/* Background Patterns */
+
+body.bg-styledefault {
+    /* Use the theme's default background - no override */
+}
+
+body.bg-singlecolor {
+    background-color: var(--bg-base-color, #ffffff);
+}
+
+body.bg-grid {
+    background-color: var(--bg-base-color, #ffffff);
+    background-image: 
+        repeating-linear-gradient(0deg, transparent, transparent 59px, color-mix(in srgb, var(--bg-pattern-color, #c8c8c8) 15%, transparent) 59px, color-mix(in srgb, var(--bg-pattern-color, #c8c8c8) 15%, transparent) 60px),
+        repeating-linear-gradient(90deg, transparent, transparent 59px, color-mix(in srgb, var(--bg-pattern-color, #c8c8c8) 15%, transparent) 59px, color-mix(in srgb, var(--bg-pattern-color, #c8c8c8) 15%, transparent) 60px);
+}
+
+body.bg-dots {
+    background-color: var(--bg-base-color, #ffffff);
+    background-image: 
+        radial-gradient(circle, var(--bg-pattern-color, #c8c8c8) 1px, transparent 1px);
+    background-size: 20px 20px;
+}
+
+body.bg-gradient {
+    background: linear-gradient(135deg, var(--bg-gradient-color1, #c8dcff) 0%, var(--bg-gradient-color2, #dcc8ff) 100%) !important;
+    background-attachment: fixed;
+}
+
+body.bg-image {
+    background-image: var(--bg-image-url, none);
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}

@@ -4,8 +4,8 @@ export class DefaultSettings {
     constructor() {
         this.settings = {
             "toggle": { "tgglIcon": false, "tgglOpenTab": true, "tgglWebSearch": false, "tgglAutoTheme": false },
-            "radio": { "tmStyle": "Stylish", "tmTheme": "Light" , "tmColor": "LightBlue" },
-            "text": { "txtScale": "", "txtRegexpPattern": "^'", "txtDisableFolderPattern": "", "txtMacyColumns": "", "txtMacyMarginX": "", "txtMacyBreak": "" },
+            "radio": { "tmStyle": "Stylish", "tmTheme": "Light" , "tmColor": "LightBlue", "bgPattern": "StyleDefault" },
+            "text": { "txtScale": "", "txtRegexpPattern": "^'", "txtDisableFolderPattern": "", "txtMacyColumns": "", "txtMacyMarginX": "", "txtMacyBreak": "", "txtBgImage": "", "txtBgBaseColor": "#ffffff", "txtBgPatternColor": "#c8c8c8", "txtBgGradientColor1": "#c8dcff", "txtBgGradientColor2": "#dcc8ff" },
             "range": { "sliderLower": "7", "sliderUpper": "17" },
             "select": {
                 "autoThemePrimaryStyle": "Flat", "autoThemePrimaryTheme": "Light","autoThemePrimaryColor": "LightBlue",
@@ -33,6 +33,14 @@ export class DefaultSettings {
                 { "id": "Orange", "label": "Orange" },
                 { "id": "Lime", "label": "Lime" },
                 { "id": "White", "label": "White" }
+            ],
+            "backgrounds": [
+                { "id": "StyleDefault", "label": "Style Default" },
+                { "id": "SingleColor", "label": "Single Color (Custom)" },
+                { "id": "Grid", "label": "Grid Pattern" },
+                { "id": "Dots", "label": "Dots Pattern" },
+                { "id": "Gradient", "label": "Gradient Pattern" },
+                { "id": "Image", "label": "Image (Custom URL)" }
             ]
         }
         this.loadData()

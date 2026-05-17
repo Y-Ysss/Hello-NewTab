@@ -329,6 +329,32 @@ class Reflector {
     tgglWebSearch(value) {
         document.getElementById('web-search-area').classList.toggle('displayNone', !value)
     }
+    bgPattern(value) {
+        // Remove all background pattern classes
+        document.body.classList.remove('bg-styledefault', 'bg-singlecolor', 'bg-grid', 'bg-dots', 'bg-gradient', 'bg-image')
+        // Add the selected pattern class
+        document.body.classList.add(`bg-${value.toLowerCase()}`)
+    }
+    txtBgImage(value) {
+        // Apply custom background image URL
+        if(value && value.trim() !== '') {
+            document.documentElement.style.setProperty('--bg-image-url', `url("${value}")`)
+        } else {
+            document.documentElement.style.setProperty('--bg-image-url', 'none')
+        }
+    }
+    txtBgBaseColor(value) {
+        document.documentElement.style.setProperty('--bg-base-color', value || '#ffffff')
+    }
+    txtBgPatternColor(value) {
+        document.documentElement.style.setProperty('--bg-pattern-color', value || '#c8c8c8')
+    }
+    txtBgGradientColor1(value) {
+        document.documentElement.style.setProperty('--bg-gradient-color1', value || '#c8dcff')
+    }
+    txtBgGradientColor2(value) {
+        document.documentElement.style.setProperty('--bg-gradient-color2', value || '#dcc8ff')
+    }
 }
 
 class ContentsManager extends DefaultSettings {
