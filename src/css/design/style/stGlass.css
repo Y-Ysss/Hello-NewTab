@@ -1,16 +1,11 @@
 body {
     color: var(--primary);
-    background:
-        radial-gradient(circle at top left, rgba(86, 168, 255, .14), transparent 34%),
-        radial-gradient(circle at bottom right, rgba(72, 214, 179, .12), transparent 30%),
-        var(--base);
 }
 
 a {
     color: var(--primary);
 }
 
-#bookmark-search-group,
 .content-module {
     background-color: rgba(255, 255, 255, .72);
     border: 1px solid rgba(255, 255, 255, .42);
@@ -21,6 +16,9 @@ a {
 
 #bookmark-search-group {
     overflow: hidden;
+    box-shadow: 0rem .2rem .5rem var(--shadow1);
+    backdrop-filter: blur(32px) saturate(150%);
+    -webkit-backdrop-filter: blur(32px) saturate(150%);
 }
 
 #bookmark-search-header {
@@ -49,10 +47,9 @@ select {
 
 .bookmark-search-result-items:hover,
 .bookmark-search-result-items:focus,
-.content-module ul li:hover,
 .menu:hover,
 .active-menu {
-    background: rgba(86, 168, 255, .10);
+    background: color-mix(in srgb, var(--accent1) 12%, transparent);
 }
 
 .bookmark-search-result-items span {
@@ -71,7 +68,7 @@ select {
 
 #system-link-area {
     opacity: 1;
-    background-color: rgba(255, 255, 255, .26);
+    background-color: rgba(255, 255, 255, .72);
     border-right: 1px solid rgba(120, 150, 190, .24);
     box-shadow: 0 .2rem .8rem rgba(25, 42, 70, .08);
     backdrop-filter: blur(14px) saturate(145%);
@@ -100,16 +97,18 @@ select {
 
 .menu {
     transition: transform .2s ease, background-color .2s ease, box-shadow .2s ease;
-    border-radius: 1rem;
+    padding: 0.35rem;
+    margin: .6rem .3rem;
+    border-radius: .4rem;
 }
 
 .menu:hover {
-    transform: translateY(-1px);
     box-shadow: 0 .5rem 1rem rgba(25, 42, 70, .08);
+    background: color-mix(in srgb, var(--accent1) 12%, transparent);
 }
 
 .content-module {
-    border-radius: 1.2rem;
+    border-radius: 1rem;
 }
 
 .content-header {
@@ -118,11 +117,16 @@ select {
 }
 
 .content-module ul li a {
-    border-radius: .9rem;
+    border-radius: .4rem;
+    margin: .3rem;
+    padding: .3rem;
+}
+
+.content-module ul li:hover a {
+    background: color-mix(in srgb, var(--accent1) 12%, transparent);
 }
 
 .toggle {
-    background-color: rgba(255, 255, 255, .68);
     box-shadow: inset 0 1px 2px rgba(25, 42, 70, .10);
 }
 
@@ -132,11 +136,11 @@ select {
 }
 
 .toggle-on {
-    background-color: rgba(86, 168, 255, .35);
+    background-color: color-mix(in srgb, var(--accent1) 35%, transparent);
 }
 
 .toggle-on:after {
-    background-color: #4c8dff;
+    background-color: var(--accent1);
 }
 
 input[type=radio]+label::before {
@@ -157,21 +161,21 @@ input[type=radio]+label:after {
 .text-input:focus,
 select:focus {
     border-color: var(--accent1);
-    box-shadow: 0 0 0 .2rem rgba(86, 168, 255, .16);
+    box-shadow: 0 0 0 .2rem color-mix(in srgb, var(--accent1) 18%, transparent);
 }
 
 #web-search-submit,
 .button {
     border-color: transparent;
-    background: linear-gradient(135deg, #2f80ed 0%, #56a8ff 100%);
+    background: linear-gradient(135deg, color-mix(in srgb, var(--accent1) 85%, #000) 0%, var(--accent1) 100%);
     color: #fff;
-    box-shadow: 0 .45rem 1rem rgba(47, 128, 237, .22);
+    box-shadow: 0 .45rem 1rem color-mix(in srgb, var(--accent1) 25%, transparent);
 }
 
 #web-search-submit:hover,
 .button:hover {
-    background: linear-gradient(135deg, #2b74d7 0%, #4d9cff 100%);
-    box-shadow: 0 .55rem 1.1rem rgba(47, 128, 237, .28);
+    background: linear-gradient(135deg, color-mix(in srgb, var(--accent1) 75%, #000) 0%, color-mix(in srgb, var(--accent1) 90%, #fff) 100%);
+    box-shadow: 0 .55rem 1.1rem color-mix(in srgb, var(--accent1) 32%, transparent);
 }
 
 #body-main {

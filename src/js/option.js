@@ -1,5 +1,6 @@
 
 import { DefaultSettings } from './defaultSettings.js';
+import { PREVIEW_FRAME_SRCDOC } from './previewFrameSrcdoc.js';
 
 class Reflector {
     static toggle(key, value) {
@@ -36,6 +37,7 @@ class ReflectSettings extends DefaultSettings {
         this.regenerate = false
         this.addThemeOptions()
         this.reflect()
+        this.initializeAppearancePreview()
         this.addElementsEventListener()
         this.isReady = true
     }
@@ -113,6 +115,7 @@ class ReflectSettings extends DefaultSettings {
             pattern === 'Gradient' ? 'flex' : 'none'
         document.getElementById('bgGradientColor2InputSection').style.display = 
             pattern === 'Gradient' ? 'flex' : 'none'
+        this.updateAppearancePreview()
     }
     setState(type, data) {
         for(const key in data) {
@@ -124,6 +127,84 @@ class ReflectSettings extends DefaultSettings {
         for(const item of all) {
             item.addEventListener(action, (event) => { func(event) })
         }
+    }
+
+    toPixelValue(value, fallback) {
+        const n = Number(value)
+        if(Number.isFinite(n) && n > 0) {
+            return `${n}px`
+        }
+        return fallback
+    }
+
+    toPercentageValue(value, fallback) {
+        const n = Number(value)
+        if(Number.isFinite(n)) {
+            return `${Math.min(100, Math.max(0, n))}%`
+        }
+        return fallback
+    }
+
+    getCurrentBackgroundValue(id, fallback) {
+        const input = document.getElementById(id)
+        const v = input && input.value !== '' ? input.value : this.settings.text[id]
+        return v === undefined || v === '' ? fallback : v
+    }
+
+    initializeAppearancePreview() {
+        this.preview = document.getElementById('appearance-preview')
+        this.previewFrame = document.getElementById('appearance-preview-frame')
+        if(!this.preview || !this.previewFrame) {
+            return
+        }
+        this.previewFrameLoaded = false
+        this.previewFrame.addEventListener('load', () => {
+            this.previewFrameLoaded = true
+            this.updateAppearancePreview()
+        })
+        this.previewFrame.srcdoc = PREVIEW_FRAME_SRCDOC
+    }
+
+    updateAppearancePreview() {
+        if(!this.preview || !this.previewFrameLoaded || !this.previewFrame.contentDocument) {
+            return
+        }
+
+        const frameDocument = this.previewFrame.contentDocument
+        const frameRoot = frameDocument.documentElement
+        const frameBody = frameDocument.body
+        const style = this.settings.radio.tmStyle
+        const theme = this.settings.radio.tmTheme
+        const color = this.settings.radio.tmColor
+        const pattern = this.settings.radio.bgPattern
+
+        frameDocument.getElementById('head-design-style').href = `css/design/style/st${style}.css`
+        frameDocument.getElementById('head-design-theme').href = `css/design/theme/tm${theme}.css`
+        frameDocument.getElementById('head-design-color').href = `css/design/color/cl${color}.css`
+
+        frameRoot.style.setProperty('--bg-image-url', this.getCurrentBackgroundValue('txtBgImage', '').trim() !== ''
+            ? `url("${this.getCurrentBackgroundValue('txtBgImage', '')}")`
+            : 'none')
+        frameRoot.style.setProperty('--bg-base-color', this.getCurrentBackgroundValue('txtBgBaseColor', '#ffffff'))
+        frameRoot.style.setProperty('--bg-pattern-color', this.getCurrentBackgroundValue('txtBgPatternColor', '#c8c8c8'))
+        frameRoot.style.setProperty('--bg-gradient-color1', this.getCurrentBackgroundValue('txtBgGradientColor1', '#c8dcff'))
+        frameRoot.style.setProperty('--bg-gradient-color2', this.getCurrentBackgroundValue('txtBgGradientColor2', '#dcc8ff'))
+        frameRoot.style.setProperty('--bg-grid-line-width', this.toPixelValue(this.getCurrentBackgroundValue('txtBgGridLineWidth', '2'), '2px'))
+        frameRoot.style.setProperty('--bg-grid-spacing-x', this.toPixelValue(this.getCurrentBackgroundValue('txtBgGridSpacingX', '60'), '60px'))
+        frameRoot.style.setProperty('--bg-grid-spacing-y', this.toPixelValue(this.getCurrentBackgroundValue('txtBgGridSpacingY', '60'), '60px'))
+        frameRoot.style.setProperty('--bg-grid-opacity', this.toPercentageValue(this.getCurrentBackgroundValue('txtBgGridOpacity', '50'), '50%'))
+        frameRoot.style.setProperty('--bg-dots-size', this.toPixelValue(this.getCurrentBackgroundValue('txtBgDotsLineWidth', '1'), '1px'))
+        frameRoot.style.setProperty('--bg-dots-spacing-x', this.toPixelValue(this.getCurrentBackgroundValue('txtBgDotsSpacingX', '20'), '20px'))
+        frameRoot.style.setProperty('--bg-dots-spacing-y', this.toPixelValue(this.getCurrentBackgroundValue('txtBgDotsSpacingY', '20'), '20px'))
+        frameRoot.style.setProperty('--bg-dots-opacity', this.toPercentageValue(this.getCurrentBackgroundValue('txtBgDotsOpacity', '50'), '50%'))
+
+        frameBody.classList.remove('bg-styledefault', 'bg-singlecolor', 'bg-grid', 'bg-dots', 'bg-gradient', 'bg-image')
+        frameBody.classList.add(`bg-${pattern.toLowerCase()}`)
+
+        document.getElementById('previewStyleLabel').textContent = `Style: ${style}`
+        document.getElementById('previewThemeLabel').textContent = `Theme: ${theme}`
+        document.getElementById('previewColorLabel').textContent = `Color: ${color}`
+        document.getElementById('previewPatternLabel').textContent = `Pattern: ${pattern}`
     }
 
     async setupAlarms() {
@@ -160,6 +241,7 @@ class ReflectSettings extends DefaultSettings {
         })
         this.wrapper('.text-input', 'blur', (event) => {
             this.settings.text[event.currentTarget.id] = event.currentTarget.value
+            this.updateAppearancePreview()
         })
         this.wrapper('.sw-disable', 'click', (event) => {
             const name = event.currentTarget.dataset.targetInput
@@ -209,6 +291,7 @@ class ReflectSettings extends DefaultSettings {
                 document.getElementById('bgGradientColor2InputSection').style.display = 
                     pattern === 'Gradient' ? 'flex' : 'none'
             }
+            this.updateAppearancePreview()
         })
         this.wrapper('input[type="range"]', 'change', (event) => {
             this.settings.range[event.currentTarget.name] = event.currentTarget.value
@@ -232,6 +315,10 @@ class ReflectSettings extends DefaultSettings {
         })
         this.wrapper('select', 'change', (event) => {
             this.settings.select[event.currentTarget.name] = event.currentTarget.value
+        })
+
+        this.wrapper('#txtBgImage, #txtBgBaseColor, #txtBgPatternColor, #txtBgGridLineWidth, #txtBgGridSpacingX, #txtBgGridSpacingY, #txtBgGridOpacity, #txtBgDotsLineWidth, #txtBgDotsSpacingX, #txtBgDotsSpacingY, #txtBgDotsOpacity, #txtBgGradientColor1, #txtBgGradientColor2', 'input', () => {
+            this.updateAppearancePreview()
         })
     }
 }

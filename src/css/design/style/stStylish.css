@@ -179,11 +179,14 @@ input[type=radio]+label:after {
     border-color: var(--accent1);
 }
 
-#web-search-submit {
-    border-color: var(--boundary);
-    background-color: var(--accent3);
+#web-search-submit,
+.button {
+    border-color: transparent;
+    background: linear-gradient(135deg, color-mix(in srgb, var(--accent1) 85%, #000) 0%, var(--accent1) 100%);
+    color: #fff;
 }
 
-#web-search-submit:hover {
-    background-color: var(--accent2);
+#web-search-submit:hover,
+.button:hover {
+    background: linear-gradient(135deg, color-mix(in srgb, var(--accent1) 75%, #000) 0%, color-mix(in srgb, var(--accent1) 90%, #fff) 100%);
 }
