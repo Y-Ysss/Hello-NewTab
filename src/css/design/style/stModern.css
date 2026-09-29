@@ -138,9 +138,18 @@ input[type=radio]+label:after {
 
 #web-search-submit {
     border-color: var(--boundary);
-    background-color: var(--accent3);
+    background-color: var(--surface);
+    color: var(--secondary);
+    border-radius: .65rem;
+    box-shadow: none;
 }
 
 #web-search-submit:hover {
-    background-color: var(--accent2);
+    background-color: var(--surface);
+    border-color: var(--accent1);
+    box-shadow: 0 .15rem .35rem var(--shadow2);
+}
+
+#web-search-submit:active {
+    box-shadow: inset 0 .1rem .2rem var(--shadow2);
 }

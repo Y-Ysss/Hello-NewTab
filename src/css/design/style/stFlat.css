@@ -125,6 +125,7 @@ input[type=radio]+label:after {
     color: var(--secondary);
     background-color: var(--surface);
     border-color: var(--boundary);
+    border-radius: 0.65rem;
 }
 
  ::-webkit-input-placeholder {
@@ -137,9 +138,17 @@ input[type=radio]+label:after {
 
 #web-search-submit {
     border-color: var(--boundary);
-    background-color: var(--accent3);
+    background-color: var(--surface);
+    color: var(--secondary);
+    border-radius: 0.65rem;
+    box-shadow: none;
 }
 
 #web-search-submit:hover {
-    background-color: var(--accent2);
+    background-color: var(--accent3);
+    border-color: var(--accent1);
+}
+
+#web-search-submit:active {
+    transform: translateY(1px);
 }

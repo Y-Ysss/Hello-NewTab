@@ -91,13 +91,26 @@ ul {
 .bookmark-search-result-items {
     padding: 0.45rem 0.5rem 0.45rem 0.5rem;
     z-index: 1;
-    display: block;
+    display: flex;
+    align-items: center;
     overflow: hidden;
-    vertical-align: middle;
     white-space: nowrap;
     text-overflow: ellipsis;
     transition: .12s ease-out all;
     outline: none;
+}
+
+.bookmark-search-result-title {
+    min-width: 0;
+    overflow: hidden;
+    line-height: 1.4rem;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.bookmark-search-result-items .favicon {
+    position: static;
+    flex: 0 0 auto;
 }
 
 .bookmark-search-result-items:hover {}
@@ -178,6 +191,20 @@ ul {
     font-size: .96rem;
     opacity: 0;
     transition: .12s cubic-bezier(.49, .03, .12, 1.00) all;
+}
+
+html.theme-loading #body-main {
+    opacity: 0 !important;
+    visibility: hidden;
+}
+
+html.theme-loading #body-main .content-module {
+    transition: none !important;
+}
+
+html.theme-loading #system-link-area {
+    opacity: 0 !important;
+    visibility: hidden;
 }
 
 
@@ -372,6 +399,10 @@ ul {
 }
 
 #web-search-input {
+    box-sizing: border-box;
+    color: var(--secondary);
+    background-color: var(--surface);
+    border-color: var(--boundary);
     width: 80%;
     max-width: 50rem;
     padding: 0.6rem 0.65rem 0.6rem 0.65rem;
@@ -386,6 +417,9 @@ ul {
     border-style: solid;
     border-radius: 0.65rem;
     outline: none;
+    font: inherit;
+    line-height: 1rem;
+    transition: background-color .16s ease, border-color .16s ease, color .16s ease, box-shadow .16s ease;
 }
 
 #web-search-input:focus {
@@ -399,9 +433,12 @@ ul {
 #web-search-input:focus::-webkit-input-placeholder {}
 
 #web-search-submit {
-    line-height: 1rem;
-    /*color: #5F6368;*/
-    /*box-shadow: 0 0.13rem 0.325rem rgba(0, 0, 0, .3);*/
+    box-sizing: border-box;
+    appearance: none;
+    -webkit-appearance: none;
+    color: var(--secondary);
+    background-color: var(--surface);
+    border-color: var(--boundary);
     border-radius: 0.65rem;
     cursor: pointer;
     vertical-align: middle;
@@ -410,7 +447,15 @@ ul {
     border-style: solid;
     padding: 0.6rem 0.65rem 0.6rem 0.65rem;
     outline: none;
-    transition: .12s ease-out all;
+    font: inherit;
+    font-weight: 500;
+    line-height: 1rem;
+    transition: background-color .16s ease, border-color .16s ease, color .16s ease, box-shadow .16s ease, transform .16s ease;
+}
+
+#web-search-submit:focus-visible {
+    outline: 2px solid var(--accent1);
+    outline-offset: 2px;
 }
 
 .displayNone {

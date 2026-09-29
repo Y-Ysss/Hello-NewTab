@@ -150,7 +150,7 @@ summary {
   word-wrap: break-word;
   color: #345;
   background-color: #fff;
-  box-shadow: 0 .2rem .5rem rgba(0, 0, 0, .3);
+  box-shadow: 0 .2rem .5rem rgba(125, 125, 125, .3);
   border-radius: 1.2rem;
 }
 
@@ -282,7 +282,6 @@ summary {
 .appearance-preview {
   width: min(42rem, 100%);
   min-width: 22rem;
-  border-radius: 1rem;
   overflow: hidden;
   border: 1px solid #d7d7d7;
   background: #fff;

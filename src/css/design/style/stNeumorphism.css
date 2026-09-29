@@ -144,6 +144,7 @@ input[type=radio]+label:after {
     color: var(--secondary);
     background-color: var(--surface);
     border-color: var(--boundary);
+    box-shadow: inset .1rem .1rem .2rem var(--boundary), inset -.1rem -.1rem .2rem var(--surface);
 }
 
  ::-webkit-input-placeholder {
@@ -156,9 +157,17 @@ input[type=radio]+label:after {
 
 #web-search-submit {
     border-color: var(--boundary);
-    background-color: var(--accent3);
+    border-radius: .65rem;
+    color: var(--secondary);
+    background-color: var(--surface);
+    box-shadow: .1rem .1rem .2rem var(--boundary), -.1rem -.1rem .2rem var(--surface);
 }
 
 #web-search-submit:hover {
-    background-color: var(--accent2);
+    border-color: var(--accent1);
+    color: var(--secondary);
+}
+
+#web-search-submit:active {
+    box-shadow: inset .1rem .1rem .2rem var(--boundary), inset -.1rem -.1rem .2rem var(--surface);
 }

@@ -15,34 +15,33 @@ a {
 }
 
 #bookmark-search-group {
+    background-color: rgba(255, 255, 255, .58);
     overflow: hidden;
     box-shadow: 0rem .2rem .5rem var(--shadow1);
     backdrop-filter: blur(32px) saturate(150%);
     -webkit-backdrop-filter: blur(32px) saturate(150%);
 }
 
-#bookmark-search-header {
-    background-color: rgba(255, 255, 255, .58);
+
+
+#bookmark-search {
+    height: 2.2rem;
+    width: 96%;
+    margin: 0.6rem .4rem;
+    padding: 0.4rem 2rem 0.4rem 0.8rem;
+    border-radius: 0.6rem;
+    color: var(--secondary);
+    font-size: 1rem;
+    box-shadow: 0 1rem 2rem rgba(25, 42, 70, .10);
 }
 
-#bookmark-search,
-#web-search-input,
-.text-input,
-.text-synchronize-slider,
-select {
-    color: var(--secondary);
-    background-color: rgba(255, 255, 255, .82);
-    border: 1px solid rgba(120, 150, 190, .22);
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, .75);
+#bookmark-search-reset {
+    line-height: normal;
 }
 
 #bookmark-search::-webkit-input-placeholder,
 ::-webkit-input-placeholder {
     color: var(--secondary);
-}
-
-#bookmark-search-result {
-    background-color: rgba(255, 255, 255, .52);
 }
 
 .bookmark-search-result-items:hover,
@@ -53,7 +52,7 @@ select {
 }
 
 .bookmark-search-result-items span {
-    background-color: rgba(255, 255, 255, .76);
+    background-color: rgb(255, 255, 255);
     border: 1px solid rgba(120, 150, 190, .18);
 }
 
@@ -107,10 +106,6 @@ select {
     background: color-mix(in srgb, var(--accent1) 12%, transparent);
 }
 
-.content-module {
-    border-radius: 1rem;
-}
-
 .content-header {
     color: var(--primary);
     border-bottom: 1px solid rgba(120, 150, 190, .18);
@@ -157,6 +152,12 @@ input[type=radio]+label:after {
     background-color: var(--accent1);
 }
 
+#web-search-input {
+    border: 1px solid rgba(255, 255, 255, .42);
+    box-shadow: 0 1rem 2rem rgba(25, 42, 70, .10);
+    background-color: rgba(255, 255, 255, .72);
+}
+
 #web-search-input:focus,
 .text-input:focus,
 select:focus {
@@ -164,18 +165,25 @@ select:focus {
     box-shadow: 0 0 0 .2rem color-mix(in srgb, var(--accent1) 18%, transparent);
 }
 
-#web-search-submit,
-.button {
-    border-color: transparent;
-    background: linear-gradient(135deg, color-mix(in srgb, var(--accent1) 85%, #000) 0%, var(--accent1) 100%);
-    color: #fff;
-    box-shadow: 0 .45rem 1rem color-mix(in srgb, var(--accent1) 25%, transparent);
+
+#web-search-submit {
+    border: 1px solid rgba(255, 255, 255, .42);
+    border-radius: .65rem;
+    color: var(--secondary);
+    background: rgba(255, 255, 255, .82);
+    box-shadow: 0 1rem 2rem rgba(25, 42, 70, .10);
+    backdrop-filter: blur(12px) saturate(145%);
+    -webkit-backdrop-filter: blur(12px) saturate(145%);
 }
 
-#web-search-submit:hover,
-.button:hover {
-    background: linear-gradient(135deg, color-mix(in srgb, var(--accent1) 75%, #000) 0%, color-mix(in srgb, var(--accent1) 90%, #fff) 100%);
-    box-shadow: 0 .55rem 1.1rem color-mix(in srgb, var(--accent1) 32%, transparent);
+#web-search-submit:hover {
+    border-color: var(--accent1);
+    background: rgba(255, 255, 255, .82);
+    box-shadow: 0 0 0 .2rem color-mix(in srgb, var(--accent1) 18%, transparent);
+}
+
+#web-search-submit:active {
+    box-shadow: inset 0 1px 3px rgba(25, 42, 70, .14);
 }
 
 #body-main {
