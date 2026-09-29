@@ -1,15 +1,9 @@
 
 import { DefaultSettings } from './defaultSettings.js';
 import { PREVIEW_FRAME_SRCDOC } from './previewFrameSrcdoc.js';
+import { OptionI18n } from './option-i18n.js';
 
-const RELEASE_NOTES = [
-    'Glass テーマと背景パターンのカスタマイズを追加',
-    'オプションページに外観プレビューを追加',
-    '検索ボタンのデザインをStyleごとに調整',
-    '1.1.0 からの設定引き継ぎを改善',
-    '自動テーマの時刻判定と新規タブのレイアウト反映を修正',
-    '新規タブ読み込み時にカードとサイドバーの枠線が一瞬暗く見える問題を修正'
-]
+const i18n = new OptionI18n()
 
 class Reflector {
     static toggle(key, value) {
@@ -55,18 +49,18 @@ class ReflectSettings extends DefaultSettings {
         const themes = this.themes.themes
         const colors = this.themes.colors
         const backgrounds = this.themes.backgrounds
-        document.getElementById('theme-styles').appendChild(this.generateRadio(styles, 'tmStyle'))
-        document.getElementById('theme-themes').appendChild(this.generateRadio(themes, 'tmTheme'))
-        document.getElementById('theme-colors').appendChild(this.generateRadio(colors, 'tmColor'))
-        document.getElementById('bg-patterns').appendChild(this.generateRadio(backgrounds, 'bgPattern'))
-        document.getElementById('theme-primary-style').appendChild(this.generateOption(styles))
-        document.getElementById('theme-primary-theme').appendChild(this.generateOption(themes))
-        document.getElementById('theme-primary-color').appendChild(this.generateOption(colors))
-        document.getElementById('theme-secondary-style').appendChild(this.generateOption(styles))
-        document.getElementById('theme-secondary-theme').appendChild(this.generateOption(themes))
-        document.getElementById('theme-secondary-color').appendChild(this.generateOption(colors))
+        document.getElementById('theme-styles').appendChild(this.generateRadio(styles, 'tmStyle', 'style'))
+        document.getElementById('theme-themes').appendChild(this.generateRadio(themes, 'tmTheme', 'theme'))
+        document.getElementById('theme-colors').appendChild(this.generateRadio(colors, 'tmColor', 'color'))
+        document.getElementById('bg-patterns').appendChild(this.generateRadio(backgrounds, 'bgPattern', 'background'))
+        document.getElementById('theme-primary-style').appendChild(this.generateOption(styles, 'style'))
+        document.getElementById('theme-primary-theme').appendChild(this.generateOption(themes, 'theme'))
+        document.getElementById('theme-primary-color').appendChild(this.generateOption(colors, 'color'))
+        document.getElementById('theme-secondary-style').appendChild(this.generateOption(styles, 'style'))
+        document.getElementById('theme-secondary-theme').appendChild(this.generateOption(themes, 'theme'))
+        document.getElementById('theme-secondary-color').appendChild(this.generateOption(colors, 'color'))
     }
-    generateRadio(items, name) {
+    generateRadio(items, name, category) {
         const fragment = document.createDocumentFragment()
         const inputBase = document.createElement('input')
         const labelBase = document.createElement('label')
@@ -76,19 +70,25 @@ class ReflectSettings extends DefaultSettings {
             inpt.type = 'radio'
             inpt.name = name
             inpt.id = inpt.value = labl.htmlFor = item.id
-            labl.appendChild(document.createTextNode(item.label))
+            labl.dataset.optionCategory = category
+            labl.dataset.optionId = item.id
+            labl.dataset.optionFallback = item.label
+            labl.textContent = i18n.optionLabel(category, item.id, item.label)
             fragment.appendChild(inpt)
             fragment.appendChild(labl)
         }
         return fragment
     }
-    generateOption(items) {
+    generateOption(items, category) {
         const fragment = document.createDocumentFragment()
         const optionBase = document.createElement('option')
         for(const item of items) {
             const optn = optionBase.cloneNode()
             optn.value = item.id
-            optn.appendChild(document.createTextNode(item.label))
+            optn.dataset.optionCategory = category
+            optn.dataset.optionId = item.id
+            optn.dataset.optionFallback = item.label
+            optn.textContent = i18n.optionLabel(category, item.id, item.label)
             fragment.appendChild(optn)
         }
         return fragment
@@ -210,10 +210,10 @@ class ReflectSettings extends DefaultSettings {
         frameBody.classList.remove('bg-styledefault', 'bg-singlecolor', 'bg-grid', 'bg-dots', 'bg-gradient', 'bg-image')
         frameBody.classList.add(`bg-${pattern.toLowerCase()}`)
 
-        document.getElementById('previewStyleLabel').textContent = `Style: ${style}`
-        document.getElementById('previewThemeLabel').textContent = `Theme: ${theme}`
-        document.getElementById('previewColorLabel').textContent = `Color: ${color}`
-        document.getElementById('previewPatternLabel').textContent = `Pattern: ${pattern}`
+        document.getElementById('previewStyleLabel').textContent = `${i18n.t('previewStyle')}: ${i18n.optionLabel('style', style)}`
+        document.getElementById('previewThemeLabel').textContent = `${i18n.t('previewTheme')}: ${i18n.optionLabel('theme', theme)}`
+        document.getElementById('previewColorLabel').textContent = `${i18n.t('previewColor')}: ${i18n.optionLabel('color', color)}`
+        document.getElementById('previewPatternLabel').textContent = `${i18n.t('previewPattern')}: ${i18n.optionLabel('background', pattern)}`
     }
 
     async setupAlarms() {
@@ -265,7 +265,7 @@ class ReflectSettings extends DefaultSettings {
                 errorMsg.innerText = ''
                 saveBtn.disabled = false
             } catch (error) {
-                errorMsg.innerText = '正規表現が正しくありません'
+                errorMsg.innerText = i18n.t('regexInvalid')
                 saveBtn.disabled = true
             }
             this.regenerate = true
@@ -322,7 +322,7 @@ class ReflectSettings extends DefaultSettings {
                 item.value = val
             }
         })
-        this.wrapper('select', 'change', (event) => {
+        this.wrapper('select:not(#option-language)', 'change', (event) => {
             this.settings.select[event.currentTarget.name] = event.currentTarget.value
         })
 
@@ -334,6 +334,7 @@ class ReflectSettings extends DefaultSettings {
 
 class ExtensionInfo {
     constructor() {
+        document.addEventListener('option-language-changed', () => this.versionInfo())
         this.versionInfo()
     }
     createSection(titleText) {
@@ -358,23 +359,28 @@ class ExtensionInfo {
     versionInfo() {
         const manifestData = chrome.runtime.getManifest();
         const container = document.getElementById('ExtensionInfo')
-        const versionSection = this.createSection('Installed Extension')
+        container.replaceChildren()
+        const versionSection = this.createSection(i18n.t('installedExtension'))
         const version = document.createElement('span')
-        version.textContent = `バージョン : ${String(manifestData.version ?? '')}`
+        version.textContent = `${i18n.t('version')}: ${String(manifestData.version ?? '')}`
         this.appendRow(versionSection, version)
         container.appendChild(versionSection)
 
-        const releaseSection = this.createSection('このバージョンの変更点')
+        const releaseSection = this.createSection(i18n.t('whatsNew'))
         const whatsNew = document.createElement('div')
-        RELEASE_NOTES.forEach(note => {
+        const releaseNoteKeys = [
+            'releaseNoteGlass', 'releaseNotePreview', 'releaseNoteSearch',
+            'releaseNoteMigration', 'releaseNoteAutoTheme', 'releaseNoteFlash'
+        ]
+        releaseNoteKeys.forEach(key => {
             const line = document.createElement('div')
-            line.textContent = `• ${note}`
+            line.textContent = `• ${i18n.t(key)}`
             whatsNew.appendChild(line)
         })
         this.appendRow(releaseSection, whatsNew)
 
         const releaseLinkText = document.createElement('span')
-        releaseLinkText.appendChild(document.createTextNode('リリース一覧 : '))
+        releaseLinkText.appendChild(document.createTextNode(`${i18n.t('releaseList')} `))
         const releaseLink = document.createElement('a')
         releaseLink.className = 'url-text'
         releaseLink.href = 'https://github.com/Y-Ysss/Hello-NewTab/releases'
@@ -388,6 +394,8 @@ class ExtensionInfo {
 
 const opt = new ReflectSettings()
 const info = new ExtensionInfo()
+
+document.addEventListener('option-language-changed', () => opt.updateAppearancePreview())
 
 chrome.storage.onChanged.addListener((changes, areaName) => {
     if(areaName !== 'local' || !changes.settings || !opt.isReady) {
