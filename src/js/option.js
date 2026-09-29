@@ -2,6 +2,15 @@
 import { DefaultSettings } from './defaultSettings.js';
 import { PREVIEW_FRAME_SRCDOC } from './previewFrameSrcdoc.js';
 
+const RELEASE_NOTES = [
+    'Glass テーマと背景パターンのカスタマイズを追加',
+    'オプションページに外観プレビューを追加',
+    '検索ボタンのデザインをStyleごとに調整',
+    '1.1.0 からの設定引き継ぎを改善',
+    '自動テーマの時刻判定と新規タブのレイアウト反映を修正',
+    '新規タブ読み込み時にカードとサイドバーの枠線が一瞬暗く見える問題を修正'
+]
+
 class Reflector {
     static toggle(key, value) {
         document.getElementById(key).classList.toggle('toggle-on', Boolean(value))
@@ -326,32 +335,54 @@ class ReflectSettings extends DefaultSettings {
 class ExtensionInfo {
     constructor() {
         this.versionInfo()
-        this.wrapper('https://api.github.com/repos/Y-Ysss/Hello-NewTab/releases/latest', this.gitReleaseInfo)
     }
-    wrapper(url, func) {
-        fetch(url).then((response) => response.json()).then((data) => {
-            func(data)
-        }).catch((error) => {
-            console.log(error)
-        })
+    createSection(titleText) {
+        const section = document.createElement('div')
+        section.className = 'content-section'
+        const title = document.createElement('div')
+        title.className = 'section-title'
+        title.textContent = titleText
+        section.appendChild(title)
+        return section
+    }
+    appendRow(section, content) {
+        const row = document.createElement('div')
+        row.className = 'section-items-slim'
+        const text = document.createElement('div')
+        text.className = 'section-item-text'
+        text.appendChild(content)
+        row.appendChild(text)
+        section.appendChild(row)
     }
 
     versionInfo() {
         const manifestData = chrome.runtime.getManifest();
-        let str = `<div class="content-section"><div class="section-title">Installed Extension</div><div class="section-items-slim"><div class="section-item-text">バージョン : ${manifestData.version}</div></div></div>`
-        document.getElementById('ExtensionInfo').insertAdjacentHTML('beforeend', str);
-    }
+        const container = document.getElementById('ExtensionInfo')
+        const versionSection = this.createSection('Installed Extension')
+        const version = document.createElement('span')
+        version.textContent = `バージョン : ${String(manifestData.version ?? '')}`
+        this.appendRow(versionSection, version)
+        container.appendChild(versionSection)
 
-    gitReleaseInfo(data) {
-        const manifestData = chrome.runtime.getManifest();
-        let str
-        if(data.message !== undefined) { return }
-        if(manifestData.version !== data.name) {
-            const body = data.body.replace(/#{1,6}(.+?)\r?\n/g, '<span>$1</span><br>')
-            str = `<div class="content-section"><div class="section-title">Latest Release</div><div class="section-items-slim"><div class="section-item-text">バージョン : ${data.name}</div></div><div class="section-items-slim"><div class="section-item-text"><b>What's New</b><br>${body}</div></div><div class="section-items-slim"><div class="section-item-text">URL : <a class="url-text" href="${data.html_url}" target="_blank"></a></div></div></div>`
-            str = str.replace(/\r?\n/g, '<br>')
-            document.getElementById('ExtensionInfo').insertAdjacentHTML('beforeend', str);
-        }
+        const releaseSection = this.createSection('このバージョンの変更点')
+        const whatsNew = document.createElement('div')
+        RELEASE_NOTES.forEach(note => {
+            const line = document.createElement('div')
+            line.textContent = `• ${note}`
+            whatsNew.appendChild(line)
+        })
+        this.appendRow(releaseSection, whatsNew)
+
+        const releaseLinkText = document.createElement('span')
+        releaseLinkText.appendChild(document.createTextNode('リリース一覧 : '))
+        const releaseLink = document.createElement('a')
+        releaseLink.className = 'url-text'
+        releaseLink.href = 'https://github.com/Y-Ysss/Hello-NewTab/releases'
+        releaseLink.target = '_blank'
+        releaseLink.rel = 'noopener noreferrer'
+        releaseLinkText.appendChild(releaseLink)
+        this.appendRow(releaseSection, releaseLinkText)
+        container.appendChild(releaseSection)
     }
 }
 

@@ -66,11 +66,13 @@ export const PREVIEW_FRAME_SRCDOC = `<!DOCTYPE html>
         }
         #web-search-input {
             width: min(19rem, calc(100vw - 9rem));
-            height: 1rem;
-            font-size: .9rem;
+            height: 2rem;
+            padding: .48rem .8rem;
+            font-size: .8rem;
         }
         #web-search-submit {
             margin: 0;
+            height: 2rem;
             padding: .48rem .8rem;
             font-size: .8rem;
         }
@@ -110,6 +112,7 @@ export const PREVIEW_FRAME_SRCDOC = `<!DOCTYPE html>
     <div id="body-main">
         <div id="web-search-area">
             <input id="web-search-input" type="text" placeholder="Search" readonly>
+            <input id="web-search-submit" type="submit" value="Search">
         </div>
         <div class="preview-bookmarks-grid">
             <div class="content-module">

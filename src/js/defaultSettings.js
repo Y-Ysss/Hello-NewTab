@@ -1,5 +1,34 @@
 import { getStorage, setStorage } from "./browser.js";
 
+const isRecord = value => value !== null && typeof value === 'object' && !Array.isArray(value)
+
+const mergeSettings = (defaults, storedValue) => {
+    const stored = isRecord(storedValue) ? storedValue : {}
+    const hasAllDefaults = Object.entries(defaults).every(([key, defaultValue]) => {
+        if(isRecord(defaultValue)) {
+            const storedGroup = stored[key]
+            return isRecord(storedGroup) && Object.keys(defaultValue).every(item => Object.prototype.hasOwnProperty.call(storedGroup, item))
+        }
+        return Object.prototype.hasOwnProperty.call(stored, key)
+    })
+
+    const settings = { ...defaults, ...stored }
+    for(const [key, defaultValue] of Object.entries(defaults)) {
+        if(isRecord(defaultValue)) {
+            settings[key] = {
+                ...defaultValue,
+                ...(isRecord(stored[key]) ? stored[key] : {})
+            }
+        }
+    }
+    settings.format_version = defaults.format_version
+
+    return {
+        settings,
+        needsSave: !hasAllDefaults || stored.format_version !== defaults.format_version
+    }
+}
+
 export class DefaultSettings {
     constructor() {
         this.settings = {
@@ -11,7 +40,7 @@ export class DefaultSettings {
                 "autoThemePrimaryStyle": "Flat", "autoThemePrimaryTheme": "Light","autoThemePrimaryColor": "LightBlue",
                 "autoThemeSecondaryStyle": "Flat", "autoThemeSecondaryTheme": "Dark", "autoThemeSecondaryColor": "LightBlue"
             },
-            "format_version": "0.7"
+            "format_version": "0.8"
         }
         this.themes = {
             "styles": [
@@ -44,14 +73,16 @@ export class DefaultSettings {
                 { "id": "Image", "label": "Image (Custom URL)" }
             ]
         }
+        this.defaultSettings = this.settings
         this.loadData()
     }
     async loadData() {
         const data = await getStorage(null)
-        if(data.settings !== undefined && data.settings.format_version === this.settings.format_version) {
-            this.settings = data.settings
-        } else {
-            this.saveData()
+        const merged = mergeSettings(this.defaultSettings, data.settings)
+        this.settings = merged.settings
+
+        if(merged.needsSave) {
+            await this.saveData()
         }
         this.init()
     }
@@ -80,42 +111,39 @@ export class DefaultSettings {
 
     async autoTheme() {
         const data = await getStorage('settings')
-        this.settings.range = data.settings.range
-        let t1 = data.settings.range.sliderLower;
-        let t2 = data.settings.range.sliderUpper;
+        if(!isRecord(data.settings)) {
+            return
+        }
+        const latestSettings = mergeSettings(this.defaultSettings, data.settings).settings
+        const t1 = Number(latestSettings.range?.sliderLower)
+        const t2 = Number(latestSettings.range?.sliderUpper)
+        if(!Number.isFinite(t1) || !Number.isFinite(t2)) {
+            return
+        }
         const now = new Date()
         console.log(this.formatTime(now))
         const h = now.getHours()
-        let st, tm, cl
+        let usePrimary
         if(t1 <= t2) {
-            if(t1 <= h && h < t2) {
-                console.log('theme1')
-                st = data.settings.select.autoThemePrimaryStyle
-                tm = data.settings.select.autoThemePrimaryTheme
-                cl = data.settings.select.autoThemePrimaryColor
-            } else if(h < t1 || t2 <= h) {
-                console.log('theme2')
-                st = data.settings.select.autoThemeSecondaryStyle
-                tm = data.settings.select.autoThemeSecondaryTheme
-                cl = data.settings.select.autoThemeSecondaryColor
-            }
-        } else if(t2 < t1) {
-            if(t2 <= h && h < t1) {
-                console.log('theme2')
-                st = data.settings.select.autoThemeSecondaryStyle
-                tm = data.settings.select.autoThemeSecondaryTheme
-                cl = data.settings.select.autoThemeSecondaryColor
-            } else if(t1 <= h || h < t2) {
-                console.log('theme1')
-                st = data.settings.select.autoThemePrimaryStyle
-                tm = data.settings.select.autoThemePrimaryTheme
-                cl = data.settings.select.autoThemePrimaryColor
-            }
+            usePrimary = t1 <= h && h < t2
+        } else {
+            usePrimary = h >= t1 || h < t2
         }
-        if(this.settings.radio.tmStyle !== st || this.settings.radio.tmTheme !== tm || this.settings.radio.tmColor !== cl) {
-            this.settings.radio.tmStyle = st
-            this.settings.radio.tmTheme = tm
-            this.settings.radio.tmColor = cl
+
+        const prefix = usePrimary ? 'autoThemePrimary' : 'autoThemeSecondary'
+        console.log(usePrimary ? 'theme1' : 'theme2')
+        const select = latestSettings.select ?? {}
+        const latestRadio = latestSettings.radio ?? {}
+        const st = select[`${prefix}Style`]
+        const tm = select[`${prefix}Theme`]
+        const cl = select[`${prefix}Color`]
+        this.settings = latestSettings
+
+        if(latestRadio.tmStyle !== st || latestRadio.tmTheme !== tm || latestRadio.tmColor !== cl) {
+            this.settings = {
+                ...latestSettings,
+                radio: { ...latestRadio, tmStyle: st, tmTheme: tm, tmColor: cl }
+            }
             await this.saveData()
         }
     }

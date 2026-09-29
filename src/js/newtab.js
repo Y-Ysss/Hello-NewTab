@@ -16,19 +16,11 @@ class BookmarkContents {
         this.fragment = document.createDocumentFragment()
         this.macy = null
     }
-    async append() {
-        await this.generateContents()
-        this.applyMacy()
-        document.getElementById('body-main').appendChild(this.fragment)
-        this.fragment = null
-    }
-    async reload() {
+    destroy() {
         if(this.macy !== null) {
             this.macy.remove()
             this.macy = null
         }
-        document.getElementById('body-main').innerHTML = ''
-        await this.append()
     }
     async generateContents() {
         const data = await getStorage('jsonBookmarks')
@@ -163,9 +155,9 @@ class BookmarkSearch {
         const searchToken = ++this.searchToken
         const words = document.getElementById('bookmark-search').value.trim()
         const resultArea = document.getElementById('bookmark-search-result')
+        resultArea.textContent = ''
         if(words == "") {
             document.getElementById('bookmark-search-reset').classList.remove('search-reset-visible')
-            resultArea.textContent = ''
             return
         } else {
             document.getElementById('bookmark-search-reset').classList.add('search-reset-visible')
@@ -204,7 +196,9 @@ class BookmarkSearch {
                             favicon.className = 'favicon'
                             favicon.src = getFaviconUrl(item.url)
 
-                            const title = document.createTextNode(item.title)
+                            const title = document.createElement('div')
+                            title.className = 'bookmark-search-result-title'
+                            title.textContent = item.title
                             const parent = document.createElement('span')
                             parent.textContent = item.parentTitle
 
@@ -317,6 +311,53 @@ class SwitchModuleVisible extends FloatMenu {
 }
 
 class Reflector {
+    constructor() {
+        this.stylesheetLoads = new Map()
+    }
+    setStylesheet(linkId, href) {
+        const link = document.getElementById(linkId)
+        const currentLoad = this.stylesheetLoads.get(linkId)
+        if(link.getAttribute('href') === href) {
+            return currentLoad?.promise ?? Promise.resolve()
+        }
+
+        currentLoad?.cancel()
+
+        let resolveLoad
+        const promise = new Promise(resolve => {
+            resolveLoad = resolve
+        })
+        const finish = () => {
+            link.removeEventListener('load', finish)
+            link.removeEventListener('error', finish)
+            if(this.stylesheetLoads.get(linkId) === load) {
+                this.stylesheetLoads.delete(linkId)
+            }
+            resolveLoad()
+        }
+        const load = {
+            promise,
+            cancel: () => {
+                link.removeEventListener('load', finish)
+                link.removeEventListener('error', finish)
+                if(this.stylesheetLoads.get(linkId) === load) {
+                    this.stylesheetLoads.delete(linkId)
+                }
+                resolveLoad()
+            }
+        }
+
+        link.addEventListener('load', finish)
+        link.addEventListener('error', finish)
+        this.stylesheetLoads.set(linkId, load)
+        link.href = href
+        return promise
+    }
+    async waitForStylesheets() {
+        while(this.stylesheetLoads.size > 0) {
+            await Promise.all(Array.from(this.stylesheetLoads.values(), load => load.promise))
+        }
+    }
     toPixelValue(value, fallback) {
         const n = Number(value)
         if(Number.isFinite(n) && n > 0) {
@@ -347,16 +388,19 @@ class Reflector {
         }
     }
     tmStyle(value) {
-        document.getElementById('head-design-style').href = `css/design/style/st${value}.css`
+        const loaded = this.setStylesheet('head-design-style', `css/design/style/st${value}.css`)
         document.getElementById(value).checked = true
+        return loaded
     }
     tmTheme(value) {
-        document.getElementById('head-design-theme').href = `css/design/theme/tm${value}.css`
+        const loaded = this.setStylesheet('head-design-theme', `css/design/theme/tm${value}.css`)
         document.getElementById(value).checked = true
+        return loaded
     }
     tmColor(value) {
-        document.getElementById('head-design-color').href = `css/design/color/cl${value}.css`
+        const loaded = this.setStylesheet('head-design-color', `css/design/color/cl${value}.css`)
         document.getElementById(value).checked = true
+        return loaded
     }
     tgglWebSearch(value) {
         document.getElementById('web-search-area').classList.toggle('displayNone', !value)
@@ -414,20 +458,46 @@ class Reflector {
 }
 
 class ContentsManager extends DefaultSettings {
+    constructor() {
+        super()
+        this.reflector = new Reflector()
+        this.bookmarkContents = null
+        this.renderToken = 0
+        this.isReady = false
+    }
     init() {
-        this.addContents()
         this.addThemeOptions()
         this.addEventListener()
+        this.isReady = true
+        void this.initialize()
+    }
+    async initialize() {
+        await this.reflect()
+        await this.addContents()
+        this.reflector.tgglIcon(this.settings.toggle.tgglIcon)
+        await this.reflector.waitForStylesheets()
+        document.documentElement.classList.remove('theme-loading')
     }
     async addContents() {
-        const cg = new BookmarkContents(this.settings)
-        await cg.append()
-        this.reflect()
+        await this.renderContents()
     }
     async reloadContents() {
-        const cg = new BookmarkContents(this.settings)
-        await cg.reload()
-        this.reflect()
+        await this.renderContents()
+    }
+    async renderContents() {
+        const renderToken = ++this.renderToken
+        const contents = new BookmarkContents(this.settings)
+        await contents.generateContents()
+        if(renderToken !== this.renderToken) {
+            return
+        }
+
+        this.bookmarkContents?.destroy()
+        const container = document.getElementById('body-main')
+        container.replaceChildren(contents.fragment)
+        contents.fragment = null
+        contents.applyMacy()
+        this.bookmarkContents = contents
     }
 
     addThemeOptions() {
@@ -492,20 +562,26 @@ class ContentsManager extends DefaultSettings {
     }
 
     reflect() {
-        this.reflector = new Reflector()
         const data = this.settings
+        const pending = []
         for(const type in data) {
             if(typeof data[type] === "object") {
-                this.setState(data[type])
+                pending.push(this.setState(data[type]))
             }
         }
+        return Promise.all(pending)
     }
     setState(data) {
+        const pending = []
         for(const key in data) {
             if(typeof this.reflector[key] === 'function') {
-                this.reflector[key](data[key])
+                const result = this.reflector[key](data[key])
+                if(result && typeof result.then === 'function') {
+                    pending.push(result)
+                }
             }
         }
+        return Promise.all(pending)
     }
 }
 
@@ -556,8 +632,15 @@ chrome.storage.onChanged.addListener((changes, areaName) => {
         return
     }
     if(changes.settings) {
+        const previousText = cm.settings?.text ?? {}
         cm.settings = changes.settings.newValue
-        cm.reflect()
+        if(cm.isReady) {
+            cm.reflect()
+            const nextText = cm.settings?.text ?? {}
+            if(previousText.txtMacyColumns !== nextText.txtMacyColumns || previousText.txtMacyMarginX !== nextText.txtMacyMarginX) {
+                void cm.reloadContents()
+            }
+        }
     }
     if(changes.jsonBookmarks) {
         void cm.reloadContents()
