@@ -9,6 +9,8 @@
     "url": "git+https://github.com/Y-Ysss/Hello-NewTab.git"
   },
   "scripts": {
+    "build": "node scripts/package-extension.mjs",
+    "package:zip": "node scripts/package-extension.mjs && node scripts/package-extension-zip.mjs",
     "lint": "oxlint",
     "lint:fix": "oxlint --fix",
     "fmt": "oxfmt",
