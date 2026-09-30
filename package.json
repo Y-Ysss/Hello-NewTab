@@ -1,0 +1,29 @@
+{
+  "name": "Hello-NewTab",
+  "version": "2.0.0",
+  "description": "",
+  "license": "MIT",
+  "author": "yuyosy",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Y-Ysss/Hello-NewTab.git"
+  },
+  "scripts": {
+    "lint": "oxlint",
+    "lint:fix": "oxlint --fix",
+    "fmt": "oxfmt",
+    "fmt:check": "oxfmt --check"
+  },
+  "devDependencies": {
+    "oxfmt": "^0.71.0",
+    "oxlint": "^1.86.0"
+  },
+  "devEngines": {
+    "packageManager": {
+      "name": "pnpm",
+      "version": "12.8.1",
+      "onFail": "download"
+    }
+  },
+  "packageManager": "pnpm@12.8.1"
+}

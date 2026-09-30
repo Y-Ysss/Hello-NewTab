@@ -1,0 +1,7 @@
+# user specified
+*.local*
+*.env*
+
+# Node.js
+node_modules
+dist
