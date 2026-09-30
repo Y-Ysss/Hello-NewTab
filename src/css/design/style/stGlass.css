@@ -1,191 +1,195 @@
 body {
-    color: var(--primary);
+  color: var(--primary);
 }
 
 a {
-    color: var(--primary);
+  color: var(--primary);
 }
 
 .content-module {
-    background-color: rgba(255, 255, 255, .72);
-    border: 1px solid rgba(255, 255, 255, .42);
-    box-shadow: 0 1rem 2rem rgba(25, 42, 70, .10);
-    backdrop-filter: blur(16px) saturate(150%);
-    -webkit-backdrop-filter: blur(16px) saturate(150%);
+  background-color: rgba(255, 255, 255, 0.72);
+  border: 1px solid rgba(255, 255, 255, 0.42);
+  box-shadow: 0 1rem 2rem rgba(25, 42, 70, 0.1);
+  backdrop-filter: blur(16px) saturate(150%);
+  -webkit-backdrop-filter: blur(16px) saturate(150%);
 }
 
 #bookmark-search-group {
-    background-color: rgba(255, 255, 255, .58);
-    overflow: hidden;
-    box-shadow: 0rem .2rem .5rem var(--shadow1);
-    backdrop-filter: blur(32px) saturate(150%);
-    -webkit-backdrop-filter: blur(32px) saturate(150%);
+  background-color: rgba(255, 255, 255, 0.58);
+  overflow: hidden;
+  box-shadow: 0rem 0.2rem 0.5rem var(--shadow1);
+  backdrop-filter: blur(32px) saturate(150%);
+  -webkit-backdrop-filter: blur(32px) saturate(150%);
 }
 
-
-
 #bookmark-search {
-    height: 2.2rem;
-    width: 96%;
-    margin: 0.6rem .4rem;
-    padding: 0.4rem 2rem 0.4rem 0.8rem;
-    border-radius: 0.6rem;
-    color: var(--secondary);
-    font-size: 1rem;
-    box-shadow: 0 1rem 2rem rgba(25, 42, 70, .10);
+  height: 2.2rem;
+  width: 96%;
+  margin: 0.6rem 0.4rem;
+  padding: 0.4rem 2rem 0.4rem 0.8rem;
+  border-radius: 0.6rem;
+  color: var(--secondary);
+  font-size: 1rem;
+  box-shadow: 0 1rem 2rem rgba(25, 42, 70, 0.1);
 }
 
 #bookmark-search-reset {
-    line-height: normal;
+  line-height: normal;
 }
 
 #bookmark-search::-webkit-input-placeholder,
 ::-webkit-input-placeholder {
-    color: var(--secondary);
+  color: var(--secondary);
 }
 
 .bookmark-search-result-items:hover,
 .bookmark-search-result-items:focus,
 .menu:hover,
 .active-menu {
-    background: color-mix(in srgb, var(--accent1) 12%, transparent);
+  background: color-mix(in srgb, var(--accent1) 12%, transparent);
 }
 
 .bookmark-search-result-items span {
-    background-color: rgb(255, 255, 255);
-    border: 1px solid rgba(120, 150, 190, .18);
+  background-color: rgb(255, 255, 255);
+  border: 1px solid rgba(120, 150, 190, 0.18);
 }
 
 #bookmark-no-results-found {
-    color: var(--secondary);
+  color: var(--secondary);
 }
 
 #bookmark-no-results-found img,
 .menu-icon {
-    filter: var(--filter2);
+  filter: var(--filter2);
 }
 
 #system-link-area {
-    opacity: 1;
-    background-color: rgba(255, 255, 255, .72);
-    border-right: 1px solid rgba(120, 150, 190, .24);
-    box-shadow: 0 .2rem .8rem rgba(25, 42, 70, .08);
-    backdrop-filter: blur(14px) saturate(145%);
-    -webkit-backdrop-filter: blur(14px) saturate(145%);
-    overflow: visible;
+  opacity: 1;
+  background-color: rgba(255, 255, 255, 0.72);
+  border-right: 1px solid rgba(120, 150, 190, 0.24);
+  box-shadow: 0 0.2rem 0.8rem rgba(25, 42, 70, 0.08);
+  backdrop-filter: blur(14px) saturate(145%);
+  -webkit-backdrop-filter: blur(14px) saturate(145%);
+  overflow: visible;
 }
 
 .float-menu {
-    color: var(--primary);
-    background-color: rgba(255, 255, 255, .68);
-    border: 1px solid rgba(120, 150, 190, .16);
-    box-shadow: 0 .8rem 1.8rem rgba(25, 42, 70, .12);
-    backdrop-filter: blur(14px) saturate(145%);
-    -webkit-backdrop-filter: blur(14px) saturate(145%);
-    visibility: hidden;
-    opacity: 0;
-    transform: translateY(-0.35rem);
-    transition: opacity .14s cubic-bezier(.58, .11, .2, 1.05), transform .14s cubic-bezier(.58, .11, .2, 1.05), background-color .14s ease, box-shadow .14s ease;
+  color: var(--primary);
+  background-color: rgba(255, 255, 255, 0.68);
+  border: 1px solid rgba(120, 150, 190, 0.16);
+  box-shadow: 0 0.8rem 1.8rem rgba(25, 42, 70, 0.12);
+  backdrop-filter: blur(14px) saturate(145%);
+  -webkit-backdrop-filter: blur(14px) saturate(145%);
+  visibility: hidden;
+  opacity: 0;
+  transform: translateY(-0.35rem);
+  transition:
+    opacity 0.14s cubic-bezier(0.58, 0.11, 0.2, 1.05),
+    transform 0.14s cubic-bezier(0.58, 0.11, 0.2, 1.05),
+    background-color 0.14s ease,
+    box-shadow 0.14s ease;
 }
 
 .float-menu.activeFloatMenu {
-    visibility: visible;
-    opacity: 1;
-    transform: translateY(0);
+  visibility: visible;
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .menu {
-    transition: transform .2s ease, background-color .2s ease, box-shadow .2s ease;
-    padding: 0.35rem;
-    margin: .6rem .3rem;
-    border-radius: .4rem;
+  transition:
+    transform 0.2s ease,
+    background-color 0.2s ease,
+    box-shadow 0.2s ease;
+  padding: 0.35rem;
+  margin: 0.6rem 0.3rem;
+  border-radius: 0.4rem;
 }
 
 .menu:hover {
-    box-shadow: 0 .5rem 1rem rgba(25, 42, 70, .08);
-    background: color-mix(in srgb, var(--accent1) 12%, transparent);
+  box-shadow: 0 0.5rem 1rem rgba(25, 42, 70, 0.08);
+  background: color-mix(in srgb, var(--accent1) 12%, transparent);
 }
 
 .content-header {
-    color: var(--primary);
-    border-bottom: 1px solid rgba(120, 150, 190, .18);
+  color: var(--primary);
+  border-bottom: 1px solid rgba(120, 150, 190, 0.18);
 }
 
 .content-module ul li a {
-    border-radius: .4rem;
-    margin: .3rem;
-    padding: .3rem;
+  border-radius: 0.4rem;
+  margin: 0.3rem;
+  padding: 0.3rem;
 }
 
 .content-module ul li:hover a {
-    background: color-mix(in srgb, var(--accent1) 12%, transparent);
+  background: color-mix(in srgb, var(--accent1) 12%, transparent);
 }
 
 .toggle {
-    box-shadow: inset 0 1px 2px rgba(25, 42, 70, .10);
+  box-shadow: inset 0 1px 2px rgba(25, 42, 70, 0.1);
 }
 
 .toggle:after {
-    background-color: #ffffff;
-    box-shadow: 0 .2rem .4rem rgba(25, 42, 70, .12);
+  background-color: #ffffff;
+  box-shadow: 0 0.2rem 0.4rem rgba(25, 42, 70, 0.12);
 }
 
 .toggle-on {
-    background-color: color-mix(in srgb, var(--accent1) 35%, transparent);
+  background-color: color-mix(in srgb, var(--accent1) 35%, transparent);
 }
 
 .toggle-on:after {
-    background-color: var(--accent1);
+  background-color: var(--accent1);
 }
 
-input[type=radio]+label::before {
-    border-color: rgba(120, 150, 190, .34);
-    background-color: rgba(255, 255, 255, .75);
+input[type='radio'] + label::before {
+  border-color: rgba(120, 150, 190, 0.34);
+  background-color: rgba(255, 255, 255, 0.75);
 }
 
-input[type=radio]:checked+label:before,
-input[type=radio]:hover+label::before {
-    border-color: var(--accent1);
+input[type='radio']:checked + label:before,
+input[type='radio']:hover + label::before {
+  border-color: var(--accent1);
 }
 
-input[type=radio]+label:after {
-    background-color: var(--accent1);
+input[type='radio'] + label:after {
+  background-color: var(--accent1);
 }
 
 #web-search-input {
-    border: 1px solid rgba(255, 255, 255, .42);
-    box-shadow: 0 1rem 2rem rgba(25, 42, 70, .10);
-    background-color: rgba(255, 255, 255, .72);
+  border: 1px solid rgba(255, 255, 255, 0.42);
+  box-shadow: 0 1rem 2rem rgba(25, 42, 70, 0.1);
+  background-color: rgba(255, 255, 255, 0.72);
 }
 
 #web-search-input:focus,
 .text-input:focus,
 select:focus {
-    border-color: var(--accent1);
-    box-shadow: 0 0 0 .2rem color-mix(in srgb, var(--accent1) 18%, transparent);
+  border-color: var(--accent1);
+  box-shadow: 0 0 0 0.2rem color-mix(in srgb, var(--accent1) 18%, transparent);
 }
 
-
 #web-search-submit {
-    border: 1px solid rgba(255, 255, 255, .42);
-    border-radius: .65rem;
-    color: var(--secondary);
-    background: rgba(255, 255, 255, .82);
-    box-shadow: 0 1rem 2rem rgba(25, 42, 70, .10);
-    backdrop-filter: blur(12px) saturate(145%);
-    -webkit-backdrop-filter: blur(12px) saturate(145%);
+  border: 1px solid rgba(255, 255, 255, 0.42);
+  border-radius: 0.65rem;
+  color: var(--secondary);
+  background: rgba(255, 255, 255, 0.82);
+  box-shadow: 0 1rem 2rem rgba(25, 42, 70, 0.1);
+  backdrop-filter: blur(12px) saturate(145%);
+  -webkit-backdrop-filter: blur(12px) saturate(145%);
 }
 
 #web-search-submit:hover {
-    border-color: var(--accent1);
-    background: rgba(255, 255, 255, .82);
-    box-shadow: 0 0 0 .2rem color-mix(in srgb, var(--accent1) 18%, transparent);
+  border-color: var(--accent1);
+  background: rgba(255, 255, 255, 0.82);
+  box-shadow: 0 0 0 0.2rem color-mix(in srgb, var(--accent1) 18%, transparent);
 }
 
 #web-search-submit:active {
-    box-shadow: inset 0 1px 3px rgba(25, 42, 70, .14);
+  box-shadow: inset 0 1px 3px rgba(25, 42, 70, 0.14);
 }
 
 #body-main {
-    opacity: 1;
+  opacity: 1;
 }

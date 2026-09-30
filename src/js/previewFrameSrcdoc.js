@@ -137,4 +137,4 @@ export const PREVIEW_FRAME_SRCDOC = `<!DOCTYPE html>
         </div>
     </div>
 </body>
-</html>`
+</html>`;
