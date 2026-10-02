@@ -140,10 +140,6 @@ a {
   background-color: var(--accent1);
 }
 
-.active-menu {
-  background-color: var(--accent3);
-}
-
 .float-menu {
   background-color: var(--surface);
   box-shadow: 0 0.1rem 0.8rem var(--shadow1);

@@ -44,8 +44,7 @@ a {
 
 .bookmark-search-result-items:hover,
 .bookmark-search-result-items:focus,
-.menu:hover,
-.active-menu {
+.menu:hover {
   background: color-mix(in srgb, var(--accent1) 12%, transparent);
 }
 
@@ -84,6 +83,7 @@ a {
   opacity: 0;
   transform: translateY(-0.35rem);
   transition:
+    visibility 0s linear 0.14s,
     opacity 0.14s cubic-bezier(0.58, 0.11, 0.2, 1.05),
     transform 0.14s cubic-bezier(0.58, 0.11, 0.2, 1.05),
     background-color 0.14s ease,

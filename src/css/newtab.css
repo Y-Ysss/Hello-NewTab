@@ -173,6 +173,8 @@ ul {
   white-space: nowrap;
   text-decoration: none;
   cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
 }
 
 .menu-icon {
@@ -181,6 +183,7 @@ ul {
   padding: 0 0.65rem 0.2rem 0;
   vertical-align: middle;
   pointer-events: none;
+  -webkit-user-drag: none;
 }
 
 /*Body*/
@@ -286,6 +289,7 @@ html.theme-loading #system-link-area {
   opacity: 0;
   transform: translateY(-0.35rem);
   transition:
+    visibility 0s linear 0.14s,
     opacity 0.14s cubic-bezier(0.58, 0.11, 0.2, 1.05),
     transform 0.14s cubic-bezier(0.58, 0.11, 0.2, 1.05);
 }
@@ -294,6 +298,7 @@ html.theme-loading #system-link-area {
   visibility: visible;
   opacity: 1;
   transform: translateY(0);
+  transition-delay: 0s;
 }
 
 #float-menu-theme {
@@ -347,11 +352,13 @@ html.theme-loading #system-link-area {
 #float-menu-theme input[type='radio'] + label::before {
   top: 50%;
   transform: translateY(-50%);
+  transition-duration: 0.14s;
 }
 
 #float-menu-theme input[type='radio'] + label::after {
   top: 50%;
   transform: translateY(-50%) scale(0);
+  transition-duration: 0.14s;
 }
 
 #float-menu-theme input[type='radio']:checked + label:after {

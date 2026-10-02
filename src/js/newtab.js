@@ -129,16 +129,13 @@ class BookmarkSearch {
   }
   on(state = this.state) {
     const bookmarkSearch = document.getElementById('bookmark-search-group');
-    const searchMenu = document.getElementById('search-menu');
     const search = document.getElementById('bookmark-search');
     if (state) {
       bookmarkSearch.style.left = '-34rem';
-      searchMenu.classList.remove('active-menu');
       search.blur();
       this.searchReset();
     } else {
       bookmarkSearch.style.left = '2.6rem';
-      searchMenu.classList.add('active-menu');
       search.focus();
     }
     this.state = !state;
@@ -245,7 +242,24 @@ class FloatMenu {
     const maxTop = window.innerHeight - menuRect.height - viewportPadding;
     const maxLeft = window.innerWidth - menuRect.width - viewportPadding;
     const top = Math.max(viewportPadding, Math.min(anchorRect.top, maxTop));
-    const preferredLeft = anchorRect.right + gap;
+    let anchorRight = anchorRect.right;
+    const sidebar = anchor.closest('#system-link-area');
+    if (sidebar?.style.width) {
+      const sidebarRect = sidebar.getBoundingClientRect();
+      const sidebarStyle = getComputedStyle(sidebar);
+      const rootFontSize = Number.parseFloat(getComputedStyle(document.documentElement).fontSize);
+      const targetContentWidth = Number.parseFloat(sidebar.style.width) * rootFontSize;
+      const targetOuterWidth =
+        sidebarStyle.boxSizing === 'border-box'
+          ? targetContentWidth
+          : targetContentWidth +
+            Number.parseFloat(sidebarStyle.paddingLeft) +
+            Number.parseFloat(sidebarStyle.paddingRight) +
+            Number.parseFloat(sidebarStyle.borderLeftWidth) +
+            Number.parseFloat(sidebarStyle.borderRightWidth);
+      anchorRight += targetOuterWidth - sidebarRect.width;
+    }
+    const preferredLeft = anchorRight + gap;
     const fallbackLeft = anchorRect.left - menuRect.width - gap;
     const left =
       preferredLeft <= maxLeft
@@ -272,10 +286,8 @@ class SelectTheme extends FloatMenu {
 
     if (state) {
       super.onDisplay(floatMenu, TO_CLOSE, menu);
-      menu.classList.remove('active-menu');
     } else {
       super.onDisplay(floatMenu, TO_OPEN, menu);
-      menu.classList.add('active-menu');
     }
     this.state = !state;
   }
@@ -293,10 +305,8 @@ class SwitchModuleVisible extends FloatMenu {
     const menu = document.getElementById('module-visible-menu');
     if (state) {
       super.onDisplay(floatMenu, TO_CLOSE, menu);
-      menu.classList.remove('active-menu');
     } else {
       super.onDisplay(floatMenu, TO_OPEN, menu);
-      menu.classList.add('active-menu');
     }
     this.state = !state;
   }
@@ -638,9 +648,9 @@ class SideBarManager {
   addEventListener() {
     wrapper('.action-item', 'click', (event) => {
       const target = event.currentTarget.id;
+      this.closeMenu(target);
       this.ev[target].on();
       this.activeItem = this.ev[target].state ? target : null;
-      this.closeMenu(target);
     });
     wrapper('.create-system-tab', 'click', (event) => {
       this.closeMenu();
